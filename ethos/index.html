@@ -289,7 +289,7 @@ h3{font-size:18px}
 <body>
 
 <header class="top"><div class="wrap">
-  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v5.1</div>
+  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v5.2</div>
   <h1>Ethos Abandoned Cart.</h1>
   <p class="lede">They saw an Ethos ad, started a life insurance application, got deep into it, and stopped. That was 6 to 12 months ago. These leads sell. The first 30 seconds decide whether you get to sell them.</p>
   <div class="legend-read"><span><i></i>Black serif in a card: say it word for word.</span><span><i class="g"></i>Gray text: for you. Don't read it to the client.</span></div>
@@ -911,7 +911,7 @@ h3{font-size:18px}
 </section>
 
 </main>
-<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v5.1 · 2026 · Internal use only</div></footer>
+<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v5.2 · 2026 · Internal use only</div></footer>
 
 <script>
 (function(){
@@ -928,9 +928,11 @@ h3{font-size:18px}
     start:{t:"Opener", say:"Hey [CLIENT], it's [NAME]. I'm getting back to you on the life insurance application you started with Ethos a while back. You got pretty far into it and then it just stopped. Did you give up on that, or did life just get busy?", cue:"Say it like a callback. Then stop talking. The question does the work.",
       r:[["Life got busy / forgot","busylife"],["It was too expensive","price"],["I gave up on it","gaveup"],["I already got it","hascov"],["Who is this? / What's this about?","what"],["How'd you get my number?","number"],["I'm busy","busy"],["Not interested","notint"],["I never applied","never"],["Need to ask my spouse","spouse"],["Stop calling / hostile","stop"]]},
     busylife:{t:"Life got busy", say:"Totally get it, that's most people. Good news is you already did the hard part. Let me get you up to speed real quick.", end:"s02"},
-    gaveup:{t:"Gave up on it", say:"Hmm, okay. Nobody gives up on something they didn't want, though. A while back something had you putting your info in. What changed?",
-      cue:"Don't accept the first answer. Wait for a real reason.",
-      r:[["The price","price"],["Offered too little","toolow"],["Decided I don't need it","noneed"],["Nothing changed, just never finished","busylife"],["Don't remember","forgot"]]},
+    gaveup:{t:"Gave up on it", say:"Okay, that's fair. Honestly, most people don't give up on life insurance unless they've already got something in place. Do you have anything else that acts like life insurance right now? A policy, something through work, money set aside?",
+      cue:"Agree first. The question assumes they're responsible, not that they flaked. Then stop talking.",
+      r:[["Yes, I've got a policy","hascov"],["Something through work","work"],["Money set aside","savings"],["No, nothing","gaveup2"],["Decided I don't need it","noneed"]]},
+    gaveup2:{t:"Nothing in place", say:"Okay. Then let me ask it this way: when you went on Ethos, was it the price, or did they come back with less than you wanted?",
+      r:[["The price","price"],["Offered too little","toolow"],["Just never finished it","busylife"],["Don't remember","forgot"]]},
 
     nocov:{t:"No coverage yet", say:"Okay. So what stopped you? Usually it's the price, the offer came back lower than you wanted, or life just got busy.",
       r:[["The price","price"],["They offered too little","toolow"],["Got busy / forgot","forgot"],["Don't remember","forgot"]]},
