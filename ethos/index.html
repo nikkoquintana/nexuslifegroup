@@ -289,7 +289,7 @@ h3{font-size:18px}
 <body>
 
 <header class="top"><div class="wrap">
-  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v5.9</div>
+  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v6.0</div>
   <h1>Ethos Abandoned Cart.</h1>
   <p class="lede">They saw an Ethos ad, started a life insurance application, got deep into it, and stopped. That was 6 to 12 months ago. These leads sell. The first 30 seconds decide whether you get to sell them.</p>
   <div class="legend-read"><span><i></i>Black serif in a card: say it word for word.</span><span><i class="g"></i>Gray text: for you. Don't read it to the client.</span></div>
@@ -347,11 +347,6 @@ h3{font-size:18px}
   <h2>The opening.</h2>
   <p>Two beats. A three-second hook question first, then the reason. Whole thing under 27 seconds from hello. Tap what they say and read the next line.</p>
 
-  <div class="box">
-    <div class="step">Send this text 2 to 3 minutes before you dial</div>
-    <p class="say">"Hi <em>[CLIENT]</em>, it's <em>[NAME]</em>. I'm the advisor assigned to the life insurance application you started with Ethos a while back. I'll give you a quick call in a few minutes to get it closed out. My state license number is <em>[#]</em> if you want to look me up. Reply STOP to opt out."</p>
-    <div class="cue"><span class="tag t-imp">Important</span><p>Only open with "Did you get my text?" if you actually sent it. If they catch you on a text you never sent, the call is over.</p></div>
-  </div>
 
   <div class="tree" data-tree="open">
     <div class="tree-top">
@@ -376,10 +371,9 @@ h3{font-size:18px}
       <li><b>You sound like you're reading.</b> Flat, familiar, a little bored, like you're calling a coworker. Your name goes down at the end, not up. Up-talk sounds like asking permission.</li>
       <li><b>No question in the first 5 seconds.</b> Nobody hangs up in the middle of answering. "Did you get my text?" or "quick question for you" gets a word out of them before they can decide.</li>
       <li><b>"Hi, is this [full name]?"</b> Telemarketer signal. First name, no company, no title, no "may I speak with."</li>
-      <li><b>No text first.</b> A name they saw on their screen two minutes ago gets ten more seconds than a stranger.</li>
       <li><b>Your number shows "Spam Likely."</b> They pick up angry. Register your numbers (Free Caller Registry) and dial local.</li>
     </ul>
-    <p>Test it: each agent runs 50 dials with the text hook and 50 with "quick question for you," and logs every hang-up under 10 seconds. Keep whichever one wins.</p>
+    <p>Track it: every agent logs hang-ups under 10 seconds for a day. If one agent's number is way higher than the others, it's tone, not the words.</p>
   </div>
 </section>
 
@@ -934,7 +928,7 @@ h3{font-size:18px}
 </section>
 
 </main>
-<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v5.9 · 2026 · Internal use only</div></footer>
+<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v6.0 · 2026 · Internal use only</div></footer>
 
 <script>
 (function(){
@@ -950,7 +944,7 @@ h3{font-size:18px}
   var RESP=[["Life got busy / forgot","busylife"],["It was too expensive","price"],["I gave up on it","gaveup"],["I already got it","hascov"],["What's this about?","what"],["How'd you get my number?","number"],["I'm busy","busy"],["Not interested","notint"],["I never applied","never"],["Need to ask my spouse","spouse"],["Stop calling / hostile","stop"]];
   var N = {
     start:{t:"Hook", say:"Hey [CLIENT], it's [NAME]. Did you get my text?",
-      cue:"Only if you sent the pre-call text (below) 2 to 3 minutes before dialing. No text sent? Say \u201cHey [CLIENT], it's [NAME], quick question for you.\u201d and tap Yeah.",
+      cue:"Every lead in this campaign was texted at some point, so the question is true. Say it like you expect a yes. Then stop.",
       r:[["Yeah / I think so","reason"],["No / what text?","notext"],["Who is this?","what"],["Stop calling / hostile","stop"]]},
     notext:{t:"Didn't get it", say:"Huh, weird. No worries. So I'm getting back to you about the unfinished life insurance application you started with Ethos a little while back. You got pretty far into it and then it just stopped. Did you give up on that, or did life just get busy?",
       cue:"Straight through, no pauses, then stop talking.",
