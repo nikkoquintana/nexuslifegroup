@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Ethos Cart Script</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap">
+<style>
+/* Layout: one reading column, sticky step rail that tracks scroll. Spoken lines in serif like a call sheet, directions in sans. Tree is a tappable card. */
+:root{
+  --bg:#F2F5F6; --surface:#FFFFFF; --ink:#13212B; --muted:#5B6B76; --line:#D7E0E4; --line-2:#E8EEF0;
+  --accent:#0E6774; --accent-soft:#E1F0F1; --accent-ink:#0A4F59;
+  --ask:#2F5BB7; --ask-soft:#E6EDFA;
+  --pause:#6B5BA8; --pause-soft:#EEEAF8;
+  --warn:#9A5B00; --warn-soft:#FBF0DC;
+  --stop:#A23B3B; --stop-soft:#F9E6E6;
+  --go:#1E7A46; --go-soft:#E2F3E8; --say-bg:#F4FAFA;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-line:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D151A; --surface:#152128; --ink:#E6EDF0; --muted:#95A6B0; --line:#25353F; --line-2:#1E2C34;
+  --accent:#5FC4CF; --accent-soft:#143236; --accent-ink:#8ED9E1;
+  --ask:#92B3F4; --ask-soft:#1B2740; --pause:#B9ACE8; --pause-soft:#26213A;
+  --warn:#E8B862; --warn-soft:#33270F; --stop:#F09C9C; --stop-soft:#3A1E1E;
+  --go:#6FD098; --go-soft:#14301F; --say-bg:#13242A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D151A; --surface:#152128; --ink:#E6EDF0; --muted:#95A6B0; --line:#25353F; --line-2:#1E2C34;
+  --accent:#5FC4CF; --accent-soft:#143236; --accent-ink:#8ED9E1;
+  --ask:#92B3F4; --ask-soft:#1B2740; --pause:#B9ACE8; --pause-soft:#26213A;
+  --warn:#E8B862; --warn-soft:#33270F; --stop:#F09C9C; --stop-soft:#3A1E1E;
+  --go:#6FD098; --go-soft:#14301F; --say-bg:#13242A; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:840px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+p{margin:0}
+ul{margin:0;padding-left:20px;display:grid;gap:6px}
+a{color:var(--accent)}
+
+/* header */
+header.top{padding-block:40px 24px}
+.eyebrow{font:600 12px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font:900 clamp(36px,7vw,60px)/1 var(--f-display);letter-spacing:-.025em;margin:12px 0 14px;text-wrap:balance}
+.lede{color:var(--muted);max-width:64ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:22px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:6px;align-content:start}
+.fact small{font:700 11px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.fact p{font-size:14px}
+.fact b{color:var(--ink)}
+
+/* rail */
+.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-block:1px solid var(--line)}
+.rail .wrap{display:flex;gap:2px;overflow-x:auto;padding-block:8px;scrollbar-width:none}
+.rail .wrap::-webkit-scrollbar{display:none}
+.rail a{flex:none;font:600 13px/1 var(--f-body);color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:6px;white-space:nowrap;border:1px solid transparent}
+.rail a b{font-family:var(--f-display);color:var(--accent);margin-right:5px;font-variant-numeric:tabular-nums}
+.rail a:hover,.rail a:focus-visible{background:var(--accent-soft);color:var(--accent);outline:none}
+.rail a.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.rail a.on b{color:#fff}
+
+/* sections */
+main{padding-block:28px 72px;display:grid;gap:48px}
+section{scroll-margin-top:66px;display:grid;gap:14px}
+.step{font:700 12px/1 var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h2{font:800 clamp(26px,4.6vw,34px)/1.08 var(--f-display);margin:0;letter-spacing:-.015em;text-wrap:balance}
+h3{font:700 17px/1.3 var(--f-display);margin:8px 0 0}
+.say{font:400 18px/1.6 var(--f-line);background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:4px 10px 10px 4px;padding:14px 18px}
+.say em{font-style:normal;background:var(--accent-soft);color:var(--accent-ink);padding:0 5px;border-radius:3px;font-family:var(--f-body);font-size:.82em;font-weight:600}
+.cue{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted)}
+.cue .t-ask+p{font:400 17px/1.5 var(--f-line);color:var(--ink)}
+.cue a{color:var(--accent)}
+.agent{color:var(--muted);font-size:13.5px}
+.box.agent{border-style:dashed}
+.box.agent::before{content:"For you · don't read this to the client";font:700 10px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--warn)}
+.box.read{border-left:3px solid var(--accent);border-radius:4px 10px 10px 4px}
+.box.read li,ul.spoken li{font:400 17px/1.5 var(--f-line);color:var(--ink)}
+ul.spoken{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:4px 10px 10px 4px;padding:12px 18px 12px 34px;gap:8px}
+.prod p,.q p,.fact p,.tier p{color:var(--muted)}
+.legend-read{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted);margin-top:14px}
+.legend-read span{display:inline-flex;align-items:center;gap:8px}
+.legend-read i{display:inline-block;width:26px;height:12px;border-radius:3px;border:1px solid var(--line);background:var(--surface);border-left:3px solid var(--accent)}
+.legend-read i.g{border:1px dashed var(--line);background:transparent}
+.tag{flex:none;font:700 11px/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;padding:6px 8px;border-radius:5px;margin-top:2px}
+.t-ask{background:var(--ask-soft);color:var(--ask)}
+.t-pause{background:var(--pause-soft);color:var(--pause)}
+.t-imp{background:var(--warn-soft);color:var(--warn)}
+.t-note{background:var(--accent-soft);color:var(--accent)}
+.t-go{background:var(--go-soft);color:var(--go)}
+.box{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:var(--surface);display:grid;gap:10px}
+.box.warn{background:var(--warn-soft);border-color:transparent}
+.box.warn h3,.box.warn .step{color:var(--warn);margin:0}
+.box.go{background:var(--go-soft);border-color:transparent}
+.box.go .step{color:var(--go)}
+.branch{border-left:3px solid var(--ask)}
+.branch .step{color:var(--ask)}
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.tier{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--surface);display:grid;gap:8px;align-content:start}
+.tier.rec{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.tier small{font:700 11px/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tier.rec small{color:var(--accent)}
+.tier strong{font:800 20px/1.1 var(--f-display)}
+.tier p{font-size:14px;color:var(--muted)}
+details{border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+details+details{margin-top:8px}
+summary{cursor:pointer;padding:14px 16px;font:700 16px/1.3 var(--f-display);list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--accent);font-size:20px;line-height:1;flex:none}
+details[open] summary::after{content:"–"}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:10px}
+.det{padding:0 16px 16px;display:grid;gap:10px}
+.det .say{font-size:17px}
+
+.agewrap{display:grid;gap:6px}
+.agebar{display:flex;gap:4px;height:58px}
+.agebar.health{height:40px}
+.seg{display:grid;align-content:center;justify-items:center;gap:2px;border-radius:8px;color:#fff;text-align:center;padding:4px 6px;min-width:0}
+.seg b{font:800 14px/1.1 var(--f-display)}
+.seg span{font:600 11px/1.1 var(--f-body);opacity:.9}
+.s-term{background:var(--ask);flex:32}
+.s-either{background:var(--pause);flex:15}
+.s-perm{background:var(--accent);flex:25}
+.seg.full{flex:1;grid-auto-flow:column;gap:10px;justify-content:center;align-items:center}
+.ageaxis{display:flex;justify-content:space-between;font:600 12px/1 var(--f-body);color:var(--muted);padding:0 2px;font-variant-numeric:tabular-nums}
+.q3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:4px;align-content:start}
+.q b{font:700 14px/1.3 var(--f-display)}
+.q p{font-size:13.5px;color:var(--muted)}
+.prods{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.prod{border:1px solid var(--line);border-top:4px solid var(--ask);border-radius:10px;padding:14px 16px;background:var(--surface);display:grid;gap:8px;align-content:start;font-size:14.5px}
+.prod .step{color:var(--ask);font-size:14px}
+.hreq{font:600 11px/1 var(--f-body);letter-spacing:.04em;text-transform:none;color:var(--warn);background:var(--warn-soft);padding:4px 7px;border-radius:5px;margin-left:4px;vertical-align:middle}
+.prod.p-wl .hreq{color:var(--go);background:var(--go-soft)}
+.hnote{font-size:13px;color:var(--warn);font-weight:600}
+.prod.p-wl .hnote{color:var(--go)}
+.prod.p-iul{border-top-color:var(--pause)}.prod.p-iul .step{color:var(--pause)}
+.prod.p-wl{border-top-color:var(--accent)}.prod.p-wl .step{color:var(--accent)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font:700 15px/1 var(--f-display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.tab:hover{border-color:var(--accent);color:var(--accent)}
+.tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{display:grid;gap:14px;border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--bg)}
+@media (max-width:520px){.seg b{font-size:12px}.seg span{font-size:10px}}
+/* flow strip */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:6px}
+.flow a{display:grid;gap:4px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.flow a:hover{border-color:var(--accent)}
+.flow b{font:800 18px/1 var(--f-display);color:var(--accent);font-variant-numeric:tabular-nums}
+.flow span{font-size:12.5px;line-height:1.3}
+.flow i{font-style:normal;font-size:11px;color:var(--muted)}
+
+/* tree */
+.tree{border:2px solid var(--accent);border-radius:14px;background:var(--surface);padding:0;overflow:hidden}
+.tree-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px;background:var(--accent);color:#fff}
+.tree-top .tt{font:800 13px/1 var(--f-display);letter-spacing:.1em;text-transform:uppercase}
+.tree-top .ctl{background:rgba(255,255,255,.14);color:#fff;border-color:transparent}
+.tree-top .ctl:hover:not(:disabled){background:rgba(255,255,255,.26)}
+.crumbs{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:12.5px;color:var(--muted);align-items:center;padding:10px 16px 0}
+.crumbs i{font-style:normal;opacity:.6}
+.crumbs .cur{color:var(--accent);font-weight:600}
+.node{display:grid;gap:12px;min-width:0;padding:12px 16px 16px}
+.node-t{font:700 12px/1 var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.node .say{font-size:19px}
+.resp-l{font:600 12px/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.resp{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.resp button,.ctl{font:600 14.5px/1.3 var(--f-body);text-align:left;padding:12px 14px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;display:flex;gap:10px;align-items:center}
+.resp button:hover,.resp button:focus-visible{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);outline:none}
+.resp .dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--muted)}
+.dot.d-s02,.dot.d-s04,.dot.d-ann{background:var(--go)}
+.dot.d-book{background:var(--ask)}
+.dot.d-close{background:var(--pause)}
+.dot.d-dnc{background:var(--stop)}
+.dot.d-q{background:var(--accent)}
+.ctl{padding:7px 11px;font-size:13px}
+.ctl:disabled{opacity:.45;cursor:default}
+.ctl:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.end{font:700 16px/1.3 var(--f-display);padding:14px 16px;border-radius:9px;background:var(--go-soft);color:var(--go);display:flex;gap:10px;align-items:center}
+.end a{color:inherit}
+.end-book{background:var(--ask-soft);color:var(--ask)}
+.end-close{background:var(--pause-soft);color:var(--pause)}
+.end-dnc{background:var(--stop-soft);color:var(--stop)}
+.keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px}
+.key{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--muted)}
+.key .dot{width:9px;height:9px;border-radius:50%;flex:none}
+
+/* map */
+.map{display:grid;gap:4px;font-size:14px}
+.m{display:grid;gap:4px;padding-left:14px;border-left:2px solid var(--line-2);margin-left:5px}
+.m.root{padding-left:0;border:0;margin:0}
+.m-you{display:grid;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+.m-t{font:700 12px/1.3 var(--f-display);letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.m-say{font:400 14.5px/1.45 var(--f-line)}
+.m-say em{font-style:normal;color:var(--accent-ink);font-weight:500}
+.m-they{display:inline-flex;align-items:center;gap:6px;font:600 12.5px/1 var(--f-body);color:var(--ask);padding:6px 0 2px}
+.m-they::before{content:"↳";opacity:.7}
+.m-end{display:inline-block;font:700 12px/1 var(--f-body);padding:5px 9px;border-radius:5px;background:var(--go-soft);color:var(--go)}
+.m-end.e-book{background:var(--ask-soft);color:var(--ask)}
+.m-end.e-close{background:var(--pause-soft);color:var(--pause)}
+.m-end.e-dnc{background:var(--stop-soft);color:var(--stop)}
+.m-ref{font-size:12.5px;color:var(--muted);font-style:italic}
+
+/* rebuttal grid */
+.rgrid{display:grid;gap:8px}
+.filter{width:100%;font:500 15px/1.4 var(--f-body);padding:11px 14px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink)}
+.filter:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.src{font-size:13px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding-block:20px 36px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:520px){.say{font-size:17px;padding:12px 14px}.cue{flex-direction:column;gap:6px}.node .say{font-size:18px}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+/* ---- color-coded readability layer ---- */
+body{font-size:16px}
+.say{position:relative;font-size:19px;line-height:1.65;background:var(--say-bg);border-left:5px solid var(--accent);padding:34px 18px 16px}
+.say::before{content:"Say";position:absolute;top:9px;left:12px;font:800 10px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--accent);padding:5px 8px;border-radius:4px}
+.node .say{font-size:20px}
+.det .say{font-size:18px}
+.tag{font-size:11px;padding:7px 9px;border-radius:5px;color:#fff}
+.t-ask{background:var(--ask)}
+.t-pause{background:var(--pause)}
+.t-imp{background:var(--warn)}
+.t-note{background:var(--accent)}
+.t-go{background:var(--go)}
+.cue{border-radius:8px;padding:8px 10px}
+.cue:has(.t-imp){background:var(--warn-soft);color:var(--ink)}
+.cue:has(.t-go){background:var(--go-soft);color:var(--ink)}
+.cue:has(.t-pause){background:var(--pause-soft);color:var(--ink)}
+.cue:has(.t-note){background:var(--accent-soft);color:var(--ink)}
+.cue:has(.t-ask){background:var(--say-bg);border:1px solid var(--line);border-left:5px solid var(--ask)}
+.cue .t-ask+p{font-size:18px;line-height:1.55}
+section{border-top:4px solid var(--accent);padding-top:18px}
+section#glance{border-top:0;padding-top:0}
+.step{display:inline-block;background:var(--accent);color:#fff;padding:7px 11px;border-radius:6px;font-size:12px}
+.branch .step{background:var(--ask);color:#fff}
+.box.agent .step{background:var(--muted);color:#fff}
+.box.warn .step,.box.warn.agent .step{background:var(--warn);color:#fff}
+.box.go .step,.box.go.agent .step{background:var(--go);color:#fff}
+.box.read .step{background:var(--accent);color:#fff}
+.box.agent::before{font-size:11px}
+.branch{border-left:5px solid var(--ask);background:var(--ask-soft)}
+.branch .say{background:var(--surface)}
+.tier small{display:inline-block;background:var(--line-2);color:var(--muted);padding:5px 8px;border-radius:4px;letter-spacing:.08em}
+.tier.rec small{background:var(--accent);color:#fff}
+.tier.rec{background:var(--accent-soft)}
+.tab[data-tab="term"].on{background:var(--ask);border-color:var(--ask)}
+.tab[data-tab="iul"].on{background:var(--pause);border-color:var(--pause)}
+.tab[data-tab="wl"].on{background:var(--accent);border-color:var(--accent)}
+#p-term{border-left:5px solid var(--ask)}
+#p-wl{border-left:5px solid var(--accent)}
+#p-iul{border-left:5px solid var(--pause)}
+.resp button{border-left:5px solid var(--accent);font-size:15.5px;padding:13px 14px}
+.resp button.r-d-s02,.resp button.r-d-s04,.resp button.r-d-ann{border-left-color:var(--go)}
+.resp button.r-d-book{border-left-color:var(--ask)}
+.resp button.r-d-close{border-left-color:var(--pause)}
+.resp button.r-d-dnc{border-left-color:var(--stop)}
+.resp-l{color:var(--ink);font-weight:700}
+#rebuttals details{border-left:5px solid var(--stop)}
+#rebuttals summary{font-size:17px}
+#rebuttals summary::before{content:"They say";font:800 10px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--stop);padding:5px 8px;border-radius:4px;margin-right:10px;align-self:center;flex:none}
+.flow a b{color:#fff;background:var(--accent);padding:4px 7px;border-radius:5px;font-size:14px;width:fit-content}
+.legend-read i{border-left:5px solid var(--accent);background:var(--say-bg)}
+h3{font-size:18px}
+
+/* ---- audit fixes ---- */
+.prod .step{background:var(--ask);color:#fff;font-size:13px;letter-spacing:.1em}
+.prod.p-iul .step{background:var(--pause);color:#fff}
+.prod.p-wl .step{background:var(--accent);color:#fff}
+.hreq,.prod.p-wl .hreq{background:rgba(255,255,255,.22);color:#fff;font-size:11px;letter-spacing:.02em}
+.prod{border-top-width:5px}
+.panel[hidden]{display:none}
+.q b{font-size:15px}
+.tier strong{font-size:21px}
+.paths2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;align-items:start}
+.paths2 .say{font-size:17px;padding:30px 14px 14px}
+.paths2 .branch>.step{display:block;font:800 17px/1.2 var(--f-display);letter-spacing:0;text-transform:none;padding:10px 14px;border-radius:8px}
+.paths2 .col-work{background:var(--ask-soft);border-left-color:var(--ask)}
+.paths2 .col-work>.step{background:var(--ask)}
+.paths2 .col-ret{background:var(--pause-soft);border-left-color:var(--pause)}
+.paths2 .col-ret>.step{background:var(--pause)}
+.paths2 .col-ret .say{border-left-color:var(--pause)}
+.paths2 .col-ret .say::before{background:var(--pause)}
+.paths2 .step.sub{background:var(--warn);font-size:14px;margin-top:4px}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v5.1</div>
+  <h1>Ethos Abandoned Cart.</h1>
+  <p class="lede">They saw an Ethos ad, started a life insurance application, got deep into it, and stopped. That was 6 to 12 months ago. These leads sell. The first 30 seconds decide whether you get to sell them.</p>
+  <div class="legend-read"><span><i></i>Black serif in a card: say it word for word.</span><span><i class="g"></i>Gray text: for you. Don't read it to the client.</span></div>
+  <div class="facts">
+    <div class="fact"><small>Who they are</small><p>Usually <b>higher income</b>, busy, and short on the pickup. They don't want fluff. Be direct and know your stuff.</p></div>
+    <div class="fact"><small>What you have</small><p><b>Name, phone, email, date of birth, age, address.</b> Nothing else. No product, amount, beneficiary or submit date.</p></div>
+    <div class="fact"><small>The ad they clicked</small><p>Usually <b>term</b>: "$500K for about $12 a month, no exam, in minutes." That price is for a <b>healthy 30-year-old on a 10-year term</b>. Their real quote came in higher, or the amount lower, and they left. Could still be anything: term, whole life, final expense, IUL.</p></div>
+    <div class="fact"><small>Your position</small><p>You're the <b>advisor assigned</b>, not Ethos. Ethos is one door. You have <b>[60+]</b> carriers and can usually beat the price or raise the amount.</p></div>
+  </div>
+</div></header>
+
+<nav class="rail" aria-label="Script steps"><div class="wrap" id="railwrap">
+  <a href="#open"><b>01</b>Opening</a>
+  <a href="#request"><b>02</b>The request</a>
+  <a href="#needs"><b>03</b>Basics</a>
+  <a href="#health"><b>04</b>Health</a>
+  <a href="#budget"><b>05</b>Budget</a>
+  <a href="#pitch"><b>06</b>What to pitch</a>
+  <a href="#options"><b>07</b>The pitch</a>
+  <a href="#app"><b>08</b>App</a>
+  <a href="#cement"><b>09</b>Cement</a>
+  <a href="#annuity"><b>A</b>Annuity</a>
+  <a href="#rebuttals"><b>R</b>Rebuttals</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="glance">
+  <div class="step">The call at a glance</div>
+  <div class="flow">
+    <a href="#open"><b>01</b><span>The opening</span><i>0–30 sec</i></a>
+    <a href="#request"><b>02</b><span>Explain the request</span><i>60 sec</i></a>
+    <a href="#needs"><b>03</b><span>Basics &amp; why</span><i>2 min</i></a>
+    <a href="#health"><b>04</b><span>Health</span><i>3 min</i></a>
+    <a href="#budget"><b>05</b><span>Discounts &amp; budget</span><i>2 min</i></a>
+    <a href="#pitch"><b>06</b><span>What to pitch</span><i>1 min</i></a>
+    <a href="#options"><b>07</b><span>The pitch, close</span><i>3 min</i></a>
+    <a href="#app"><b>08</b><span>HIPAA &amp; the app</span><i>10 min</i></a>
+    <a href="#cement"><b>09</b><span>Cement</span><i>2 min</i></a>
+    <a href="#annuity"><b>A</b><span>Annuity pivot</span><i>if money's sitting</i></a>
+  </div>
+  <div class="box go agent">
+    <div class="step">Three rules that close these</div>
+    <ul>
+      <li><b>Short lines, then shut up.</b> On the pickup, never talk more than 15 seconds without asking something. Silence after a question is where they talk themselves in.</li>
+      <li><b>Sell the same call, not a callback.</b> Every branch tries to keep them on the phone and get to Step 02. If you must book, it's today, two specific times. Never "when works for you?"</li>
+      <li><b>Agree, then ask.</b> "That's fair." "I'd be annoyed too." "Totally get it." Then the next question. Arguing on an aged lead ends the call.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 01 -->
+<section id="open">
+  <div class="step">01 · The opening</div>
+  <h2>The opening.</h2>
+  <p>Read it. Tap what they say. Read the next line.</p>
+
+  <div class="tree" data-tree="open">
+    <div class="tree-top">
+      <span class="tt">The opening</span>
+      <span style="display:flex;gap:6px"><button type="button" class="ctl t-back">← Back</button><button type="button" class="ctl t-reset">Start over</button></span>
+    </div>
+    <div class="crumbs" aria-label="Path so far"></div>
+    <div class="node" aria-live="polite"></div>
+  </div>
+  <div class="keys">
+    <span class="key"><span class="dot d-q"></span>Keeps going</span>
+    <span class="key"><span class="dot d-s02"></span>Into the script</span>
+    <span class="key"><span class="dot d-book"></span>Book today</span>
+    <span class="key"><span class="dot d-close"></span>Close the file</span>
+    <span class="key"><span class="dot d-dnc"></span>Do not call</span>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="request">
+  <div class="step">02 · Who you are &amp; what you're here to do</div>
+  <h2>Explain the request.</h2>
+  <p class="say">"Okay <em>[CLIENT]</em>, I've got your file pulled up here, so let me get you up to speed on what's going on. Like I said, my name is <em>[YOUR NAME]</em>. I'm the advisor assigned to your request."</p>
+  <p class="say">"Now, this was originally started by you… gosh, maybe <em>[6 months to a year]</em> ago! You went on Ethos and got pretty far into the application, but it never got finished. This is a request to make sure that if you were to pass away, become chronically ill, or permanently disabled, your family will have the funds to <em>[replace your income / cover the bills / take care of everything you'd normally provide]</em>."</p>
+  <p class="say">"I'm not sure why the heck this was never handled. Could be for quite a few reasons, but I was raised better than to make excuses. Bottom line: I'm one of the managers, and it's my job to make sure we get this handled today and make sure you have the coverage your family needs."</p>
+  <p class="say">"And just so you know, I don't actually work for Ethos. They're one of the companies I'm contracted with, but I'm an independent advisor contracted with <em>[60+]</em> A-rated carriers, so I get to shop around and find you the best deal."</p>
+
+  <h3>Provide credentials &amp; establish compliance</h3>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Begin with transparency. This builds trust before you ask for any personal information.</p></div>
+  <p class="say">"Now, before I get ahead of myself, I just gotta make sure you have all my information, so you can look me up and do what you need to do."</p>
+  <div class="cue"><span class="tag t-note">Note</span><p>Text your digital business card now: name, license number, agency, direct cell.</p></div>
+  <div class="cue"><span class="tag t-ask">Ask</span><p>"Did that come through okay?" If not: "No worries, what's the best cell? I'll resend it." Keep going while it sends.</p></div>
+
+  <p class="say">"So the way this works today is pretty simple. First, I'll make sure we can find a program you qualify for. Then we'll make sure it's affordable for your budget, because at the end of the day, if you can't afford it, it ain't worth a dang thing. Right?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Make sure they agree.</p></div>
+  <p class="say">"Then once we've found something you qualify for that fits your needs financially, I'll fill out the application and send it to the insurance carriers for final approval. Sometimes we get an approval today, on the call. If not, usually we have an answer in 24 to 48 hours. Now, do you have any questions on this?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for a "no" before continuing.</p></div>
+  <div class="cue"><span class="tag t-imp">Important</span><p>If they want $1M+, set the expectation now: "On a bigger case like yours, the carrier may want a quick exam, so it can take a little longer."</p></div>
+</section>
+
+<!-- 03 -->
+<section id="needs">
+  <div class="step">03 · Clarify insurable needs</div>
+  <h2>Get the basics and the why.</h2>
+  <p class="say">"Perfect, so let me get the basics out of the way. I have your name here as <em>[CLIENT NAME]</em>. Is that correct?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer.</p></div>
+  <div class="cue"><span class="tag t-ask">Ask</span><p>"And I've got your date of birth as [DOB], is that right?"</p></div>
+  <p class="say">"So what made you start looking into life insurance in the first place?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer. New baby, getting married, new business, a health scare. This is your "why." You'll use it in the close.</p></div>
+  <p class="say">"Who's gonna be the one in charge of this in case something happens? Who are we trying to make sure money is left behind for?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer. This is your beneficiary.</p></div>
+  <p class="say">"So when you went on Ethos, what were you looking to take care of? Some people want to make sure the funeral and final expenses are covered, some want to replace their income or cover the mortgage and bills for the family, and some want something that builds cash value for down the road. What was it for you?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer. Don't assume the product. Let them tell you.</p></div>
+  <div class="cue"><span class="tag t-ask">Ask</span><p>"And do you remember roughly how much coverage you were looking at?"</p></div>
+
+  <h3>Only if their number is bigger than their age or health will get</h3>
+  <div class="branch box">
+    <div class="step">→ Only if: big number, and they're 50+ or on medications. Otherwise skip.</div>
+    <p class="say">"Real quick, so you know what happened on Ethos. Those ads, the half a million for about twelve bucks a month, that price is built for a healthy 30-year-old non-smoker on a 10-year term. The second you put in your real age and health, the number moves. You didn't do anything wrong, that's just how it's priced. My job is to find the carrier that prices your age and your health the best, and show you what's actually possible. Fair enough?"</p>
+    <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for the "fair enough." Now the real numbers won't feel like a bait and switch.</p></div>
+  </div>
+
+  <h3>Then, everyone</h3>
+  <div class="tree" data-tree="needs">
+    <div class="tree-top">
+      <span class="tt">What else do they have</span>
+      <span style="display:flex;gap:6px"><button type="button" class="ctl t-back">← Back</button><button type="button" class="ctl t-reset">Start over</button></span>
+    </div>
+    <div class="crumbs" aria-label="Path so far"></div>
+    <div class="node" aria-live="polite"></div>
+  </div>
+
+  <div class="box agent">
+    <div class="step">Where this call is heading · decide now, pitch it in 07</div>
+    <ul>
+      <li><b>Funeral, burial, final expenses, leaving a little behind</b> → whole life.</li>
+      <li><b>Replace income, protect the kids, cover the mortgage or debts for a set number of years</b> → term. For a mortgage, use the loan balance as the full amount.</li>
+      <li><b>Cash value, retirement, "not throwing money away"</b> → IUL. Run the carrier illustration. Never quote returns from memory.</li>
+      <li><b>Not sure, "I was just looking"</b> → ask "Is this more of a contingency plan for the next 10 to 20 years, or something you want there no matter what?" Route from their answer.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="health">
+  <div class="step">04 · Medical assessment</div>
+  <h2>Qualify the health.</h2>
+  <p class="say">"Okay, so the first thing now is I'm going to ask some preliminary medical questions just to get an understanding of what options you may qualify for. We're not just one insurance company. We're independent, which means we have access to over <em>[60]</em> carriers, and we want to make sure to match your health with the carrier that caters most to it, to get you the best rate."</p>
+  <div class="cue"><span class="tag t-note">Note</span><p>Open the quoting tool. Clear all fields. Enter conditions and medications as you ask them.</p></div>
+
+  <h3>Basic info</h3>
+  <ul class="spoken">
+    <li>"And you're in <em>[State]</em>, correct?"</li>
+    <li>"Are you married, single or widowed?"</li>
+    <li>"Approximate height and weight?"</li>
+    <li>"Any nicotine or tobacco use?"</li>
+  </ul>
+
+  <h3>Health questions</h3>
+  <p class="say">"Now I'm going to go through some health questions. I'm going to read every single one, and I need you to answer them as accurately as you can. The more accurate we are, the more accurate your price will be. Your health information stays private and only goes to the carrier."</p>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Read every question word for word. Never skip one or answer for them.</p></div>
+
+  <div class="box read">
+    <div class="step">Last 10 years</div>
+    <p class="say">"In the last 10 years, have you had or been treated for any of the following?"</p>
+    <ul>
+      <li>"Any lung disease, asthma or COPD?"</li>
+      <li>"Any heart attack, stroke, TIA (mini stroke) or stents?"</li>
+      <li>"Congestive heart failure (CHF)?"</li>
+      <li>"Diabetes or neuropathy?"</li>
+      <li>"Any blood clots?"</li>
+      <li>"Any cancers?"</li>
+      <li>"Any kidney or liver problems?"</li>
+      <li>"Any alcohol or drug abuse?"</li>
+      <li>"Any anxiety or depression?"</li>
+      <li>"Any Alzheimer's or dementia?"</li>
+    </ul>
+    <div class="cue"><span class="tag t-ask">For every yes</span><p>"When was that diagnosed? When was your last treatment? What medications do you take for it?" Write down the dates. The dates decide which carrier and which policy they qualify for.</p></div>
+  </div>
+
+  <div class="box read">
+    <div class="step">Last 5 years</div>
+    <p class="say">"Now just the last five years."</p>
+    <ul>
+      <li>"Do you take insulin for diabetes? Any complications from diabetes, like neuropathy, amputation or kidney problems?"</li>
+      <li>"Any blood clots?"</li>
+      <li>"Any heart attacks?"</li>
+      <li>"Any strokes?"</li>
+      <li>"Any stents placed?"</li>
+      <li>"Any congestive heart failure or AFib?"</li>
+      <li>"Any defibrillator or pacemaker?"</li>
+      <li>"Have you used oxygen?"</li>
+      <li>"Any license suspensions, DUIs or felonies?"</li>
+    </ul>
+    <div class="cue"><span class="tag t-note">Note</span><p>Asking the same conditions again with a shorter window is on purpose. People who said no at 10 years often remember something when you narrow it down.</p></div>
+  </div>
+
+  <div class="box read">
+    <div class="step">Last 12 months</div>
+    <p class="say">"And in the last 12 months."</p>
+    <ul>
+      <li>"Have you been in the hospital overnight for anything?"</li>
+      <li>"Have you been confined to a nursing home or skilled nursing facility?"</li>
+      <li>"Have you used any oxygen equipment?"</li>
+      <li>"Any heart attack, stroke or cancer?"</li>
+      <li>"Any trouble breathing, like respiratory failure, or a lung problem?"</li>
+      <li>"Anything with your heart, or your head, like a stroke, a seizure or a mental health stay?"</li>
+    </ul>
+  </div>
+
+  <div class="box read">
+    <div class="step">Right now</div>
+    <ul>
+      <li>"High blood pressure, high cholesterol or thyroid problems?"</li>
+      <li>"Do you use a walker or wheelchair?"</li>
+      <li>"Any other medications we haven't talked about?"</li>
+    </ul>
+  </div>
+
+  <div class="cue"><span class="tag t-imp">Important</span><p>If Ethos declined them or rated them up, ask what they were told. A different carrier may treat the same condition much better. That's your angle.</p></div>
+</section>
+
+<!-- 05 -->
+<section id="budget">
+  <div class="step">05 · Financial assessment</div>
+  <h2>Check for discounts, set the budget.</h2>
+  <p class="say">"Okay, great. Now I'm going to start checking for some discounts and see if I can even get you some money saved. First question: what are you doing for work, or are you retired?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer.</p></div>
+  <div class="paths2">
+    <div class="branch box col-work">
+      <div class="step">If working</div>
+      <p class="say">"Okay, great. How long have you been doing that for?"</p>
+      <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer.</p></div>
+      <p class="say">"Okay, great. And are you the main income earner in the household, or does your <em>[wife / husband]</em> work too?"</p>
+      <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer.</p></div>
+      <div class="step sub">If they're the main income earner</div>
+      <p class="say">"Okay, so pretty much everything runs on your check. Let me ask you something, and I'm not trying to be morbid: if something happened to you tomorrow and that income stopped, what would that look like for <em>[wife / kids]</em>? Could they stay in the house, keep the bills paid, keep living the way they live right now?"</p>
+      <div class="cue"><span class="tag t-pause">Pause</span><p>Let them sit in it. Don't rescue them from the silence. Whatever they say is the reason for the policy. Write it down for the close.</p></div>
+      <p class="say">"Right. And that's exactly what this is for. Not what they'd need to get by, what they're used to. Honestly, I appreciate you being proactive and taking accountability on that. Most people don't until it's too late."</p>
+    </div>
+    <div class="branch box col-ret">
+      <div class="step">If retired or not working</div>
+      <p class="say">"Okay. Are you on Social Security, disability, or pension income?"</p>
+      <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer. Then the bank question below. Say "or Direct Express" on that one.</p></div>
+    </div>
+  </div>
+  <p class="say">"Okay, and just to see if you qualify for our savings plan, do you currently bank with a credit union, or a major institution like Chase, Navy Federal, Wells Fargo <em>[or Direct Express]</em>?"</p>
+  <div class="cue"><span class="tag t-note">Note</span><p>Only say "or Direct Express" if they're on Social Security or disability. Don't mention it to someone working a job with a regular bank.</p></div>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Only promise a discount the carrier actually gives for that bank or payment method.</p></div>
+  <p class="say">"Okay. On average, how much would your estimated monthly income be, on the low end?"</p>
+  <p class="say">"Got it. Now, after all the bills are paid, how much do you usually have left over?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer. Write the number down.</p></div>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Under $300 a month left over: on their worst day they cancel in a heartbeat. Don't build a big policy on it. Keep it small, or don't force it.</p></div>
+  <p class="say">"Okay, well, don't take this the wrong way. The only reason I ask is because a lot of the insurance companies only let us do up to 10 to 15% of your leftover income. And a lot of the time there's something called financial justification, where sometimes they won't even let us go up to 2x your annual income."</p>
+  <div class="cue"><span class="tag t-note">Note</span><p>Your budget is 10 to 15% of what's left over. Build all three options inside that. Then pick the product in Step 06.</p></div>
+
+</section>
+
+<!-- 06 -->
+<section id="pitch">
+  <div class="step">06 · What to pitch</div>
+  <h2>Pick the product.</h2>
+  <p>Age gets you in the right neighborhood. Health and what they told you they want make the call.</p>
+
+  <div class="agewrap">
+    <div class="agebar">
+      <div class="seg s-term"><b>Term</b><span>18 to 50 · really healthy</span></div>
+      <div class="seg s-either"><b>Term or IUL</b><span>50 to 65 · really healthy</span></div>
+      <div class="seg s-perm"><b>Whole life</b><span>65 and up</span></div>
+    </div>
+    <div class="ageaxis"><span>18</span><span>50</span><span>65</span><span>90</span></div>
+    <div class="agebar health"><div class="seg s-perm full"><b>Bad health, any age</b><span>Whole life</span></div></div>
+  </div>
+
+  <div class="q3">
+    <div class="q"><b>How old are they?</b><p>Under 50, think term. Over 65, think whole life. In between, keep asking.</p></div>
+    <div class="q"><b>How healthy are they?</b><p>Serious conditions or a lot of medications push to whole life at any age.</p></div>
+    <div class="q"><b>What can they afford?</b><p>A smaller permanent policy they keep beats a bigger term policy they cancel.</p></div>
+  </div>
+
+  <div class="prods">
+    <div class="prod p-term">
+      <div class="step">Term <span class="hreq">(really healthy)</span></div>
+      <p><b>Pitch it when:</b> under 50, really healthy, and they want a big number for a set time. Income, kids, mortgage.</p>
+      <p class="hnote">Minimal medications, minimal conditions. Anything serious or a long med list, go whole life.</p>
+      <p><b>Coverage:</b> $50K up to $1M+, depending on age. Most coverage for the lowest premium.</p>
+      <p><b>How:</b> full amount, 75%, 50%.</p>
+    </div>
+    <div class="prod p-iul">
+      <div class="step">IUL <span class="hreq">(really healthy)</span></div>
+      <p><b>Pitch it when:</b> 50 to 65 (or younger with money), really healthy, and they want coverage that lasts and builds cash. Hardest to qualify for, highest premium.</p>
+      <p class="hnote">Minimal medications, minimal conditions. Strictest underwriting of the three.</p>
+      <p><b>Coverage:</b> up to about $500K. Has to be funded more to work well.</p>
+      <p><b>How:</b> three monthly amounts off the illustration.</p>
+    </div>
+    <div class="prod p-wl">
+      <div class="step">Whole life <span class="hreq">(any health)</span></div>
+      <p><b>Pitch it when:</b> 65 and up, or health issues at any age, or they want the funeral covered and money left behind, or term didn't fit the budget.</p>
+      <p><b>Coverage:</b> $50K is the max you'll see.</p>
+      <p><b>How:</b> Basic, Recommended, Maximum.</p>
+    </div>
+  </div>
+  <div class="cue"><span class="tag t-note">Note</span><p>Making good money changes the amount, not the product. Health still decides.</p></div>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Ethos ads sell 10-year term to healthy 30-year-olds. A 55-year-old on two medications was never getting that number anywhere. Don't promise to beat the ad. Promise the most coverage their age and health can actually get, and show it honestly.</p></div>
+</section>
+
+<!-- 07 -->
+<section id="options">
+  <div class="step">07 · The pitch</div>
+  <h2>Three options, one question.</h2>
+  <h3>Pen and paper first</h3>
+  <p class="say">"Okay, so I've got your options pulled up. Do you have a pen and paper handy? I've got some very important information I'm going to have you write down."</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait until they actually have it. Not one number until they do.</p></div>
+  <div class="branch box">
+    <div class="step">→ "Just tell me" / won't grab one</div>
+    <p class="say">"I'll hold on, go ahead and grab it. There's a few numbers here and I don't want you trying to remember them."</p>
+    <div class="cue"><span class="tag t-imp">Important</span><p>If they still won't grab a pen, they're not serious. Don't pitch into it. Find out what's really going on before you give a single number.</p></div>
+  </div>
+  <p class="say">"Got it? Perfect."</p>
+  <div class="cue"><span class="tag t-note">Rate-check sit</span><p>They already have a policy: option one is their same coverage at your lower price, option two is more coverage for what they pay now, option three is the budget version. Same close.</p></div>
+  <div class="tabs" role="tablist" aria-label="Product">
+    <button type="button" class="tab on" data-tab="term" role="tab" aria-selected="true">Term</button>
+    <button type="button" class="tab" data-tab="wl" role="tab" aria-selected="false">Whole life</button>
+    <button type="button" class="tab" data-tab="iul" role="tab" aria-selected="false">IUL</button>
+  </div>
+
+  <div class="panel" id="p-term" role="tabpanel">
+  <p class="say">"Okay, so based on your health and what you told me you're after, the one I'd put you in is a term plan. People usually go with term because they want the highest amount of coverage for the lowest premium, nationwide. Term starts around fifty thousand and goes all the way up to a million or more, depending on your age. Simple version: it covers you for <em>[X]</em> years, the rate never changes, the coverage never drops, and if something happens, <em>[BENEFICIARY]</em> gets the money tax-free. I've got three options, and they all work the same way. The only difference is how much."</p>
+  <div class="tiers">
+    <div class="tier rec"><small>Option 01 · Most popular</small><strong>Full amount</strong><p>The <em>[$AMOUNT]</em> they told you in Step 03. [$/mo]</p></div>
+    <div class="tier"><small>Option 02</small><strong>75%</strong><p>About <em>[$75% AMOUNT]</em>. Enough to get back on their feet. [$/mo]</p></div>
+    <div class="tier"><small>Option 03</small><strong>50%</strong><p>About <em>[$50% AMOUNT]</em>. Gets something started. [$/mo]</p></div>
+  </div>
+  <p class="say">"The first option is the full <em>[$AMOUNT]</em>, the amount you told me you were looking for, at <em>[$]</em> a month. That's the one most people try to qualify for, because it takes care of everything, no questions asked."</p>
+  <p class="say">"The second is 75% of that, about <em>[$75% AMOUNT]</em>, at <em>[$]</em> a month. Still enough for <em>[BENEFICIARY]</em> to get back on their feet, without hitting the wallet as hard."</p>
+  <p class="say">"The third is 50%, about <em>[$50% AMOUNT]</em>, at <em>[$]</em> a month. That's for getting something started. Something is far better than nothing, right?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for them to agree.</p></div>
+  <h3>The close</h3>
+  <p class="say">"So <em>[CLIENT]</em>, what would make the most sense for you if we can get you qualified: the full <em>[$AMOUNT]</em> at <em>[$]</em> a month, the 75% at <em>[$]</em> a month, or the 50% at <em>[$]</em> a month?"</p>
+  <div class="cue"><span class="tag t-pause">Long pause</span><p>Say nothing until they answer.</p></div>
+  <div class="cue"><span class="tag t-go">Go</span><p>They picked. Jump to 08 and start the application.</p></div>
+  </div>
+
+  <div class="panel" id="p-wl" role="tabpanel" hidden>
+  <p class="say">"Okay, so based on your health and what you told me you're after, the one I'd put you in is a permanent plan. Simple version: the coverage never ends, the rate never goes up, and when you pass, the money goes to <em>[BENEFICIARY]</em> tax-free. I've got three options, and they all work the same way. The only difference is how much."</p>
+  <div class="tiers">
+    <div class="tier"><small>Option 01</small><strong>Basic</strong><p>Final expenses plus about 6 months of income. Budget-focused, gets something in place. [$/mo]</p></div>
+    <div class="tier rec"><small>Option 02 · Recommended</small><strong>Recommended</strong><p>Final expenses plus about 9 months of income. Most-picked, the level-minded choice. [$/mo]</p></div>
+    <div class="tier"><small>Option 03</small><strong>Maximum</strong><p>Final expenses plus a full year of income. For long-term thinkers who want the rate locked now. [$/mo]</p></div>
+  </div>
+  <p class="say">"Basic covers your final expenses and about 6 months of your income for the family, at <em>[$AMOUNT]</em> a month. Enough to get the job done, but barely."</p>
+  <p class="say">"Our Recommended option is our most-picked option because it's exactly what it sounds like. Based on research, most families need at least 9 months to get things figured out. It's <em>[$AMOUNT]</em> a month."</p>
+  <p class="say">"Our Maximum option covers an entire year, only <em>[$AMOUNT]</em> above the budget, at <em>[$AMOUNT]</em> monthly. I don't want to push you here unless it's easily affordable. Basic and Recommended are both fantastic, but I wanted to show you the value."</p>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Only present Maximum as a genuine option if it's comfortably within budget. Never pressure past affordability.</p></div>
+  <p class="say">"So to recap: Basic covers 6 months, a great way to get started and keep it affordable. Recommended at 9 months is the best value for your situation; your family's good and you don't need to stress about only having 6 months. Then the Maximum 1-year option, if you can afford it, is easily the best."</p>
+  <h3>The close</h3>
+  <p class="say">"So <em>[CLIENT]</em>, what would make the most sense for you if we can get you qualified: the Basic at <em>[$]</em> a month, the Recommended at <em>[$]</em> a month, or the Maximum at <em>[$]</em> a month?"</p>
+  <div class="cue"><span class="tag t-pause">Long pause</span><p>Say nothing until they answer.</p></div>
+  <div class="cue"><span class="tag t-go">Go</span><p>They picked. Jump to 08 and start the application.</p></div>
+  </div>
+
+  <div class="panel" id="p-iul" role="tabpanel" hidden>
+  <p class="say">"Okay, so based on your health and what you told me you're after, the one I'd put you in is an indexed universal life. Simple version: it's permanent, so it never expires, and part of what you pay builds cash value you can use down the road. It's the hardest one to qualify for and it costs more than term, which is why not everyone gets offered it."</p>
+  <p class="say">"I've got three ways to set it up. They all give <em>[BENEFICIARY]</em> the same <em>[$AMOUNT]</em> if something happens. The difference is how much goes toward building the cash side. I'm reading these straight off the carrier's illustration, so you're seeing real numbers, not me guessing."</p>
+  <div class="tiers">
+    <div class="tier"><small>Option 01</small><strong>Coverage first</strong><p>Lowest monthly. Carries the coverage, builds a little cash. [$/mo]</p></div>
+    <div class="tier rec"><small>Option 02 · Recommended</small><strong>Recommended</strong><p>The amount the illustration shows keeps it healthy long term and builds real cash. [$/mo]</p></div>
+    <div class="tier"><small>Option 03</small><strong>Max funded</strong><p>The most the carrier allows. Most cash value. Only if it's comfortable. [$/mo]</p></div>
+  </div>
+  <p class="say">"Coverage first is <em>[$AMOUNT]</em> a month. It carries the coverage and builds a little on the side. Recommended is <em>[$AMOUNT]</em> a month, and that's the number the illustration shows keeps this thing healthy long term and actually builds cash. Max funded is <em>[$AMOUNT]</em> a month, the most they'll let you put in, and the most cash value. I don't want to push you there unless it's easily affordable."</p>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Show the guaranteed column and the projected column. Never quote a return, a break-even year, or "double your money" from memory.</p></div>
+  <h3>The close</h3>
+  <p class="say">"So <em>[CLIENT]</em>, what would make the most sense for you if we can get you qualified: coverage first at <em>[$]</em> a month, recommended at <em>[$]</em> a month, or max funded at <em>[$]</em> a month?"</p>
+  <div class="cue"><span class="tag t-pause">Long pause</span><p>Say nothing until they answer.</p></div>
+  <div class="cue"><span class="tag t-go">Go</span><p>They picked. Jump to 08 and start the application.</p></div>
+  </div>
+
+  <details>
+    <summary>If they qualify for everything and can't decide · term vs. permanent</summary>
+    <div class="det">
+  <div class="cue"><span class="tag t-note">Note</span><p>Continue here if the client did not clear the temporary path above.</p></div>
+  <p class="say">"So I have a few options here, but before I dive in I want to quickly recap the two main ways life insurance is handled. The first is a temporary option, the more popular one you'll hear people talking about. It's cheap and you can get a lot of coverage for a set number of years. The major downfall is it's only great for the right crowd: people in their 20s, 30s, or 40s. Once you get into your 50s it gets really expensive."</p>
+  <p class="say">"But even if you're a healthy, well-off person, because of your age the carriers start to shorten how long they'll even give you coverage. So you'll pay for an expensive plan and all of a sudden get a letter saying your coverage is done, right when you need it most. And what's worse, all the money is gone. It doesn't build any value you get back."</p>
+  <p class="say">"So what's the solution? It's the second way this is handled: a permanent plan. First, the coverage never ends, so your family is guaranteed to have money if something were to happen. The rate is locked in and never goes up."</p>
+  <p class="say">"Really the best part: these policies build value. Down the road you have options. Surrender the policy and get some of your money back, or keep the coverage since the rate is locked in low, and when you pass on, that money goes tax-free to your family. Right?"</p>
+  <div class="cue"><span class="tag t-ask">Ask</span><p>"You can see why a lot of clients love this option, right?"</p></div>
+  <p class="say">"So what they recommend for coverage on these permanent options is at least enough to cover final expenses and give the family some breathing room, anywhere from 6 months to a full year of your income replaced. That gives them time to figure out what's next without a financial panic on top of everything else."</p>
+    </div>
+  </details>
+</section>
+
+<!-- 08 -->
+<section id="app">
+  <div class="step">08 · The application</div>
+  <h2>Start it, read the HIPAA, walk it.</h2>
+  <p class="say">"Okay, great. Most clients are in the same situation and usually go with that one right now as well. I'll go ahead and get your application started. It should take about 10 minutes."</p>
+  <h3>HIPAA</h3>
+  <p class="say">"Are you aware of all your HIPAA laws?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer.</p></div>
+  <p class="say">"Okay, great. So I'm just letting you know, we do go over some personal information like social, banking, things of that regard. Just please make sure you have all the information handy. I, myself, <em>[YOUR NAME]</em>, and the insurance company, <em>[CARRIER]</em>, we are both held liable if any of your information is misused. And everything is monitored and recorded for quality assurance. Do you understand?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for the "yes." Then straight into the application. Nothing in between.</p></div>
+
+  <h3>Walk the application</h3>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Read it in third person: "the application is asking for," "it wants to know." Walk them through the whole thing. Don't pause for anything. Say the draft date back and write it down for Step 09.</p></div>
+  <div class="cue"><span class="tag t-imp">Important</span><p>If they have an existing policy or a pending Ethos application, don't cancel anything until the new policy is approved and in force. Complete your state's replacement forms.</p></div>
+</section>
+
+<!-- 09 -->
+<section id="cement">
+  <div class="step">09 · Cementing your sale</div>
+  <h2>Lock in the confidence.</h2>
+  <div class="branch box">
+    <div class="step">→ If pre-approved</div>
+    <p class="say">"Okay awesome, well <em>[CLIENT]</em>, it looks like you are officially approved! Again, just a quick reminder: your first payment will come out on <em>[DATE]</em>, and your future recurring payments will be coming out on <em>[DATE]</em>. I just want to make sure you plan that into your payment reminders, or however you track your budget."</p>
+  </div>
+  <div class="branch box">
+    <div class="step">→ If it went to underwriting</div>
+    <p class="say">"Okay, so everything is looking good to go. The carrier will take <em>[a day or so / a couple weeks on a case this size]</em> to review this. Now, like I mentioned before, I'm independent, so if for some reason they say we can't, I'm not stressed at all. I can easily pivot to another carrier. Sometimes life insurance is a matchmaking game. I'm usually pretty good at getting it right the first time, but if not, I'll call you and we can pivot. Does that make sense?"</p>
+    <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer.</p></div>
+  </div>
+  <p class="say">"Now a few things to be aware of that could potentially pop up."</p>
+  <p class="say">"You'll get your policy in the mail in a few weeks. If you don't get it in the mail, please don't call me yelling at me thinking we ran away with your money (haha). Usually it's something simple, like a bad address or our mailing department being behind. Just shoot me a text and let me know."</p>
+  <div class="cue"><span class="tag t-note">Note</span><p>If there are any issues with the initial payment, reach out to the client proactively.</p></div>
+  <p class="say">"Now, your info has been sitting in the system since you went on Ethos, so if for any reason anyone reaches out about life insurance, you're going to ask them for a security code: <em>[SECURITY WORD OR PHRASE]</em>. Just ask them 'What is my security code?' If they can't state it to you, hang up and call me if you have any concerns."</p>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Give the client a specific word or phrase before moving on.</p></div>
+  <p class="say">"So here's my personal cell. Please make sure you have this in your phone."</p>
+  <p class="say">"Now, one more thing I'm going to send you is a link to our Google Business page. It lets you leave a review. I'm not begging you, but if you felt I did a good job today, please leave a review. It takes you 2 minutes, but it means the world to me."</p>
+  <p class="say">"So I just sent this over to you. Did you get it?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for confirmation.</p></div>
+  <p class="say">"Now, do you have any questions before I let you go?"</p>
+  <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer.</p></div>
+  <div class="cue"><span class="tag t-go">Go</span><p>If they mentioned a 401k, IRA or savings in Step 03, don't hang up yet. Go to the <a href="#annuity">annuity pivot</a>.</p></div>
+</section>
+
+<!-- A -->
+<section id="annuity">
+  <div class="step">A · The annuity pivot</div>
+  <h2>When the money is the sale.</h2>
+  <p>For the client who's already set, the one making good money, or the one whose health won't get much life insurance but who has money sitting in a 401k, IRA, CDs or savings. Pick how you got here, then tap what they say.</p>
+
+  <div class="tree" data-tree="ann">
+    <div class="tree-top">
+      <span class="tt">Annuity pivot</span>
+      <span style="display:flex;gap:6px"><button type="button" class="ctl t-back">← Back</button><button type="button" class="ctl t-reset">Start over</button></span>
+    </div>
+    <div class="crumbs" aria-label="Path so far"></div>
+    <div class="node" aria-live="polite"></div>
+  </div>
+  <div class="keys">
+    <span class="key"><span class="dot d-q"></span>Keeps going</span>
+    <span class="key"><span class="dot d-book"></span>Book today</span>
+    <span class="key"><span class="dot d-close"></span>Close it out</span>
+  </div>
+
+  <details>
+    <summary>Rules</summary>
+    <div class="det">
+      <ul>
+        <li>Fixed and indexed annuities only. Variable needs a securities license.</li>
+        <li>Don't tell anyone to sell stocks or mutual funds. The account moves as a direct rollover or transfer, never a check to the client.</li>
+        <li>Suitability or best-interest paperwork in most states. Replacement forms if there's an existing annuity.</li>
+        <li>"Doesn't lose when the market drops" is about principal in a fixed or indexed annuity. Never promise a return. Never quote a rate on this call.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- R -->
+<section id="rebuttals">
+  <div class="step">Training appendix</div>
+  <h2>Rebuttals for aged Ethos carts.</h2>
+  <p>Expect skepticism, foggy memory, and "didn't I already handle this." Match their tone, don't over-explain, and keep them on this call. Step 01 handles the pickup objections live; this list is the long form for training and for objections that come up mid-script.</p>
+  <div class="box warn agent">
+    <div class="step">Booking rule · same day, next day at worst</div>
+    <ul>
+      <li>Every callback gets offered <b>today</b> first, with two specific times: "[time] or [time] today?" Never "when works for you?"</li>
+      <li>Only if today is truly impossible: first thing <b>tomorrow</b>, again two specific times.</li>
+      <li>Never book further out than tomorrow. Appointments are disappointments; the further out, the colder they get.</li>
+      <li>Text the confirmation while you're still on the phone. Call 10 minutes early if you can.</li>
+    </ul>
+  </div>
+
+  <input class="filter" id="rfilter" type="search" placeholder="Type what they said… (price, number, busy, spouse)" aria-label="Filter rebuttals">
+  <div class="rgrid" id="rgrid">
+
+  <details><summary>"What's this about?"</summary><div class="det">
+    <p class="say">"Yeah, absolutely, let me back up, I apologize. You remember looking at life insurance online a while back, right? Maybe you saw an Ethos ad on TV or online. You actually went in and got pretty far into the application, because why wouldn't you? It's protecting your family."</p>
+    <p class="say">"That application never got finished, and it came over to us to reach out. Why it sat this long is beyond me, and I'm not here to make excuses. I'm on the management end; I'm just here to make sure you get the coverage you originally went looking for. Does that make sense?"</p>
+    <div class="cue"><span class="tag t-go">Go</span><p>If they're with you, straight into Step 02. If not: "I can get this sorted today at [time] or [time]. Which works better?"</p></div>
+  </div></details>
+
+  <details><summary>"How did you get my number?"</summary><div class="det">
+    <p class="say">"Great question, and I'm glad you asked. You actually put it in yourself, when you started a life insurance application on Ethos. That's why I've got your name, this number, and you out in <em>[City]</em>. Does that ring a bell?"</p>
+    <div class="cue"><span class="tag t-pause">Pause</span><p>Calm and straight. Answer in the first sentence, never dodge, never joke. Then stop talking.</p></div>
+    <div class="branch box">
+      <div class="step">→ "I don't remember"</div>
+      <p class="say">"Totally fair, it was a while back and those online forms all blur together. I've got you born <em>[Month Year]</em>, is that right?"</p>
+    </div>
+    <div class="branch box">
+      <div class="step">→ "So you bought my info?"</div>
+      <p class="say">"Fair question, and I'd want to know too. I'm contracted with Ethos, and your unfinished application came to me so a real person could help you finish it. Nobody's getting your info from me. If you want, I'll close it out right now. Otherwise, did you ever get coverage?"</p>
+    </div>
+  </div></details>
+
+  <details><summary>"Not interested."</summary><div class="det">
+    <p class="say">"That's totally fair. Honestly, you probably think I'm about to pitch you something. I'm not, I'm just closing out open files. So I mark yours right: did you get it handled somewhere else, or did life just get in the way?"</p>
+    <div class="cue"><span class="tag t-pause">Pause</span><p>Soft, calm, a little surprised. Never argue with the first no. It's a reflex, not a decision.</p></div>
+    <div class="branch box"><div class="step">→ "I don't need it"</div>
+      <p class="say">"Okay, help me understand that, because a while back you went far enough to put your info in, so something had you looking. What's different now?"</p>
+      <div class="cue"><span class="tag t-imp">Important</span><p>They're trying to get you off the phone. Don't accept the first answer. Make them say the actual reason.</p></div>
+    </div>
+    <div class="branch box"><div class="step">→ "Nobody depends on me"</div>
+      <p class="say">"Fair. So who gets the call? Because somebody's making the arrangements and somebody's getting the bill. Usually it's a brother, a sister, or a kid. Who would that be for you?"</p>
+      <p class="say">"Then that's who this is for. It doesn't have to be big, just enough that <em>[NAME THEY GAVE]</em> isn't putting a funeral on a credit card. Couple quick questions and I'll show you what that actually costs."</p>
+    </div>
+    <div class="branch box"><div class="step">→ "I've got money saved"</div>
+      <p class="say">"Good, you're ahead of most people. Quick question though: is that money sitting where <em>[wife/kids]</em> could get to it the week after, or is it in a 401k, the house, something like that?"</p>
+      <p><b>Liquid:</b> "A funeral is ten to fifteen thousand before a single bill. You can hand that out of your savings, or you can pay [$X] a month and the savings never get touched. Most people with money saved go with the second one, because it's the cheaper way to protect it. Worth a couple questions to see the number?"</p>
+      <p><b>401k / house:</b> "That's where most people keep it, and that's the problem. A 401k goes through the estate and the house has to sell. None of that pays a funeral home the week after. A small policy pays in days, tax-free, straight to [wife/kids]. Couple quick questions and I'll show you what that costs."</p>
+      <p><b>Won't say:</b> "If something happened this weekend, could [wife/kids] write the check for the funeral on Monday without selling anything?"</p>
+    </div>
+    <div class="branch box"><div class="step">→ "Can't afford it"</div>
+      <p class="say">"Totally get it, and that's the number one reason people stop. Ethos only shows a few prices. If I could find something that fits your budget, would it be worth five minutes to see?"</p>
+    </div>
+    <div class="branch box"><div class="step">→ Second "not interested"</div>
+      <p class="say">"No problem, I'll close it out. Last thing so I don't send it back into the system wrong: was it the price, or you just don't need it anymore?"</p>
+      <div class="cue"><span class="tag t-imp">Important</span><p>That's the last ask. A third brush-off closes the file. Two no's means no.</p></div>
+    </div>
+  </div></details>
+
+  <details><summary>"I already have life insurance." / "I thought I already took care of this?"</summary><div class="det">
+    <p class="say">"Okay, great. I'd be very concerned if you didn't have it already. Let me go ahead and close out your file here. It looks like it never got updated on our end, and that's probably why the file's still open. Do you know which one of our carriers you got set up with? Was it Aflac, Mutual of Omaha, Gerber, Americo, Aetna, Ethos, or one of our other carriers?"</p>
+    <div class="cue"><span class="tag t-pause">Pause</span><p>Wait for answer. Start pulling general quotes while they talk.</p></div>
+    <p class="say">"Okay, gotcha. And just so I can note it correctly in the file, how much coverage did you end up with, and what are you paying for it a month?"</p>
+    <div class="cue"><span class="tag t-ask">Ask</span><p>"Is that term or permanent? Through work, or a policy you own yourself?"</p></div>
+    <div class="branch box"><div class="step">→ Through work</div>
+      <p class="say">"That's great to have, but it's like a company car. It's only in place while you're working there. Once you quit, retire, or change jobs, you have to give it back. Do you have a policy you own yourself?"</p>
+    </div>
+    <div class="branch box"><div class="step">→ They give you a number</div>
+      <p class="say">"Okay… hmm. Do you have any major health problems or something? Because I'm seeing some options out there quite a bit lower than that for the same coverage."</p>
+      <p class="say">"Let me ask you a couple quick health questions before I close this out. If I can't beat what you have, you'll know you got a great deal and I'll close the file. If I can, I'll show you the numbers side by side. Fair enough?"</p>
+      <div class="cue"><span class="tag t-go">Go</span><p>Rate reduction sit. Step 04 (health), then quote the same coverage. If they won't budge on term, last resort: IUL and cash value.</p></div>
+    </div>
+    <div class="cue"><span class="tag t-imp">Important</span><p>Never have them cancel the existing policy until the new one is approved and in force. Complete your state's replacement forms.</p></div>
+    <div class="cue"><span class="tag t-go">Go</span><p>If their coverage checks out and they have a 401k, IRA or savings: <a href="#annuity">annuity pivot</a>.</p></div>
+  </div></details>
+
+  <details><summary>"The price was too high."</summary><div class="det">
+    <p class="say">"That's exactly why I'm calling. I don't actually work for Ethos. They're just one of the companies I'm contracted with. I work with over <em>[60]</em> different A-rated life insurance companies, so most of the time we can get you a way better rate. How much were they trying to charge you?"</p>
+    <div class="cue"><span class="tag t-go">Go</span><p>Note the number. Step 02, then health, then beat it.</p></div>
+  </div></details>
+
+  <details><summary>"The ad said like $12 a month. Why is it so much more?"</summary><div class="det">
+    <p class="say">"It did, and that's a real price, for a healthy 30-year-old non-smoker on a 10-year term. Nobody tells you that part. For <em>[your age / with the medications you mentioned]</em>, that number was never going to hold, with Ethos or with anybody. What I can do is shop <em>[60+]</em> carriers and find the one that's kindest to your age and your health, and get you the most coverage for the money. That's a better deal than an ad number you can't actually get."</p>
+    <div class="cue"><span class="tag t-pause">Pause</span><p>Let it land. Then back to the options.</p></div>
+  </div></details>
+
+  <details><summary>"I wanted $2 million and they only offered $300K."</summary><div class="det">
+    <p class="say">"I'm with you, I'd have walked away too. There are carriers out there that write way, way more than that, and that is EXACTLY why I'm calling. Ethos is one door. I get to shop around with <em>[60+]</em> carriers and find the one that'll actually give you the amount you want. Let me ask you a few health questions and we'll go get it."</p>
+  </div></details>
+
+  <details><summary>"I never filled this out!"</summary><div class="det">
+    <p class="say">"Umm… okay, well I'm just as confused as you then. What I've got is a life insurance application started on Ethos with your name, this number, and an address in <em>[City, State]</em>, born <em>[DOB]</em>. Does that sound like something you might have priced out, even just to look?"</p>
+    <div class="cue"><span class="tag t-note">Note</span><p>If it's still a firm no, apologize, mark the file as not the applicant, and move on.</p></div>
+  </div></details>
+
+  <details><summary>"That was forever ago!?"</summary><div class="det">
+    <p class="say">"I know, that's what I'm thinking! I'm wondering why the heck something this simple still hasn't been handled. That's why it's on my desk. My job is to make sure we get this sorted and get you the coverage you originally went looking for, despite whatever reason it got delayed."</p>
+    <div class="cue"><span class="tag t-go">Go</span><p>Straight into Step 02. If they push for a callback: "I can do today at [time] or [time]. Which works better?"</p></div>
+  </div></details>
+
+  <details><summary>"Why is this just now coming up?"</summary><div class="det">
+    <p class="say">"<em>[CLIENT]</em>, honestly, there are a hundred reasons this could've been mishandled, but the exact reason, I'm not sure. Even if there were an excuse, I was raised better than to give you a ton of them. Bottom line: this was coverage you went looking for, and my job is to get it handled directly with you."</p>
+    <div class="cue"><span class="tag t-go">Go</span><p>Straight into Step 02.</p></div>
+  </div></details>
+
+  <details><summary>"I'm busy." / "Call me back later."</summary><div class="det">
+    <p class="say">"No problem, that's why I keep these short. Real quick, about how much coverage were you looking at, and any tobacco? … Okay. I just need ten minutes to run your real numbers. I can do <em>[time]</em> or <em>[time]</em> today. Which is better?"</p>
+    <div class="cue"><span class="tag t-imp">Important</span><p>Never let "I'm busy" end the call without a set time today. Text the confirmation while you're still on the phone.</p></div>
+  </div></details>
+
+  <details><summary>"I need to talk to my spouse." / "My wife handles that."</summary><div class="det">
+    <p class="say">"Of course, and honestly I'd rather they hear it firsthand so nobody has to explain it secondhand. Are they home right now? Can they hop on?"</p>
+    <div class="branch box"><div class="step">→ Not home</div>
+      <p class="say">"No problem. When are you both usually home together tonight? I can do <em>[time]</em> or <em>[time]</em>. Which works?"</p>
+      <div class="cue"><span class="tag t-note">Note</span><p>Don't run the presentation without the decision maker. Book it today, text the reminder, and make sure both are on.</p></div>
+    </div>
+  </div></details>
+
+  <details><summary>"Let me think about it." · at the close</summary><div class="det">
+    <p class="say">"Totally fair. Usually when someone tells me that, it's one of two things: the price, or they're not sure it's the right company. Which one is it for you?"</p>
+    <div class="cue"><span class="tag t-pause">Pause</span><p>Don't accept "I just want to think." Make them pick.</p></div>
+    <div class="branch box"><div class="step">→ The price</div>
+      <p class="say">"Okay, then let's not force the top one. The <em>[next option down]</em> at <em>[$]</em> a month still gets <em>[BENEFICIARY]</em> taken care of. Does that one feel right?"</p>
+    </div>
+    <div class="branch box"><div class="step">→ The company / not sure</div>
+      <p class="say">"That's fair, and that's exactly why I'm independent. If <em>[CARRIER]</em> comes back with anything off, I move you to another one. Here's the thing though: nothing is final until the carrier approves it, the price is based on your age today, and even after it's approved you get a free-look period to cancel for a full refund. There's no risk in getting it submitted and every reason not to wait. Let's get it in."</p>
+    </div>
+    <div class="cue"><span class="tag t-imp">Important</span><p>Free-look is real (usually 10 to 30 days by state and carrier). Say the actual number for the carrier you're writing.</p></div>
+  </div></details>
+
+  <details><summary>"I don't give my social or bank info over the phone." · at the app</summary><div class="det">
+    <p class="say">"Totally understand, and you shouldn't give it to just anyone. That's why I sent you my card first. Pull it up, that's my name and license number, and you can check me on the state insurance site right now. The application goes straight into <em>[CARRIER]</em>'s secure system, I don't keep it anywhere. Go ahead and look me up, I'll wait."</p>
+    <div class="cue"><span class="tag t-pause">Pause</span><p>Let them check. Then: "All good? Okay, let's get you approved."</p></div>
+    <div class="cue"><span class="tag t-note">Note</span><p>If they still won't, take the application as far as it goes and book the rest for today at a time their spouse or kid can be on. Don't argue about the social.</p></div>
+  </div></details>
+
+  <details><summary>"Just email me something."</summary><div class="det">
+    <p class="say">"Happy to. So I don't send you a generic quote, two quick answers: about how much coverage are you looking for, and any tobacco? Then I'll send real numbers and we can go over them for 10 minutes. <em>[Time]</em> or <em>[time]</em> today?"</p>
+    <div class="cue"><span class="tag t-note">Note</span><p>A quote without an application is a guess. The email is the hook; the ten minutes is the sale.</p></div>
+  </div></details>
+
+  <details><summary>"Are you with Ethos?"</summary><div class="det">
+    <p class="say">"Nope, I'm an independent advisor. Ethos is one of the companies I'm contracted with, along with <em>[60+]</em> others. That's the advantage: I'm on your side, not stuck selling you one company's price."</p>
+  </div></details>
+
+  <details><summary>"I'm on the Do Not Call list." / "Stop calling me."</summary><div class="det">
+    <p class="say">"Understood, I'll take you off my list right now. Have a good day."</p>
+    <div class="cue"><span class="tag t-imp">Important</span><p>Add them to the internal DNC today. No second attempt.</p></div>
+  </div></details>
+
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v5.1 · 2026 · Internal use only</div></footer>
+
+<script>
+(function(){
+  /* ---------- the opening ---------- */
+  var E = {
+    s02:{label:"Into the script · Step 02, explain the request", href:"#request", cls:"end"},
+    s04:{label:"Rate check · Step 04 health, then pitch in 07", href:"#health", cls:"end"},
+    book:{label:"Book it today, two times · text the confirmation now", cls:"end end-book"},
+    close:{label:"Close the file politely", cls:"end end-close"},
+    ann:{label:"Annuity pivot · go to section A", href:"#annuity", cls:"end"},
+    dnc:{label:"Add to Do Not Call today", cls:"end end-dnc"}
+  };
+  var N = {
+    start:{t:"Opener", say:"Hey [CLIENT], it's [NAME]. I'm getting back to you on the life insurance application you started with Ethos a while back. You got pretty far into it and then it just stopped. Did you give up on that, or did life just get busy?", cue:"Say it like a callback. Then stop talking. The question does the work.",
+      r:[["Life got busy / forgot","busylife"],["It was too expensive","price"],["I gave up on it","gaveup"],["I already got it","hascov"],["Who is this? / What's this about?","what"],["How'd you get my number?","number"],["I'm busy","busy"],["Not interested","notint"],["I never applied","never"],["Need to ask my spouse","spouse"],["Stop calling / hostile","stop"]]},
+    busylife:{t:"Life got busy", say:"Totally get it, that's most people. Good news is you already did the hard part. Let me get you up to speed real quick.", end:"s02"},
+    gaveup:{t:"Gave up on it", say:"Hmm, okay. Nobody gives up on something they didn't want, though. A while back something had you putting your info in. What changed?",
+      cue:"Don't accept the first answer. Wait for a real reason.",
+      r:[["The price","price"],["Offered too little","toolow"],["Decided I don't need it","noneed"],["Nothing changed, just never finished","busylife"],["Don't remember","forgot"]]},
+
+    nocov:{t:"No coverage yet", say:"Okay. So what stopped you? Usually it's the price, the offer came back lower than you wanted, or life just got busy.",
+      r:[["The price","price"],["They offered too little","toolow"],["Got busy / forgot","forgot"],["Don't remember","forgot"]]},
+    price:{t:"Too expensive", say:"That's exactly why I'm calling. I don't actually work for Ethos, they're just one of the companies I'm contracted with. I work with over [60] different A-rated life insurance companies, so 99% of the time we can get you a way better rate. How much were they trying to charge you?",
+      cue:"Write the number down.",
+      r:[["Gives a number","pricego"],["Don't remember","pricego"],["Can't afford anything right now","afford"]]},
+    pricego:{t:"Has a number", say:"Okay, got it. Let me get you up to speed real quick and I'll show you what I can do with that.",
+      cue:"If they're 50+ or on meds, the ad price was never real for them. Don't promise to beat it; promise what's actually possible. Use the reset line in Step 03.", end:"s02"},
+    toolow:{t:"Offered too little", say:"That's exactly why I'm calling. Ethos caps what it can do online, and my carriers go way past that. What amount were you really after?", end:"s02"},
+    forgot:{t:"Got busy", say:"Totally get it, happens all the time. Is it still something you want handled, or should I close your file?",
+      r:[["Still want it","still"],["Close it","notint"]]},
+    still:{t:"Still wants it", say:"Perfect. Let me get you up to speed real quick.", end:"s02"},
+
+    hascov:{t:"Already has coverage", say:"Okay, great. I'd be very concerned if you didn't have it already. Let me close out your file. Which one of our carriers did you go with? Aflac, Mutual of Omaha, Gerber, Americo, Aetna, Ethos, or another?",
+      r:[["Names a carrier","amount"],["It's through work","work"],["Won't say","refuse"]]},
+    amount:{t:"Get the numbers", say:"Gotcha. And how much coverage, and what are you paying a month? Just so I note it right.",
+      r:[["Gives numbers","ratecheck"],["Doesn't know","nopaper"]]},
+    ratecheck:{t:"Rate check", say:"Hmm. Any major health problems? I'm seeing options quite a bit lower for that same coverage. Mind if I ask a couple quick health questions before I close this out?",
+      r:[["Sure","rateyes"],["No thanks","ratebook"]]},
+    rateyes:{t:"Rate reduction sit", say:"Perfect. If I can't beat it, you'll know you got a great deal and I'll close the file.", end:"s04"},
+    ratebook:{t:"Book the comparison", say:"No problem. I'll run it with what you gave me. I can go over them with you today at [time] or [time]. Which one works better?", end:"book"},
+    nopaper:{t:"Doesn't know the numbers", say:"No worries, most people don't. Can you grab the paperwork later today? I can call you back at [time] or [time], five minutes and I'll tell you if it's a good deal.", end:"book"},
+    work:{t:"Work coverage", say:"That's great to have, but it's like a company car. Once you quit, retire or change jobs, you give it back. Do you have a policy you own yourself?",
+      r:[["No","workno"],["Yes","amount"]]},
+    workno:{t:"Only work coverage", say:"Then that's exactly what we should fix, so you're covered no matter where you work.", end:"s02"},
+    refuse:{t:"Won't say", say:"No problem. If you got a great deal, I'll tell you. If not, I'll tell you that too. Mind if I ask what you're paying a month?",
+      r:[["Tells you","ratecheck"],["Still no","closeok"]]},
+    closeok:{t:"Close it", say:"All good, I'll close it out on my end. Have a good one.", end:"close"},
+
+    what:{t:"What's this about?", say:"Sure, let me back up. A while back you started a life insurance application with Ethos, got pretty far, and it never got finished, so it landed on my desk. Did you ever end up getting that coverage?",
+      r:[["No","nocov"],["Yes","hascov"]]},
+
+    number:{t:"How'd you get my number?", say:"Great question, and I'm glad you asked. You actually put it in yourself, when you started a life insurance application on Ethos. That's why I've got your name, this number, and you out in [City]. Does that ring a bell?",
+      cue:"Calm and straight. Answer it in the first sentence, never dodge, never joke. Then stop talking.",
+      r:[["Oh yeah, I remember","numyes"],["I don't remember","numfog"],["So you bought my info?","numsold"],["Take me off your list","stop"]]},
+    numyes:{t:"They remember", say:"Okay, good. So unfinished applications come over to me so they don't just sit there. Did you ever end up getting coverage?",
+      r:[["No","nocov"],["Yes","hascov"]]},
+    numfog:{t:"Doesn't remember", say:"Totally fair, it was a while back and those online forms all blur together. I've got you born [Month Year], is that right?",
+      cue:"Confirming one real detail is the fastest way to prove you're legit.",
+      r:[["Yeah, that's me","numyes"],["That's not me","neverno"]]},
+    numsold:{t:"Bought my info?", say:"Fair question, and I'd want to know too. I'm contracted with Ethos, and your unfinished application came to me so a real person could help you finish it. Nobody's getting your info from me. If you want, I'll close it out right now. Otherwise, did you ever get coverage?",
+      cue:"Never argue about the data. Offer the exit, then ask the question.",
+      r:[["No","nocov"],["Yes","hascov"],["Close it / don't call","stop"]]},
+
+    busy:{t:"I'm busy", say:"I'll be quick. Two questions and I'll let you go: about how much coverage were you looking at, and any tobacco?",
+      r:[["Answers","busybook"],["Still too busy","busybook"]]},
+    busybook:{t:"Book it", say:"Perfect. I just need ten minutes to run your real numbers. I can do [time] or [time] today. Which is better?", end:"book"},
+
+    notint:{t:"Not interested", say:"That's totally fair. Honestly, you probably think I'm about to pitch you something. I'm not, I'm just closing out open files. So I mark yours right: did you get it handled somewhere else, or did life just get in the way?",
+      cue:"Soft, calm, a little surprised. Never argue with the first no. It's a reflex, not a decision. Then stop talking.",
+      r:[["Got it handled","hascov"],["Life got in the way","timing"],["I don't need it","noneed"],["Can't afford it","afford"],["Just not interested (again)","notint2"],["Stop calling","stop"]]},
+    notint2:{t:"Second no", say:"No problem, I'll close it out. Last thing so I don't send it back into the system wrong: was it the price, or you just don't need it anymore?",
+      cue:"This is your last ask. If they brush you off again, close the file. Two no's means no.",
+      r:[["The price","afford"],["Don't need it","noneed"],["Just no","closeok"]]},
+    noneed:{t:"Doesn't need it", say:"Okay, help me understand that, because a while back you went far enough to put your info in, so something had you looking. What's different now?",
+      cue:"They're trying to get you off the phone. Make them say the actual reason.",
+      r:[["Nobody depends on me","nodep"],["I've got money saved","savings"],["I've got it through work","work"],["Just don't want it","notint2"]]},
+    nodep:{t:"Nobody depends on them", say:"Fair. So who gets the call? Because somebody's making the arrangements and somebody's getting the bill. Usually it's a brother, a sister, or a kid. Who would that be for you?",
+      r:[["Names someone","nodep2"],["Nobody / the county","nodep3"]]},
+    nodep2:{t:"Named a person", say:"Then that's who this is for. It doesn't have to be big, just enough that [NAME THEY GAVE] isn't putting a funeral on a credit card. Couple quick questions and I'll show you what that actually costs.", end:"s04"},
+    nodep3:{t:"Says nobody", say:"Okay. I'll close it out. Last thing: if it turned out to be [$30] a month to make sure none of that lands on anybody, would you at least want to see the number?",
+      r:[["Sure","fe"],["No","closeok"]]},
+    fe:{t:"Final expense opening", say:"Then that's probably all you'd need, and it's usually a lot less than people think. Let me ask a couple quick questions and I'll show you.", end:"s04"},
+    savings:{t:"Has savings", say:"Good, you're ahead of most people. Quick question though: is that money sitting where [wife/kids] could get to it the week after, or is it in a 401k, the house, something like that?",
+      cue:"Everyone says they have savings. Make them say where it is.",
+      r:[["In the bank / liquid","savings2"],["401k / house / investments","savings3"],["Won't say","savings4"]]},
+    savings2:{t:"Liquid savings", say:"Okay. Then the only thing I'd ask you to think about is this. A funeral is ten to fifteen thousand before a single bill. You can hand that out of your savings, or you can pay [$X] a month and the savings never get touched. Most people with money saved go with the second one, because it's the cheaper way to protect it. Worth a couple questions to see the number?",
+      r:[["Sure","fe"],["No","closeok"]]},
+    savings3:{t:"Tied-up savings", say:"That's where most people keep it, and that's the problem. A 401k goes through the estate and the house has to sell. None of that pays a funeral home the week after. Roughly how much are we talking in there?",
+      r:[["Under [$25K]","savings3a"],["[$25K] or more","savings3b"]]},
+    savings3a:{t:"Smaller account", say:"Okay. Then a small policy that pays in days, tax-free, straight to [wife/kids] is the move. Couple quick questions and I'll show you what that costs.", end:"s04"},
+    savings3b:{t:"Bigger account", say:"Okay, that changes things. Hold that thought, because I may be able to do a lot more with that account than a funeral policy. Mind if I ask a couple questions about it?", end:"ann"},
+    savings4:{t:"Won't say", say:"Fair. Then let me ask it this way: if something happened this weekend, could [wife/kids] write the check for the funeral on Monday without selling anything?",
+      r:[["Yes, easily","closeok"],["No / not really","fe"]]},
+    afford:{t:"Can't afford it", say:"Totally get it, and that's the number one reason people stop. Ethos only shows a few prices. If I could find something that fits your budget, would it be worth five minutes to see?",
+      r:[["Yes","affordyes"],["No","closeok"]]},
+    affordyes:{t:"Budget test drive", say:"Perfect. Couple quick questions and I'll shop it across all my carriers.", end:"s04"},
+    timing:{t:"Life got in the way", say:"Fair enough. Good news is you already did the hard part. Give me ten minutes right now and we'll finish what you started, or I can call you back at [time] today. Which is easier?",
+      r:[["Now's fine","busylife"],["Call me back","timingbook"]]},
+    timingbook:{t:"Wants the callback", say:"Perfect. [Time] it is. I'm texting you the confirmation right now so it's on your phone.", end:"book"},
+
+    never:{t:"I never applied", say:"Okay, I'm as confused as you. I've got your name, this number, [City, State], born [DOB]. Does that sound like something you might have priced out, even just to look?",
+      r:[["Oh, maybe","nocov"],["Firm no","neverno"]]},
+    neverno:{t:"Not the applicant", say:"Sorry about that, I'll fix it on my end. Have a good day.", cue:"Mark the file as wrong person.", end:"close"},
+
+    spouse:{t:"Needs the spouse", say:"Of course, and honestly I'd rather they hear it firsthand so nobody has to explain it secondhand. Are they home right now? Can they hop on?",
+      r:[["Yes, hold on","spouseon"],["Not home","spousebook"]]},
+    spouseon:{t:"Both on the line", say:"Perfect. Hi [SPOUSE], I'm [NAME]. Let me get you both up to speed real quick.", end:"s02"},
+    spousebook:{t:"Book both", say:"No problem. When are you both usually home together tonight? I can do [time] or [time]. Which works?", cue:"Don't present without the decision maker. Book today, text the reminder, make sure both are on.", end:"book"},
+
+    stop:{t:"Stop calling", say:"Understood, I'll take you off my list right now. Have a good day.", end:"dnc"}
+  };
+
+  function fill(s){
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\[([^\]]+)\]/g,'<em>[$1]</em>');
+  }
+  function tree(root, N, E, startId){
+    if(!root) return;
+    var nodeEl=root.querySelector(".node"), crumbs=root.querySelector(".crumbs");
+    var back=root.querySelector(".t-back"), reset=root.querySelector(".t-reset");
+    var path=[startId];
+    function dotFor(id){ var n=N[id]; if(!n||n.r) return "d-q"; return "d-"+n.end; }
+    function render(){
+      var id=path[path.length-1], n=N[id];
+      var label = n.pick ? "You pick" : (path.length===1 ? "You say" : "They said \u201c"+n.t+"\u201d \u00b7 you say");
+      var h='<div class="node-t">'+label+'</div>';
+      if(n.say) h+='<p class="say">"'+fill(n.say)+'"</p>';
+      if(n.cue) h+='<div class="cue"><span class="tag t-pause">Note</span><p>'+fill(n.cue)+'</p></div>';
+      if(n.r){
+        h+='<div class="resp-l">'+(n.pick?"Pick one":"They say\u2026")+'</div><div class="resp">';
+        n.r.forEach(function(x){var d=dotFor(x[1]);h+='<button type="button" class="r-'+d+'" data-go="'+x[1]+'"><span class="dot '+d+'"></span>'+fill(x[0])+'</button>';});
+        h+='</div>';
+      } else if(n.end){
+        var e=E[n.end];
+        h+='<div class="'+e.cls+'">'+(e.href?'<a href="'+e.href+'">'+e.label+' \u2192</a>':e.label)+'</div>';
+      }
+      nodeEl.innerHTML=h;
+      crumbs.innerHTML=path.map(function(p,i){return '<span'+(i===path.length-1?' class="cur"':'')+'>'+N[p].t+'</span>';}).join('<i>\u203a</i>');
+      back.disabled=path.length===1;
+    }
+    nodeEl.addEventListener("click",function(ev){
+      var b=ev.target.closest("button[data-go]"); if(!b) return;
+      path.push(b.getAttribute("data-go")); render();
+    });
+    back.addEventListener("click",function(){ if(path.length>1){path.pop();render();} });
+    reset.addEventListener("click",function(){ path=[startId];render(); });
+    render();
+  }
+  tree(document.querySelector('[data-tree="open"]'), N, E, "start");
+
+
+  /* ---------- step 03 tree ---------- */
+  var NE = {
+    s04:{label:"Step 04 \u00b7 health", href:"#health", cls:"end"}
+  };
+  var NN = {
+    start:{t:"Anything else in place", say:"Do you have anything that may act like life insurance: a 401k, Roth, IRA, mutual funds, or current life insurance?", cue:"Stop talking. Let them answer.",
+      r:[["No, nothing","nothing"],["401k / IRA / investments","inv"],["I have life insurance","ins"]]},
+    nothing:{t:"Nothing in place", say:"Okay, no problem. That's exactly why we're doing this.", end:"s04"},
+    inv:{t:"Has investments", say:"Okay, good. Roughly what's in there?",
+      cue:"Write it down. [$25K] or more is a possible annuity pivot after the life sale, or instead of it if health closes that door.",
+      r:[["Under [$25K]","alsoins"],["[$25K] or more","invbig"]]},
+    invbig:{t:"Bigger account", say:"Got it. Hold that thought, I may be able to help you with that too once we're done here.",
+      cue:"Flag it. Annuity pivot, section A.",
+      r:[["Okay","alsoins"]]},
+    alsoins:{t:"Also insured?", say:"And any life insurance in place right now?",
+      r:[["Yes","ins"],["No","nothing"]]},
+    ins:{t:"Has life insurance", say:"Oh okay, perfect, most of our clients have this. I'm assuming you got this to take care of all your end-of-life expenses, or to replace income for the family, correct?",
+      r:[["Yes / that's right","insq"]]},
+    insq:{t:"The details", say:"Who is the coverage through? Is it term or whole life? How much coverage, and what are you paying a month?",
+      cue:"Write all four down.",
+      r:[["It's through work","work"],["Own policy, gives the numbers","own"],["Doesn't know the details","own2"]]},
+    work:{t:"Work coverage", say:"That's great to have, but it's like a company car. It's only in place while you're working there. Once you quit, retire, or change jobs, you have to give it back. Does that make sense?",
+      r:[["Makes sense","workgo"],["I also own one","own"]]},
+    workgo:{t:"Needs their own", say:"So that's what we're taking care of today, something that's yours no matter where you work.", end:"s04"},
+    own:{t:"Owns a policy", say:"Okay, gotcha.",
+      cue:"Gauge it. If what they pay looks high for what they have, you'll show it side by side in 07 (rate-check sit). If it's solid, you're adding to it, not replacing it.", end:"s04"},
+    own2:{t:"Doesn't know", say:"No worries. If you can, grab the paperwork before we get to the numbers so we're comparing apples to apples.", end:"s04"}
+  };
+  tree(document.querySelector('[data-tree="needs"]'), NN, NE, "start");
+
+  /* ---------- annuity tree ---------- */
+  var AE = {
+    book:{label:"Book it today, two times · text the confirmation now", cls:"end end-book"},
+    close:{label:"Close it out politely", cls:"end end-close"}
+  };
+  var AN = {
+    start:{t:"Entry", pick:true, say:"", r:[["After the life sale","post"],["No life sale (already set, or health)","nosale"]]},
+    post:{t:"After the sale", say:"Now, before I let you go [CLIENT], is it okay if I'm fully honest with you?", cue:"Wait for the \u201csure.\u201d",
+      r:[["Sure","post2"]]},
+    post2:{t:"Honest moment", say:"Thanks. It's just that I personally wouldn't feel right if we put this much time into getting life insurance but we didn't discuss your financial future in depth. It means I'm not doing my job. It's kinda like getting a flat tire and the mechanic only checks the tire pressure on one tire\u2026 you'd probably be mad if you drove out of the body shop and popped a second tire, right? Hahaha",
+      r:[["Laughs / right","plan"]]},
+    nosale:{t:"No life sale", say:"Okay, so here's the thing. On the life insurance side, [you're set / we're limited on what we can do]. But you mentioned that [401k / IRA / savings] earlier, and honestly that's where I might be able to do the most for you. Mind if I ask a couple questions about it?",
+      r:[["Sure","plan"],["Not interested","decline"]]},
+    plan:{t:"What's the money for", say:"So I know we mentioned that [ACCOUNT] earlier. What's the plan with it? Are you going to draw from it soon, is it just laying around, or is it safe money that goes to the family when you pass?",
+      cue:"Their answer picks the hook.",
+      r:[["Not touching it for a while","fia"],["It's for the family","fia"],["Retiring soon / need income","spia"],["Not sure","fia"],["Don't want to get into it","decline"]]},
+    fia:{t:"Not touching it soon", say:"I only ask because we've been able to protect several clients' money while growing it at the same time. What if I told you we could put that money in an account where it gains when the stock market goes up, but doesn't lose when it goes down? Would that help you out?",
+      r:[["Yeah, how?","q1"],["Sounds too good to be true","skept"],["Not interested","decline"]]},
+    spia:{t:"Retiring soon", say:"Do you know what people's biggest financial fear is nowadays, [CLIENT]? It's outliving their money. The general rule is take out 4% a year in retirement, but in down years you settle for less or run out by 80. What if I told you we could get that account in a situation where, by next month, you're guaranteed a certain income for the rest of your life, no ifs, buts, or second thoughts?",
+      r:[["Yeah, how?","q1"],["Sounds too good to be true","skept"],["Not interested","decline"]]},
+    skept:{t:"Too good to be true", say:"Fair, and I'd think the same. It's not a stock account, it's a fixed indexed annuity. The insurance company carries the market risk, not you. I'm not asking you to move anything today. Just let me ask a couple questions so I can run real numbers off your statement. Fair enough?",
+      r:[["Okay","q1"],["No","decline"]]},
+    q1:{t:"Account type", say:"What kind of account is it? 401k, IRA, Roth, 403b, TSP, or just savings and CDs?",
+      cue:"Roth stays Roth. Savings and CDs have no rollover rules, just the surrender period.",
+      r:[["401k","q2"],["IRA / Roth / 403b / TSP","q3"],["Savings / CDs","q4"]]},
+    q2:{t:"Which 401k", say:"Is that 401k with the company you work for now, or an old job?",
+      r:[["Old job","q2b"],["Current job","cur"]]},
+    cur:{t:"Current employer", say:"Okay. Most plans won't let that one move until you leave or hit 59\u00bd. Do you have any old 401ks or IRAs from before this job?",
+      r:[["Yes","q2b"],["No","park"]]},
+    park:{t:"Nothing movable yet", say:"Got it. Then let's keep an eye on that one. Is there anything in savings or CDs just sitting?",
+      cue:"If they're 59\u00bd or older, some plans allow an in-service rollover. Have them ask HR.",
+      r:[["Yes","q4"],["No","closeout"]]},
+    q2b:{t:"Loans", say:"Any loans out against it?",
+      cue:"An unpaid 401k loan can turn taxable when the account moves.",
+      r:[["No","q3"],["Yes","loan"]]},
+    loan:{t:"Has a loan", say:"Okay, that matters. An unpaid loan can become taxable when the account moves, so we'd look at clearing that first. Roughly what's left on the loan?",
+      r:[["Small, can pay it off","q3"],["Big","q3"]]},
+    q3:{t:"Age", say:"And you're [AGE], right?",
+      cue:"Under 59\u00bd: direct rollover only, never a check to them. 73 and up: required withdrawals keep going; the annuity has to handle them. Check the carrier's max issue age.",
+      r:[["Confirmed","q4"]]},
+    q4:{t:"Balance", say:"Roughly how much is in there?",
+      cue:"Carrier minimums are usually $10K to $25K. Never move money they'll need.",
+      r:[["Under [$25K]","small"],["[$25K] or more","q5"]]},
+    small:{t:"Too small", say:"Okay. That's under what most of the carriers will take for this, so let's leave it where it is for now.", end:"close"},
+    q5:{t:"Time horizon", say:"When do you think you'll start using this money? Within a few years, or not for a while?",
+      cue:"Five-plus years out: indexed annuity. Income now or soon: immediate annuity or income rider. Surrender periods run 5 to 10 years.",
+      r:[["Not for a while","q6"],["Soon / need income","q6"]]},
+    q6:{t:"Liquidity", say:"Will you need to pull any of it out in the next couple years?",
+      cue:"Most allow about 10% a year free. More than that costs.",
+      r:[["No","q7"],["Some of it","q7"],["Most of it","notfit"]]},
+    notfit:{t:"Needs the money", say:"Then this isn't the right home for that money, and I'd rather tell you that than sell you something. Keep what you'll need where it is. Is there a chunk you won't touch?",
+      r:[["Yes","q7"],["No","closeout"]]},
+    q7:{t:"Market pain", say:"Is it in the market right now? How'd it do the last time the market dropped?",
+      cue:"This is the pain. Let them talk.",
+      r:[["Lost money / nervous","q8"],["Did fine","q8"],["Not in the market","q8"]]},
+    q8:{t:"Existing annuity", say:"Is any of it already in an annuity?",
+      cue:"Replacement forms if yes.",
+      r:[["No","q9"],["Yes","q9"]]},
+    q9:{t:"Beneficiary", say:"And who's the beneficiary on that account?",
+      r:[["Answers","book"]]},
+    book:{t:"Book it", say:"Perfect. Here's what I need from you: grab your most recent statement for that account, and I'll run the actual numbers with the carriers so you're looking at real figures, not guesses. I can do [time] or [time] today. Which one?",
+      cue:"Don't quote a rate or an income number on this call. Today, tomorrow at worst, two specific times.", end:"book"},
+    decline:{t:"Not interested", say:"No problem at all. If that ever changes, you've got my cell.", end:"close"},
+    closeout:{t:"Nothing to move", say:"Okay, then let's leave it there for now. You've got my cell if anything changes.", end:"close"}
+  };
+  tree(document.querySelector('[data-tree="ann"]'), AN, AE, "start");
+
+  /* ---------- rail highlight ---------- */
+  var links=[].slice.call(document.querySelectorAll("#railwrap a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));}).filter(Boolean);
+  if("IntersectionObserver" in window){
+    var cur=null;
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ cur=e.target.id; } });
+      links.forEach(function(a){ a.classList.toggle("on", a.getAttribute("href")==="#"+cur); });
+      var on=document.querySelector("#railwrap a.on"); if(on && on.scrollIntoView){ try{on.scrollIntoView({block:"nearest",inline:"nearest"});}catch(x){} }
+    },{rootMargin:"-30% 0px -60% 0px"});
+    secs.forEach(function(s){io.observe(s);});
+  }
+
+
+  /* ---------- pitch tabs ---------- */
+  var tabs=[].slice.call(document.querySelectorAll(".tab"));
+  tabs.forEach(function(t){ t.addEventListener("click",function(){
+    tabs.forEach(function(x){ var on=x===t; x.classList.toggle("on",on); x.setAttribute("aria-selected",on?"true":"false"); });
+    ["term","wl","iul"].forEach(function(k){ var el=document.getElementById("p-"+k); if(el) el.hidden=(k!==t.getAttribute("data-tab")); });
+  }); });
+  /* ---------- rebuttal filter ---------- */
+  var f=document.getElementById("rfilter"), items=[].slice.call(document.querySelectorAll("#rgrid > details"));
+  f.addEventListener("input",function(){
+    var q=f.value.trim().toLowerCase();
+    items.forEach(function(d){
+      var hit=!q || d.textContent.toLowerCase().indexOf(q)>-1;
+      d.hidden=!hit; if(q && hit) d.open=true;
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
