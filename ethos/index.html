@@ -289,7 +289,7 @@ h3{font-size:18px}
 <body>
 
 <header class="top"><div class="wrap">
-  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v5.5</div>
+  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v5.6</div>
   <h1>Ethos Abandoned Cart.</h1>
   <p class="lede">They saw an Ethos ad, started a life insurance application, got deep into it, and stopped. That was 6 to 12 months ago. These leads sell. The first 30 seconds decide whether you get to sell them.</p>
   <div class="legend-read"><span><i></i>Black serif in a card: say it word for word.</span><span><i class="g"></i>Gray text: for you. Don't read it to the client.</span></div>
@@ -572,20 +572,20 @@ h3{font-size:18px}
       <p><b>Pitch it when:</b> under 50, really healthy, and they want a big number for a set time. Income, kids, mortgage.</p>
       <p class="hnote">Minimal medications, minimal conditions. Anything serious or a long med list, go whole life.</p>
       <p><b>Coverage:</b> $50K up to $1M+, depending on age. Most coverage for the lowest premium.</p>
-      <p><b>How:</b> full amount, 75%, 50%.</p>
+      <p><b>How:</b> full amount, 75%, 50%. Always high to low.</p>
     </div>
     <div class="prod p-iul">
       <div class="step">IUL <span class="hreq">(really healthy)</span></div>
       <p><b>Pitch it when:</b> 50 to 65 (or younger with money), really healthy, and they want coverage that lasts and builds cash. Hardest to qualify for, highest premium.</p>
       <p class="hnote">Minimal medications, minimal conditions. Strictest underwriting of the three.</p>
       <p><b>Coverage:</b> up to about $500K. Has to be funded more to work well.</p>
-      <p><b>How:</b> three monthly amounts off the illustration.</p>
+      <p><b>How:</b> max funded, recommended, coverage first. Always high to low.</p>
     </div>
     <div class="prod p-wl">
       <div class="step">Whole life <span class="hreq">(any health)</span></div>
       <p><b>Pitch it when:</b> 65 and up, or health issues at any age, or they want the funeral covered and money left behind, or term didn't fit the budget.</p>
       <p><b>Coverage:</b> $50K is the max you'll see.</p>
-      <p><b>How:</b> Basic, Recommended, Maximum.</p>
+      <p><b>How:</b> Maximum, Recommended, Basic. Always high to low.</p>
     </div>
   </div>
   <div class="cue"><span class="tag t-note">Note</span><p>Making good money changes the amount, not the product. Health still decides.</p></div>
@@ -605,7 +605,7 @@ h3{font-size:18px}
     <div class="cue"><span class="tag t-imp">Important</span><p>If they still won't grab a pen, they're not serious. Don't pitch into it. Find out what's really going on before you give a single number.</p></div>
   </div>
   <p class="say">"Got it? Perfect."</p>
-  <div class="cue"><span class="tag t-note">Rate-check sit</span><p>They already have a policy: option one is their same coverage at your lower price, option two is more coverage for what they pay now, option three is the budget version. Same close.</p></div>
+  <div class="cue"><span class="tag t-note">Rate-check sit</span><p>They already have a policy: option one is more coverage for what they pay now, option two is their same coverage at your lower price, option three is the budget version. High to low, same close.</p></div>
   <div class="tabs" role="tablist" aria-label="Product">
     <button type="button" class="tab on" data-tab="term" role="tab" aria-selected="true">Term</button>
     <button type="button" class="tab" data-tab="wl" role="tab" aria-selected="false">Whole life</button>
@@ -632,17 +632,16 @@ h3{font-size:18px}
   <div class="panel" id="p-wl" role="tabpanel" hidden>
   <p class="say">"Okay, so based on your health and what you told me you're after, the one I'd put you in is a permanent plan. Simple version: the coverage never ends, the rate never goes up, and when you pass, the money goes to <em>[BENEFICIARY]</em> tax-free. I've got three options, and they all work the same way. The only difference is how much."</p>
   <div class="tiers">
-    <div class="tier"><small>Option 01</small><strong>Basic</strong><p>Final expenses plus about 6 months of income. Budget-focused, gets something in place. [$/mo]</p></div>
-    <div class="tier rec"><small>Option 02 · Recommended</small><strong>Recommended</strong><p>Final expenses plus about 9 months of income. Most-picked, the level-minded choice. [$/mo]</p></div>
-    <div class="tier"><small>Option 03</small><strong>Maximum</strong><p>Final expenses plus a full year of income. For long-term thinkers who want the rate locked now. [$/mo]</p></div>
+    <div class="tier"><small>Option 01</small><strong>Maximum</strong><p>Final expenses plus a full year of income. Rate locked now. [$/mo]</p></div>
+    <div class="tier rec"><small>Option 02 · Recommended</small><strong>Recommended</strong><p>Final expenses plus about 9 months of income. Most-picked. [$/mo]</p></div>
+    <div class="tier"><small>Option 03</small><strong>Basic</strong><p>Final expenses plus about 6 months of income. Gets something in place. [$/mo]</p></div>
   </div>
-  <p class="say">"Basic covers your final expenses and about 6 months of your income for the family, at <em>[$AMOUNT]</em> a month. Enough to get the job done, but barely."</p>
-  <p class="say">"Our Recommended option is our most-picked option because it's exactly what it sounds like. Based on research, most families need at least 9 months to get things figured out. It's <em>[$AMOUNT]</em> a month."</p>
-  <p class="say">"Our Maximum option covers an entire year, only <em>[$AMOUNT]</em> above the budget, at <em>[$AMOUNT]</em> monthly. I don't want to push you here unless it's easily affordable. Basic and Recommended are both fantastic, but I wanted to show you the value."</p>
+  <p class="say">"The first option is our Maximum. It covers your final expenses and a full year of your income for the family, at <em>[$AMOUNT]</em> a month. If it's comfortable, it's easily the best, because <em>[BENEFICIARY]</em> has a whole year to figure things out."</p>
+  <p class="say">"The second is our Recommended, and it's our most-picked option because it's exactly what it sounds like. Based on research, most families need at least 9 months to get things figured out. It's <em>[$AMOUNT]</em> a month."</p>
+  <p class="say">"The third is Basic. It covers your final expenses and about 6 months of your income, at <em>[$AMOUNT]</em> a month. Enough to get the job done, and a great way to get started if we need to keep it affordable."</p>
   <div class="cue"><span class="tag t-imp">Important</span><p>Only present Maximum as a genuine option if it's comfortably within budget. Never pressure past affordability.</p></div>
-  <p class="say">"So to recap: Basic covers 6 months, a great way to get started and keep it affordable. Recommended at 9 months is the best value for your situation; your family's good and you don't need to stress about only having 6 months. Then the Maximum 1-year option, if you can afford it, is easily the best."</p>
   <h3>The close</h3>
-  <p class="say">"So <em>[CLIENT]</em>, what would make the most sense for you if we can get you qualified: the Basic at <em>[$]</em> a month, the Recommended at <em>[$]</em> a month, or the Maximum at <em>[$]</em> a month?"</p>
+  <p class="say">"So <em>[CLIENT]</em>, what would make the most sense for you if we can get you qualified: the Maximum at <em>[$]</em> a month, the Recommended at <em>[$]</em> a month, or the Basic at <em>[$]</em> a month?"</p>
   <div class="cue"><span class="tag t-pause">Long pause</span><p>Say nothing until they answer.</p></div>
   <div class="cue"><span class="tag t-go">Go</span><p>They picked. Jump to 08 and start the application.</p></div>
   </div>
@@ -651,14 +650,14 @@ h3{font-size:18px}
   <p class="say">"Okay, so based on your health and what you told me you're after, the one I'd put you in is an indexed universal life. Simple version: it's permanent, so it never expires, and part of what you pay builds cash value you can use down the road. It's the hardest one to qualify for and it costs more than term, which is why not everyone gets offered it."</p>
   <p class="say">"I've got three ways to set it up. They all give <em>[BENEFICIARY]</em> the same <em>[$AMOUNT]</em> if something happens. The difference is how much goes toward building the cash side. I'm reading these straight off the carrier's illustration, so you're seeing real numbers, not me guessing."</p>
   <div class="tiers">
-    <div class="tier"><small>Option 01</small><strong>Coverage first</strong><p>Lowest monthly. Carries the coverage, builds a little cash. [$/mo]</p></div>
+    <div class="tier"><small>Option 01</small><strong>Max funded</strong><p>The most the carrier allows. Most cash value. Only if it's comfortable. [$/mo]</p></div>
     <div class="tier rec"><small>Option 02 · Recommended</small><strong>Recommended</strong><p>The amount the illustration shows keeps it healthy long term and builds real cash. [$/mo]</p></div>
-    <div class="tier"><small>Option 03</small><strong>Max funded</strong><p>The most the carrier allows. Most cash value. Only if it's comfortable. [$/mo]</p></div>
+    <div class="tier"><small>Option 03</small><strong>Coverage first</strong><p>Lowest monthly. Carries the coverage, builds a little cash. [$/mo]</p></div>
   </div>
-  <p class="say">"Coverage first is <em>[$AMOUNT]</em> a month. It carries the coverage and builds a little on the side. Recommended is <em>[$AMOUNT]</em> a month, and that's the number the illustration shows keeps this thing healthy long term and actually builds cash. Max funded is <em>[$AMOUNT]</em> a month, the most they'll let you put in, and the most cash value. I don't want to push you there unless it's easily affordable."</p>
+  <p class="say">"The first is max funded, <em>[$AMOUNT]</em> a month. That's the most they'll let you put in, and the most cash value. I don't want to push you there unless it's easily affordable. The second is recommended, <em>[$AMOUNT]</em> a month, and that's the number the illustration shows keeps this thing healthy long term and actually builds cash. The third is coverage first, <em>[$AMOUNT]</em> a month. It carries the coverage and builds a little on the side."</p>
   <div class="cue"><span class="tag t-imp">Important</span><p>Show the guaranteed column and the projected column. Never quote a return, a break-even year, or "double your money" from memory.</p></div>
   <h3>The close</h3>
-  <p class="say">"So <em>[CLIENT]</em>, what would make the most sense for you if we can get you qualified: coverage first at <em>[$]</em> a month, recommended at <em>[$]</em> a month, or max funded at <em>[$]</em> a month?"</p>
+  <p class="say">"So <em>[CLIENT]</em>, what would make the most sense for you if we can get you qualified: max funded at <em>[$]</em> a month, recommended at <em>[$]</em> a month, or coverage first at <em>[$]</em> a month?"</p>
   <div class="cue"><span class="tag t-pause">Long pause</span><p>Say nothing until they answer.</p></div>
   <div class="cue"><span class="tag t-go">Go</span><p>They picked. Jump to 08 and start the application.</p></div>
   </div>
@@ -911,7 +910,7 @@ h3{font-size:18px}
 </section>
 
 </main>
-<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v5.5 · 2026 · Internal use only</div></footer>
+<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v5.6 · 2026 · Internal use only</div></footer>
 
 <script>
 (function(){
