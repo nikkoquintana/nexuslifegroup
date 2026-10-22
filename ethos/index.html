@@ -289,7 +289,7 @@ h3{font-size:18px}
 <body>
 
 <header class="top"><div class="wrap">
-  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v6.4</div>
+  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v6.5</div>
   <h1>Ethos Abandoned Cart.</h1>
   <p class="lede">They saw an Ethos ad, started a life insurance application, got deep into it, and stopped. That was 6 to 12 months ago. These leads sell. The first 30 seconds decide whether you get to sell them.</p>
   <div class="legend-read"><span><i></i>Black serif in a card: say it word for word.</span><span><i class="g"></i>Gray text: for you. Don't read it to the client.</span></div>
@@ -940,7 +940,7 @@ h3{font-size:18px}
 </section>
 
 </main>
-<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v6.4 · 2026 · Internal use only</div></footer>
+<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v6.5 · 2026 · Internal use only</div></footer>
 
 <script>
 (function(){
@@ -953,7 +953,7 @@ h3{font-size:18px}
     ann:{label:"Annuity pivot · go to section A", href:"#annuity", cls:"end"},
     dnc:{label:"Add to Do Not Call today", cls:"end end-dnc"}
   };
-  var RESP=[["Life got busy / forgot","busylife"],["It was too expensive","price"],["I gave up on it","gaveup"],["I already got it","hascov"],["What's this about?","what"],["How'd you get my number?","number"],["I'm busy","busy"],["Not interested","notint"],["I never applied","never"],["Need to ask my spouse","spouse"],["Stop calling / hostile","stop"]];
+  var RESP=[["Life got busy back then / forgot","busylife"],["It was too expensive","price"],["I gave up on it","gaveup"],["I already got it","hascov"],["What's this about?","what"],["How'd you get my number?","number"],["I'm busy right now / I'm at work","busy"],["Not interested","notint"],["I never applied","never"],["Need to ask my spouse","spouse"],["Stop calling / hostile","stop"]];
   var N = {
     start:{t:"Hook", say:"Hey [CLIENT], it's [NAME]. Did you get my text?",
       cue:"Every lead in this campaign was texted at some point, so the question is true. Say it like you expect a yes. Then stop.",
@@ -964,7 +964,7 @@ h3{font-size:18px}
     reason:{t:"The reason", say:"Okay, good. So I'm getting back to you about the unfinished life insurance application you started with Ethos a little while back. You got pretty far into it and then it just stopped. Did you give up on that, or did life just get busy?",
       cue:"Straight through, no pauses, under 27 seconds total from hello. Then stop talking.",
       r:RESP},
-    busylife:{t:"Life got busy", say:"Totally get it, that's most people. Good news is you already did the hard part. Let me get you up to speed real quick.", end:"s02"},
+    busylife:{t:"Life got busy back then", say:"Totally get it, that's most people. Good news is you already did the hard part. Let me get you up to speed real quick.", end:"s02"},
     gaveup:{t:"Gave up on it", say:"Okay, that's fair. Honestly, most people don't give up on life insurance unless they've already got something in place. Do you have anything else that acts like life insurance right now? A policy, something through work, money set aside?",
       cue:"Agree first. The question assumes they're responsible, not that they flaked. Then stop talking.",
       r:[["Yes, I've got a policy","hascov"],["Something through work","work"],["Money set aside","savings"],["No, nothing","gaveup2"],["Decided I don't need it","noneed"]]},
@@ -980,7 +980,6 @@ h3{font-size:18px}
       cue:"If they're 50+ or on meds, the ad price was never real for them. Don't promise to beat it; promise what's actually possible. Use the reset line in Step 03.", end:"s02"},
     toolow:{t:"Offered too little", say:"That's exactly why I'm calling. Ethos caps what it can do online, and my carriers go way past that. What amount were you really after?", end:"s02"},
     forgot:{t:"Don't remember", say:"Totally get it, it was a while back. Good news is you already did the hard part. Let me get you up to speed real quick.", end:"s02"},
-    still:{t:"Still wants it", say:"Perfect. Let me get you up to speed real quick.", end:"s02"},
 
     hascov:{t:"Already has coverage", say:"Okay, great. I'd be very concerned if you didn't have it already. Let me close out your file. Which one of our carriers did you go with? Aflac, Mutual of Omaha, Gerber, Americo, Aetna, Ethos, or another?",
       r:[["Names a carrier","amount"],["It's through work","work"],["Won't say","refuse"]]},
@@ -1013,7 +1012,7 @@ h3{font-size:18px}
       cue:"Never argue about the data. Answer it, then ask the question.",
       r:[["No","nocov"],["Yes","hascov"],["Don't call me","stop"]]},
 
-    busy:{t:"I'm busy", say:"Totally get it. And honestly, that's probably why this never got finished. Real quick, are you at work right now, or just in the middle of something?",
+    busy:{t:"I'm busy right now / at work", say:"Totally get it. And honestly, that's probably why this never got finished. Real quick, are you at work right now, or just in the middle of something?",
       cue:"Light, almost a joke. The question is about when, not whether. No exits anywhere in this branch.",
       r:[["At work","busywork"],["Middle of something","busymid"],["Just don't have time for this","busynotime"],["Stop calling / hostile","stop"]]},
     busywork:{t:"At work", say:"Okay, what time are you off today, [5 or 6]? \u2026 Perfect. I'll call you at [time], ten minutes, and we finish what you already started. I'm texting you the confirmation right now.",
