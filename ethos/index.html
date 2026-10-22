@@ -289,7 +289,7 @@ h3{font-size:18px}
 <body>
 
 <header class="top"><div class="wrap">
-  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v6.3</div>
+  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v6.4</div>
   <h1>Ethos Abandoned Cart.</h1>
   <p class="lede">They saw an Ethos ad, started a life insurance application, got deep into it, and stopped. That was 6 to 12 months ago. These leads sell. The first 30 seconds decide whether you get to sell them.</p>
   <div class="legend-read"><span><i></i>Black serif in a card: say it word for word.</span><span><i class="g"></i>Gray text: for you. Don't read it to the client.</span></div>
@@ -337,6 +337,7 @@ h3{font-size:18px}
       <li><b>Short lines, then shut up.</b> On the pickup, never talk more than 15 seconds without asking something. Silence after a question is where they talk themselves in.</li>
       <li><b>Sell the same call, not a callback.</b> Every branch tries to keep them on the phone and get to Step 02. If you must book, it's today, two specific times. Never "when works for you?"</li>
       <li><b>Agree, then ask.</b> "That's fair." "I'd be annoyed too." "Totally get it." Then the next question. Arguing on an aged lead ends the call.</li>
+      <li><b>Never hand them the exit.</b> No "or should I close the file," no "if you want I'll close it out." They'll take it every time. A file closes only after the third no.</li>
     </ul>
   </div>
 </section>
@@ -360,7 +361,7 @@ h3{font-size:18px}
     <span class="key"><span class="dot d-q"></span>Keeps going</span>
     <span class="key"><span class="dot d-s02"></span>Into the script</span>
     <span class="key"><span class="dot d-book"></span>Book today</span>
-    <span class="key"><span class="dot d-close"></span>Close the file</span>
+    <span class="key"><span class="dot d-close"></span>Close out (last no only)</span>
     <span class="key"><span class="dot d-dnc"></span>Do not call</span>
   </div>
 
@@ -798,12 +799,12 @@ h3{font-size:18px}
     </div>
     <div class="branch box">
       <div class="step">→ "So you bought my info?"</div>
-      <p class="say">"Fair question, and I'd want to know too. I'm contracted with Ethos, and your unfinished application came to me so a real person could help you finish it. Nobody's getting your info from me. If you want, I'll close it out right now. Otherwise, did you ever get coverage?"</p>
+      <p class="say">"Fair question, and I'd want to know too. I'm contracted with Ethos, and your unfinished application came to me so a real person could help you finish it. Nobody's getting your info from me. So, did you ever end up getting that coverage in place?"</p>
     </div>
   </div></details>
 
   <details><summary>"Not interested."</summary><div class="det">
-    <p class="say">"That's totally fair. Honestly, you probably think I'm about to pitch you something. I'm not, I'm just closing out open files. So I mark yours right: did you get it handled somewhere else, or did life just get in the way?"</p>
+    <p class="say">"That's totally fair. Honestly, you probably think I'm about to pitch you something. I'm not. Your application is still sitting open on my side, so I just need to know one thing: did you get it handled somewhere else, or did life just get in the way?"</p>
     <div class="cue"><span class="tag t-pause">Pause</span><p>Soft, calm, a little surprised. Never argue with the first no. It's a reflex, not a decision.</p></div>
     <div class="branch box"><div class="step">→ "I don't need it"</div>
       <p class="say">"Okay, help me understand that, because a while back you went far enough to put your info in, so something had you looking. What's different now?"</p>
@@ -823,8 +824,8 @@ h3{font-size:18px}
       <p class="say">"Totally get it, and that's the number one reason people stop. Ethos only shows a few prices. If I could find something that fits your budget, would it be worth five minutes to see?"</p>
     </div>
     <div class="branch box"><div class="step">→ Second "not interested"</div>
-      <p class="say">"No problem, I'll close it out. Last thing so I don't send it back into the system wrong: was it the price, or you just don't need it anymore?"</p>
-      <div class="cue"><span class="tag t-imp">Important</span><p>That's the last ask. A third brush-off closes the file. Two no's means no.</p></div>
+      <p class="say">"Fair enough. Last thing, and I'm only asking because it changes what I do with your file: was it the price, or you just don't need it anymore?"</p>
+      <div class="cue"><span class="tag t-imp">Important</span><p>That's the last ask. A third brush-off is the only thing that closes a file. Never offer to close it yourself.</p></div>
     </div>
   </div></details>
 
@@ -939,7 +940,7 @@ h3{font-size:18px}
 </section>
 
 </main>
-<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v6.3 · 2026 · Internal use only</div></footer>
+<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v6.4 · 2026 · Internal use only</div></footer>
 
 <script>
 (function(){
@@ -948,7 +949,7 @@ h3{font-size:18px}
     s02:{label:"Into the script · Step 02", href:"#request", cls:"end"},
     s04:{label:"Rate check · Step 04 health, then pitch in 07", href:"#health", cls:"end"},
     book:{label:"Book it today, two times · text the confirmation now", cls:"end end-book"},
-    close:{label:"Close the file politely", cls:"end end-close"},
+    close:{label:"Close out \u00b7 only after the last no", cls:"end end-close"},
     ann:{label:"Annuity pivot · go to section A", href:"#annuity", cls:"end"},
     dnc:{label:"Add to Do Not Call today", cls:"end end-dnc"}
   };
@@ -978,8 +979,7 @@ h3{font-size:18px}
     pricego:{t:"Has a number", say:"Okay, got it. Let me get you up to speed real quick and I'll show you what I can do with that.",
       cue:"If they're 50+ or on meds, the ad price was never real for them. Don't promise to beat it; promise what's actually possible. Use the reset line in Step 03.", end:"s02"},
     toolow:{t:"Offered too little", say:"That's exactly why I'm calling. Ethos caps what it can do online, and my carriers go way past that. What amount were you really after?", end:"s02"},
-    forgot:{t:"Got busy", say:"Totally get it, happens all the time. Is it still something you want handled, or should I close your file?",
-      r:[["Still want it","still"],["Close it","notint"]]},
+    forgot:{t:"Don't remember", say:"Totally get it, it was a while back. Good news is you already did the hard part. Let me get you up to speed real quick.", end:"s02"},
     still:{t:"Still wants it", say:"Perfect. Let me get you up to speed real quick.", end:"s02"},
 
     hascov:{t:"Already has coverage", say:"Okay, great. I'd be very concerned if you didn't have it already. Let me close out your file. Which one of our carriers did you go with? Aflac, Mutual of Omaha, Gerber, Americo, Aetna, Ethos, or another?",
@@ -995,7 +995,7 @@ h3{font-size:18px}
       r:[["No","workno"],["Yes","amount"]]},
     workno:{t:"Only work coverage", say:"Then that's exactly what we should fix, so you're covered no matter where you work.", end:"s02"},
     refuse:{t:"Won't say", say:"No problem. If you got a great deal, I'll tell you. If not, I'll tell you that too. Mind if I ask what you're paying a month?",
-      r:[["Tells you","ratecheck"],["Still no","closeok"]]},
+      r:[["Tells you","ratecheck"],["Still no","notint"]]},
     closeok:{t:"Close it", say:"All good, I'll close it out on my end. Have a good one.", end:"close"},
 
     what:{t:"What's this about?", say:"Sure, let me back up. A while back you started a life insurance application with Ethos, got pretty far, and it never got finished, so it landed on my desk. Did you ever end up getting that coverage?",
@@ -1009,9 +1009,9 @@ h3{font-size:18px}
     numfog:{t:"Doesn't remember", say:"Totally fair, it was a while back and those online forms all blur together. I've got you born [Month Year], is that right?",
       cue:"Confirming one real detail is the fastest way to prove you're legit.",
       r:[["Yeah, that's me","numyes"],["That's not me","neverno"]]},
-    numsold:{t:"Bought my info?", say:"Fair question, and I'd want to know too. I'm contracted with Ethos, and your unfinished application came to me so a real person could help you finish it. Nobody's getting your info from me. If you want, I'll close it out right now. Otherwise, did you ever get coverage?",
-      cue:"Never argue about the data. Offer the exit, then ask the question.",
-      r:[["No","nocov"],["Yes","hascov"],["Close it / don't call","stop"]]},
+    numsold:{t:"Bought my info?", say:"Fair question, and I'd want to know too. I'm contracted with Ethos, and your unfinished application came to me so a real person could help you finish it. Nobody's getting your info from me. So, did you ever end up getting that coverage in place?",
+      cue:"Never argue about the data. Answer it, then ask the question.",
+      r:[["No","nocov"],["Yes","hascov"],["Don't call me","stop"]]},
 
     busy:{t:"I'm busy", say:"Totally get it. And honestly, that's probably why this never got finished. Real quick, are you at work right now, or just in the middle of something?",
       cue:"Light, almost a joke. The question is about when, not whether. No exits anywhere in this branch.",
@@ -1027,11 +1027,11 @@ h3{font-size:18px}
       r:[["Picks a time","busybook"],["Still no","notint"]]},
     busybook:{t:"Book it", say:"Perfect, [time] it is. I'm texting you the confirmation right now so it's on your phone.", cue:"Today. Tomorrow at worst. Text it while you're still on the line.", end:"book"},
 
-    notint:{t:"Not interested", say:"That's totally fair. Honestly, you probably think I'm about to pitch you something. I'm not, I'm just closing out open files. So I mark yours right: did you get it handled somewhere else, or did life just get in the way?",
+    notint:{t:"Not interested", say:"That's totally fair. Honestly, you probably think I'm about to pitch you something. I'm not. Your application is still sitting open on my side, so I just need to know one thing: did you get it handled somewhere else, or did life just get in the way?",
       cue:"Soft, calm, a little surprised. Never argue with the first no. It's a reflex, not a decision. Then stop talking.",
       r:[["Got it handled","hascov"],["Life got in the way","timing"],["I don't need it","noneed"],["Can't afford it","afford"],["Just not interested (again)","notint2"],["Stop calling","stop"]]},
-    notint2:{t:"Second no", say:"No problem, I'll close it out. Last thing so I don't send it back into the system wrong: was it the price, or you just don't need it anymore?",
-      cue:"This is your last ask. If they brush you off again, close the file. Two no's means no.",
+    notint2:{t:"Second no", say:"Fair enough. Last thing, and I'm only asking because it changes what I do with your file: was it the price, or you just don't need it anymore?",
+      cue:"This is the last ask. A third brush-off is the only thing that closes a file.",
       r:[["The price","afford"],["Don't need it","noneed"],["Just no","closeok"]]},
     noneed:{t:"Doesn't need it", say:"Okay, help me understand that, because a while back you went far enough to put your info in, so something had you looking. What's different now?",
       cue:"They're trying to get you off the phone. Make them say the actual reason.",
@@ -1039,22 +1039,22 @@ h3{font-size:18px}
     nodep:{t:"Nobody depends on them", say:"Fair. So who gets the call? Because somebody's making the arrangements and somebody's getting the bill. Usually it's a brother, a sister, or a kid. Who would that be for you?",
       r:[["Names someone","nodep2"],["Nobody / the county","nodep3"]]},
     nodep2:{t:"Named a person", say:"Then that's who this is for. It doesn't have to be big, just enough that [NAME THEY GAVE] isn't putting a funeral on a credit card. Couple quick questions and I'll show you what that actually costs.", end:"s04"},
-    nodep3:{t:"Says nobody", say:"Okay. I'll close it out. Last thing: if it turned out to be [$30] a month to make sure none of that lands on anybody, would you at least want to see the number?",
+    nodep3:{t:"Says nobody", say:"Okay. Last thing then: if it turned out to be [$30] a month to make sure none of that lands on anybody, would you at least want to see the number?",
       r:[["Sure","fe"],["No","closeok"]]},
     fe:{t:"Final expense opening", say:"Then that's probably all you'd need, and it's usually a lot less than people think. Let me ask a couple quick questions and I'll show you.", end:"s04"},
     savings:{t:"Has savings", say:"Good, you're ahead of most people. Quick question though: is that money sitting where [wife/kids] could get to it the week after, or is it in a 401k, the house, something like that?",
       cue:"Everyone says they have savings. Make them say where it is.",
       r:[["In the bank / liquid","savings2"],["401k / house / investments","savings3"],["Won't say","savings4"]]},
     savings2:{t:"Liquid savings", say:"Okay. Then the only thing I'd ask you to think about is this. A funeral is ten to fifteen thousand before a single bill. You can hand that out of your savings, or you can pay [$X] a month and the savings never get touched. Most people with money saved go with the second one, because it's the cheaper way to protect it. Worth a couple questions to see the number?",
-      r:[["Sure","fe"],["No","closeok"]]},
+      r:[["Sure","fe"],["No","notint2"]]},
     savings3:{t:"Tied-up savings", say:"That's where most people keep it, and that's the problem. A 401k goes through the estate and the house has to sell. None of that pays a funeral home the week after. Roughly how much are we talking in there?",
       r:[["Under [$25K]","savings3a"],["[$25K] or more","savings3b"]]},
     savings3a:{t:"Smaller account", say:"Okay. Then a small policy that pays in days, tax-free, straight to [wife/kids] is the move. Couple quick questions and I'll show you what that costs.", end:"s04"},
     savings3b:{t:"Bigger account", say:"Okay, that changes things. Hold that thought, because I may be able to do a lot more with that account than a funeral policy. Mind if I ask a couple questions about it?", end:"ann"},
     savings4:{t:"Won't say", say:"Fair. Then let me ask it this way: if something happened this weekend, could [wife/kids] write the check for the funeral on Monday without selling anything?",
-      r:[["Yes, easily","closeok"],["No / not really","fe"]]},
+      r:[["Yes, easily","savings2"],["No / not really","fe"]]},
     afford:{t:"Can't afford it", say:"Totally get it, and that's the number one reason people stop. Ethos only shows a few prices. If I could find something that fits your budget, would it be worth five minutes to see?",
-      r:[["Yes","affordyes"],["No","closeok"]]},
+      r:[["Yes","affordyes"],["No","notint2"]]},
     affordyes:{t:"Budget test drive", say:"Perfect. Couple quick questions and I'll shop it across all my carriers.", end:"s04"},
     timing:{t:"Life got in the way", say:"Fair enough. Good news is you already did the hard part. Give me ten minutes right now and we'll finish what you started, or I can call you back at [time] today. Which is easier?",
       r:[["Now's fine","busylife"],["Call me back","timingbook"]]},
