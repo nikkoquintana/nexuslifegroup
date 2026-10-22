@@ -289,7 +289,7 @@ h3{font-size:18px}
 <body>
 
 <header class="top"><div class="wrap">
-  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v6.2</div>
+  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v6.3</div>
   <h1>Ethos Abandoned Cart.</h1>
   <p class="lede">They saw an Ethos ad, started a life insurance application, got deep into it, and stopped. That was 6 to 12 months ago. These leads sell. The first 30 seconds decide whether you get to sell them.</p>
   <div class="legend-read"><span><i></i>Black serif in a card: say it word for word.</span><span><i class="g"></i>Gray text: for you. Don't read it to the client.</span></div>
@@ -875,16 +875,19 @@ h3{font-size:18px}
   </div></details>
 
   <details><summary>"I'm busy." / "Call me back later."</summary><div class="det">
-    <p class="say">"Totally get it. And honestly, that's probably why this never got finished. One question and I'll let you go: did you still want that coverage in place, or should I just close the file?"</p>
-    <div class="cue"><span class="tag t-pause">Pause</span><p>Say it light. Their "busy" is the reason the application sat. Then stop talking.</p></div>
-    <div class="branch box"><div class="step">→ Still want it</div>
-      <p class="say">"Perfect. Then here's the thing: it takes about ten minutes to finish what you already started, and you did the hard part. Want to knock it out right now, or should I call you back at <em>[time]</em> today?"</p>
+    <p class="say">"Totally get it. And honestly, that's probably why this never got finished. Real quick, are you at work right now, or just in the middle of something?"</p>
+    <div class="cue"><span class="tag t-pause">Pause</span><p>Light, almost a joke. Every question in this one is about when, not whether. Never offer to close the file here.</p></div>
+    <div class="branch box"><div class="step">→ At work</div>
+      <p class="say">"Okay, what time are you off today, <em>[5 or 6]</em>? … Perfect. I'll call you at <em>[time]</em>, ten minutes, and we finish what you already started. I'm texting you the confirmation right now."</p>
     </div>
-    <div class="branch box"><div class="step">→ Call me later / I'm at work</div>
-      <p class="say">"Sure. When are you off, <em>[time]</em>? I'll call you then. Ten minutes and we close this out."</p>
-      <p><b>Won't commit to a time:</b> "No problem. One thing so I'm not bugging you: if I can't help you, I close the file and you never hear from me again. If I can, it's ten minutes. Fair enough to find out?"</p>
+    <div class="branch box"><div class="step">→ In the middle of something</div>
+      <p class="say">"No problem. This is ten minutes and you already did the hard part. Want to knock it out right now, or should I call you back at <em>[time]</em> today?"</p>
     </div>
-    <div class="cue"><span class="tag t-imp">Important</span><p>Sell the same call first; the callback is the fallback. Never let "I'm busy" end without a time today. Text the confirmation while you're still on the line.</p></div>
+    <div class="branch box"><div class="step">→ "I just don't have time for this"</div>
+      <p class="say">"I hear you, nobody has time for this. That's exactly why it's been sitting for six months. So here's what I'll do: I'll take ten minutes at <em>[time]</em> today, I'll already have your numbers run, and all you do is say yes or no. <em>[Time]</em> or <em>[time]</em>?"</p>
+      <div class="cue"><span class="tag t-note">Note</span><p>If it's still a no, that's "not interested," not "busy." Run that rebuttal.</p></div>
+    </div>
+    <div class="cue"><span class="tag t-imp">Important</span><p>Sell the same call first; the callback is the fallback. Two specific times, today. Text the confirmation while you're still on the line.</p></div>
   </div></details>
 
   <details><summary>"I need to talk to my spouse." / "My wife handles that."</summary><div class="det">
@@ -936,7 +939,7 @@ h3{font-size:18px}
 </section>
 
 </main>
-<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v6.2 · 2026 · Internal use only</div></footer>
+<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v6.3 · 2026 · Internal use only</div></footer>
 
 <script>
 (function(){
@@ -1010,16 +1013,18 @@ h3{font-size:18px}
       cue:"Never argue about the data. Offer the exit, then ask the question.",
       r:[["No","nocov"],["Yes","hascov"],["Close it / don't call","stop"]]},
 
-    busy:{t:"I'm busy", say:"Totally get it. And honestly, that's probably why this never got finished. One question and I'll let you go: did you still want that coverage in place, or should I just close the file?",
-      cue:"Say it light, almost like a joke. Their \u201cbusy\u201d is the reason the application sat. Then stop talking.",
-      r:[["Still want it","busystill"],["Close it","notint2"],["Call me later / I'm at work","busylater"],["Stop calling / hostile","stop"]]},
-    busystill:{t:"Still wants it", say:"Perfect. Then here's the thing: it takes about ten minutes to finish what you already started, and you did the hard part. Want to knock it out right now, or should I call you back at [time] today?",
-      cue:"Sell the same call first. The callback is the fallback, not the offer.",
+    busy:{t:"I'm busy", say:"Totally get it. And honestly, that's probably why this never got finished. Real quick, are you at work right now, or just in the middle of something?",
+      cue:"Light, almost a joke. The question is about when, not whether. No exits anywhere in this branch.",
+      r:[["At work","busywork"],["Middle of something","busymid"],["Just don't have time for this","busynotime"],["Stop calling / hostile","stop"]]},
+    busywork:{t:"At work", say:"Okay, what time are you off today, [5 or 6]? \u2026 Perfect. I'll call you at [time], ten minutes, and we finish what you already started. I'm texting you the confirmation right now.",
+      cue:"Assume the callback. \u201cWhat time are you off\u201d, not \u201ccan I call you.\u201d",
+      r:[["Gives a time","busybook"],["Won't give a time","busynotime"]]},
+    busymid:{t:"In the middle of something", say:"No problem. This is ten minutes and you already did the hard part. Want to knock it out right now, or should I call you back at [time] today?",
+      cue:"Sell the same call first. The callback is the fallback.",
       r:[["Now's fine","busylife"],["Call me back","busybook"]]},
-    busylater:{t:"Call me later", say:"Sure. When are you off, [time]? I'll call you then. Ten minutes and we close this out.",
-      r:[["Gives a time","busybook"],["Won't commit to a time","busysoft"]]},
-    busysoft:{t:"Won't commit", say:"No problem. One thing so I'm not bugging you: if I can't help you, I close the file and you never hear from me again. If I can, it's ten minutes. Fair enough to find out?",
-      r:[["Fair","busystill"],["No","closeok"]]},
+    busynotime:{t:"No time for this", say:"I hear you, nobody has time for this. That's exactly why it's been sitting for six months. So here's what I'll do: I'll take ten minutes at [time] today, I'll already have your numbers run, and all you do is say yes or no. [Time] or [time]?",
+      cue:"Two specific times. Don't ask if they want to.",
+      r:[["Picks a time","busybook"],["Still no","notint"]]},
     busybook:{t:"Book it", say:"Perfect, [time] it is. I'm texting you the confirmation right now so it's on your phone.", cue:"Today. Tomorrow at worst. Text it while you're still on the line.", end:"book"},
 
     notint:{t:"Not interested", say:"That's totally fair. Honestly, you probably think I'm about to pitch you something. I'm not, I'm just closing out open files. So I mark yours right: did you get it handled somewhere else, or did life just get in the way?",
