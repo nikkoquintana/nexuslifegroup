@@ -122,8 +122,8 @@ summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border
 .seg b{font:800 14px/1.1 var(--f-display)}
 .seg span{font:600 11px/1.1 var(--f-body);opacity:.9}
 .s-term{background:var(--ask);flex:32}
-.s-either{background:var(--pause);flex:15}
-.s-perm{background:var(--accent);flex:25}
+.s-either{background:var(--pause);flex:10;min-width:76px}
+.s-perm{background:var(--accent);flex:30}
 .seg.full{flex:1;grid-auto-flow:column;gap:10px;justify-content:center;align-items:center}
 .ageaxis{display:flex;justify-content:space-between;font:600 12px/1 var(--f-body);color:var(--muted);padding:0 2px;font-variant-numeric:tabular-nums}
 .q3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
@@ -171,7 +171,7 @@ summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border
 .resp button,.ctl{font:600 14.5px/1.3 var(--f-body);text-align:left;padding:12px 14px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;display:flex;gap:10px;align-items:center}
 .resp button:hover,.resp button:focus-visible{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);outline:none}
 .resp .dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--muted)}
-.dot.d-s02,.dot.d-s04,.dot.d-ann{background:var(--go)}
+.dot.d-s02,.dot.d-s04,.dot.d-s04h,.dot.d-ann{background:var(--go)}
 .dot.d-book{background:var(--ask)}
 .dot.d-close{background:var(--pause)}
 .dot.d-dnc{background:var(--stop)}
@@ -253,7 +253,7 @@ section#glance{border-top:0;padding-top:0}
 #p-wl{border-left:5px solid var(--accent)}
 #p-iul{border-left:5px solid var(--pause)}
 .resp button{border-left:5px solid var(--accent);font-size:15.5px;padding:13px 14px}
-.resp button.r-d-s02,.resp button.r-d-s04,.resp button.r-d-ann{border-left-color:var(--go)}
+.resp button.r-d-s02,.resp button.r-d-s04,.resp button.r-d-s04h,.resp button.r-d-ann{border-left-color:var(--go)}
 .resp button.r-d-book{border-left-color:var(--ask)}
 .resp button.r-d-close{border-left-color:var(--pause)}
 .resp button.r-d-dnc{border-left-color:var(--stop)}
@@ -289,7 +289,7 @@ h3{font-size:18px}
 <body>
 
 <header class="top"><div class="wrap">
-  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v6.5</div>
+  <div class="eyebrow">Nexus Life Group · Ethos Abandoned Carts · v6.7</div>
   <h1>Ethos Abandoned Cart.</h1>
   <p class="lede">They saw an Ethos ad, started a life insurance application, got deep into it, and stopped. That was 6 to 12 months ago. These leads sell. The first 30 seconds decide whether you get to sell them.</p>
   <div class="legend-read"><span><i></i>Black serif in a card: say it word for word.</span><span><i class="g"></i>Gray text: for you. Don't read it to the client.</span></div>
@@ -297,7 +297,7 @@ h3{font-size:18px}
     <div class="fact"><small>Who they are</small><p>Usually <b>higher income</b>, busy, and short on the pickup. They don't want fluff. Be direct and know your stuff.</p></div>
     <div class="fact"><small>What you have</small><p><b>Name, phone, email, date of birth, age, address.</b> Nothing else. No product, amount, beneficiary or submit date.</p></div>
     <div class="fact"><small>The ad they clicked</small><p>Usually <b>term</b>: "$500K for about $12 a month, no exam, in minutes." That price is for a <b>healthy 30-year-old on a 10-year term</b>. Their real quote came in higher, or the amount lower, and they left. Could still be anything: term, whole life, final expense, IUL.</p></div>
-    <div class="fact"><small>Your position</small><p>You're the <b>advisor assigned</b>, not Ethos. Ethos is one door. You have <b>[60+]</b> carriers and can usually beat the price or raise the amount.</p></div>
+    <div class="fact"><small>Your position</small><p>You're the <b>advisor assigned</b>, not Ethos. Ethos is one door. You work with <b>all the top-rated carriers in their state</b> and can usually find a better fit on price or amount.</p></div>
   </div>
 </div></header>
 
@@ -332,7 +332,7 @@ h3{font-size:18px}
     <a href="#annuity"><b>A</b><span>Annuity pivot</span><i>if money's sitting</i></a>
   </div>
   <div class="box go agent">
-    <div class="step">Three rules that close these</div>
+    <div class="step">The rules that close these</div>
     <ul>
       <li><b>Short lines, then shut up.</b> On the pickup, never talk more than 15 seconds without asking something. Silence after a question is where they talk themselves in.</li>
       <li><b>Sell the same call, not a callback.</b> Every branch tries to keep them on the phone and get to Step 02. If you must book, it's today, two specific times. Never "when works for you?"</li>
@@ -385,7 +385,7 @@ h3{font-size:18px}
   <p class="say">"Okay <em>[CLIENT]</em>, I've got your file pulled up here, so let me get you up to speed on what's going on. Like I said, my name is <em>[YOUR NAME]</em>. I'm the advisor assigned to your case."</p>
   <p class="say">"Now, this was originally started by you… gosh, maybe <em>[6 months to a year]</em> ago! You went on Ethos and got pretty far into the application, but it never got finished. As morbid as it sounds, this is to make sure that if something were to happen to you, your family doesn't have to worry about <em>[the income / the bills / everything you'd normally take care of]</em>."</p>
   <p class="say">"I'm not sure why the heck this was never handled. Could be for quite a few reasons, but I was raised better than to make excuses. Bottom line: I'm one of the managers, and it's my job to make sure we get this handled today and make sure you have the coverage your family needs."</p>
-  <p class="say">"And just so you know, I don't actually work for Ethos. They're one of the companies I'm contracted with, but I'm an independent advisor contracted with <em>[60+]</em> A-rated carriers, so I get to shop around and find you the best deal."</p>
+  <p class="say">"And just so you know, I don't actually work for Ethos. They're one of the companies I'm contracted with, but I'm an independent advisor, and I work with all the top-rated carriers in the state of <em>[STATE]</em>, so I get to shop around and find you the best deal."</p>
 
   <h3>Provide credentials &amp; establish compliance</h3>
   <div class="cue"><span class="tag t-imp">Important</span><p>Begin with transparency. This builds trust before you ask for any personal information.</p></div>
@@ -438,8 +438,12 @@ h3{font-size:18px}
       <li><b>Funeral, burial, final expenses, leaving a little behind</b> → whole life.</li>
       <li><b>Replace income, protect the kids, cover the mortgage or debts for a set number of years</b> → term. For a mortgage, use the loan balance as the full amount.</li>
       <li><b>Cash value, retirement, "not throwing money away"</b> → IUL. Run the carrier illustration. Never quote returns from memory.</li>
-      <li><b>Not sure, "I was just looking"</b> → ask "Is this more of a contingency plan for the next 10 to 20 years, or something you want there no matter what?" Route from their answer.</li>
+      <li><b>Not sure, "I was just looking"</b> → ask the question below, then route from their answer.</li>
     </ul>
+  </div>
+  <div class="branch box">
+    <div class="step">→ Only if: they're not sure what they wanted</div>
+    <p class="say">"Is this more of a contingency plan for the next 10 to 20 years, like until the kids are grown or the house is paid off? Or is it something you want there no matter what, to leave money behind?"</p>
   </div>
 </section>
 
@@ -447,7 +451,7 @@ h3{font-size:18px}
 <section id="health">
   <div class="step">04 · Medical assessment</div>
   <h2>Qualify the health.</h2>
-  <p class="say">"Okay, so the first thing now is I'm going to ask some preliminary medical questions just to get an understanding of what options you may qualify for. We're not just one insurance company. We're independent, which means we have access to over <em>[60]</em> carriers, and we want to make sure to match your health with the carrier that caters most to it, to get you the best rate."</p>
+  <p class="say">"Okay, so the first thing now is I'm going to ask some preliminary medical questions just to get an understanding of what options you may qualify for. We're not just one insurance company. We're independent, which means we work with all the top-rated carriers in the state of <em>[STATE]</em>, and we want to make sure to match your health with the carrier that caters most to it, to get you the best rate."</p>
   <div class="cue"><span class="tag t-note">Note</span><p>Open the quoting tool. Clear all fields. Enter conditions and medications as you ask them.</p></div>
 
   <h3>Basic info</h3>
@@ -566,16 +570,16 @@ h3{font-size:18px}
 
   <div class="agewrap">
     <div class="agebar">
-      <div class="seg s-term"><b>Term</b><span>18 to 50 · really healthy</span></div>
-      <div class="seg s-either"><b>Term or IUL</b><span>50 to 65 · really healthy</span></div>
-      <div class="seg s-perm"><b>Whole life</b><span>65 and up</span></div>
+      <div class="seg s-term"><b>Term or IUL</b><span>18 to 50 · really healthy</span></div>
+      <div class="seg s-either"><b>All three</b><span>50 to 60</span></div>
+      <div class="seg s-perm"><b>Whole life</b><span>60 and up</span></div>
     </div>
-    <div class="ageaxis"><span>18</span><span>50</span><span>65</span><span>90</span></div>
+    <div class="ageaxis"><span>18</span><span>50</span><span>60</span><span>90</span></div>
     <div class="agebar health"><div class="seg s-perm full"><b>Bad health, any age</b><span>Whole life</span></div></div>
   </div>
 
   <div class="q3">
-    <div class="q"><b>How old are they?</b><p>Under 50, think term. Over 65, think whole life. In between, keep asking.</p></div>
+    <div class="q"><b>How old are they?</b><p>Under 50, think term or IUL. 50 to 60 (65 with high income), any of the three. 60 and up, whole life.</p></div>
     <div class="q"><b>How healthy are they?</b><p>Serious conditions or a lot of medications push to whole life at any age.</p></div>
     <div class="q"><b>What can they afford?</b><p>A smaller permanent policy they keep beats a bigger term policy they cancel.</p></div>
   </div>
@@ -583,21 +587,21 @@ h3{font-size:18px}
   <div class="prods">
     <div class="prod p-term">
       <div class="step">Term <span class="hreq">(really healthy)</span></div>
-      <p><b>Pitch it when:</b> under 50, really healthy, and they want a big number for a set time. Income, kids, mortgage.</p>
+      <p><b>Pitch it when:</b> under 60 (65 with high income), really healthy, and they want a big number for a set time. Income, kids, mortgage.</p>
       <p class="hnote">Minimal medications, minimal conditions. Anything serious or a long med list, go whole life.</p>
       <p><b>Coverage:</b> $50K up to $1M+, depending on age. Most coverage for the lowest premium.</p>
       <p><b>How:</b> full amount, 75%, 50%. Always high to low.</p>
     </div>
     <div class="prod p-iul">
       <div class="step">IUL <span class="hreq">(really healthy)</span></div>
-      <p><b>Pitch it when:</b> 50 to 65 (or younger with money), really healthy, and they want coverage that lasts and builds cash. Hardest to qualify for, highest premium.</p>
+      <p><b>Pitch it when:</b> 60 or younger, really healthy, and they want coverage that lasts and builds cash. Over 60 only if they have $300 to $500 a month to put in. Hardest to qualify for, highest premium.</p>
       <p class="hnote">Minimal medications, minimal conditions. Strictest underwriting of the three.</p>
       <p><b>Coverage:</b> up to about $500K. Has to be funded more to work well.</p>
       <p><b>How:</b> max funded, recommended, coverage first. Always high to low.</p>
     </div>
     <div class="prod p-wl">
       <div class="step">Whole life <span class="hreq">(any health)</span></div>
-      <p><b>Pitch it when:</b> 65 and up, or health issues at any age, or they want the funeral covered and money left behind, or term didn't fit the budget.</p>
+      <p><b>Pitch it when:</b> 60 and up, or health issues at any age, or they want the funeral covered and money left behind, or term didn't fit the budget.</p>
       <p><b>Coverage:</b> $50K is the max you'll see.</p>
       <p><b>How:</b> Maximum, Recommended, Basic. Always high to low.</p>
     </div>
@@ -679,7 +683,6 @@ h3{font-size:18px}
   <details>
     <summary>If they qualify for everything and can't decide · term vs. permanent</summary>
     <div class="det">
-  <div class="cue"><span class="tag t-note">Note</span><p>Continue here if the client did not clear the temporary path above.</p></div>
   <p class="say">"So I have a few options here, but before I dive in I want to quickly recap the two main ways life insurance is handled. The first is a temporary option, the more popular one you'll hear people talking about. It's cheap and you can get a lot of coverage for a set number of years. The major downfall is it's only great for the right crowd: people in their 20s, 30s, or 40s. Once you get into your 50s it gets really expensive."</p>
   <p class="say">"But even if you're a healthy, well-off person, because of your age the carriers start to shorten how long they'll even give you coverage. So you'll pay for an expensive plan and all of a sudden get a letter saying your coverage is done, right when you need it most. And what's worse, all the money is gone. It doesn't build any value you get back."</p>
   <p class="say">"So what's the solution? It's the second way this is handled: a permanent plan. First, the coverage never ends, so your family is guaranteed to have money if something were to happen. The rate is locked in and never goes up."</p>
@@ -703,7 +706,7 @@ h3{font-size:18px}
 
   <h3>Walk the application</h3>
   <div class="cue"><span class="tag t-imp">Important</span><p>Read it in third person: "the application is asking for," "it wants to know." Walk them through the whole thing. Don't pause for anything. Say the draft date back and write it down for Step 09.</p></div>
-  <div class="cue"><span class="tag t-imp">Important</span><p>If they have an existing policy or a pending Ethos application, don't cancel anything until the new policy is approved and in force. Complete your state's replacement forms.</p></div>
+  <div class="cue"><span class="tag t-imp">Important</span><p>Replacing a policy? Once the new application is submitted, three-way the old carrier and cancel it on this call. Don't let them off the phone until it's cancelled, unless the carrier is closed. Complete your state's replacement forms.</p></div>
 </section>
 
 <!-- 09 -->
@@ -772,11 +775,11 @@ h3{font-size:18px}
   <h2>Rebuttals for aged Ethos carts.</h2>
   <p>Expect skepticism, foggy memory, and "didn't I already handle this." Match their tone, don't over-explain, and keep them on this call. Step 01 handles the pickup objections live; this list is the long form for training and for objections that come up mid-script.</p>
   <div class="box warn agent">
-    <div class="step">Booking rule · same day, next day at worst</div>
+    <div class="step">Booking rule · same day, next morning at worst</div>
     <ul>
       <li>Every callback gets offered <b>today</b> first, with two specific times: "[time] or [time] today?" Never "when works for you?"</li>
-      <li>Only if today is truly impossible: first thing <b>tomorrow</b>, again two specific times.</li>
-      <li>Never book further out than tomorrow. Appointments are disappointments; the further out, the colder they get.</li>
+      <li>Only if today is truly gone: <b>tomorrow morning</b>, again two specific times.</li>
+      <li>Never book further out than tomorrow morning. Appointments are disappointments; the further out, the colder they get.</li>
       <li>Text the confirmation while you're still on the phone. Call 10 minutes early if you can.</li>
     </ul>
   </div>
@@ -842,22 +845,22 @@ h3{font-size:18px}
       <p class="say">"Let me ask you a couple quick health questions before I close this out. If I can't beat what you have, you'll know you got a great deal and I'll close the file. If I can, I'll show you the numbers side by side. Fair enough?"</p>
       <div class="cue"><span class="tag t-go">Go</span><p>Rate reduction sit. Step 04 (health), then quote the same coverage. If they won't budge on term, last resort: IUL and cash value.</p></div>
     </div>
-    <div class="cue"><span class="tag t-imp">Important</span><p>Never have them cancel the existing policy until the new one is approved and in force. Complete your state's replacement forms.</p></div>
+    <div class="cue"><span class="tag t-imp">Important</span><p>Replacing it? After the new application is submitted, three-way the old carrier and cancel it on the same call, unless the carrier is closed. Complete your state's replacement forms.</p></div>
     <div class="cue"><span class="tag t-go">Go</span><p>If their coverage checks out and they have a 401k, IRA or savings: <a href="#annuity">annuity pivot</a>.</p></div>
   </div></details>
 
   <details><summary>"The price was too high."</summary><div class="det">
-    <p class="say">"That's exactly why I'm calling. I don't actually work for Ethos. They're just one of the companies I'm contracted with. I work with over <em>[60]</em> different A-rated life insurance companies, so most of the time we can get you a way better rate. How much were they trying to charge you?"</p>
+    <p class="say">"That's exactly why I'm calling. I don't actually work for Ethos. They're just one of the companies I'm contracted with. I work with all the top-rated carriers in the state of <em>[STATE]</em>, so 99% of the time we can get you a way better rate. How much were they trying to charge you?"</p>
     <div class="cue"><span class="tag t-go">Go</span><p>Note the number. Step 02, then health, then beat it.</p></div>
   </div></details>
 
   <details><summary>"The ad said like $12 a month. Why is it so much more?"</summary><div class="det">
-    <p class="say">"It did, and that's a real price, for a healthy 30-year-old non-smoker on a 10-year term. Nobody tells you that part. For <em>[your age / with the medications you mentioned]</em>, that number was never going to hold, with Ethos or with anybody. What I can do is shop <em>[60+]</em> carriers and find the one that's kindest to your age and your health, and get you the most coverage for the money. That's a better deal than an ad number you can't actually get."</p>
+    <p class="say">"It did, and that's a real price, for a healthy 30-year-old non-smoker on a 10-year term. Nobody tells you that part. For <em>[your age / with the medications you mentioned]</em>, that number was never going to hold, with Ethos or with anybody. What I can do is shop all the top-rated carriers in the state of <em>[STATE]</em> and find the one that's kindest to your age and your health, and get you the most coverage for the money. That's a better deal than an ad number you can't actually get."</p>
     <div class="cue"><span class="tag t-pause">Pause</span><p>Let it land. Then back to the options.</p></div>
   </div></details>
 
   <details><summary>"I wanted $2 million and they only offered $300K."</summary><div class="det">
-    <p class="say">"I'm with you, I'd have walked away too. There are carriers out there that write way, way more than that, and that is EXACTLY why I'm calling. Ethos is one door. I get to shop around with <em>[60+]</em> carriers and find the one that'll actually give you the amount you want. Let me ask you a few health questions and we'll go get it."</p>
+    <p class="say">"I'm with you, I'd have walked away too. There are carriers out there that write way, way more than that, and that is EXACTLY why I'm calling. Ethos is one door. I get to shop around with all the top-rated carriers in the state of <em>[STATE]</em> and find the one that'll actually give you the amount you want. Let me ask you a few health questions and we'll go get it."</p>
   </div></details>
 
   <details><summary>"I never filled this out!"</summary><div class="det">
@@ -906,9 +909,8 @@ h3{font-size:18px}
       <p class="say">"Okay, then let's not force the top one. The <em>[next option down]</em> at <em>[$]</em> a month still gets <em>[BENEFICIARY]</em> taken care of. Does that one feel right?"</p>
     </div>
     <div class="branch box"><div class="step">→ The company / not sure</div>
-      <p class="say">"That's fair, and that's exactly why I'm independent. If <em>[CARRIER]</em> comes back with anything off, I move you to another one. Here's the thing though: nothing is final until the carrier approves it, the price is based on your age today, and even after it's approved you get a free-look period to cancel for a full refund. There's no risk in getting it submitted and every reason not to wait. Let's get it in."</p>
+      <p class="say">"That's fair, and that's exactly why I'm independent. If <em>[CARRIER]</em> comes back with anything off, I move you to another one. Here's the thing though: nothing is final until the carrier approves it, and the price is based on your age today, so waiting only costs you. Let's get it in."</p>
     </div>
-    <div class="cue"><span class="tag t-imp">Important</span><p>Free-look is real (usually 10 to 30 days by state and carrier). Say the actual number for the carrier you're writing.</p></div>
   </div></details>
 
   <details><summary>"I don't give my social or bank info over the phone." · at the app</summary><div class="det">
@@ -928,7 +930,7 @@ h3{font-size:18px}
   </div></details>
 
   <details><summary>"Are you with Ethos?"</summary><div class="det">
-    <p class="say">"Nope, I'm an independent advisor. Ethos is one of the companies I'm contracted with, along with <em>[60+]</em> others. That's the advantage: I'm on your side, not stuck selling you one company's price."</p>
+    <p class="say">"Nope, I'm an independent advisor. Ethos is one of the companies I'm contracted with, along with all the top-rated carriers in the state of <em>[STATE]</em>. That's the advantage: I'm on your side, not stuck selling you one company's price."</p>
   </div></details>
 
   <details><summary>"I'm on the Do Not Call list." / "Stop calling me."</summary><div class="det">
@@ -940,7 +942,7 @@ h3{font-size:18px}
 </section>
 
 </main>
-<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v6.5 · 2026 · Internal use only</div></footer>
+<footer><div class="wrap">Nexus Life Group · Ethos Abandoned Cart · Call flow v6.7 · 2026 · Internal use only</div></footer>
 
 <script>
 (function(){
@@ -948,6 +950,7 @@ h3{font-size:18px}
   var E = {
     s02:{label:"Into the script · Step 02", href:"#request", cls:"end"},
     s04:{label:"Rate check · Step 04 health, then pitch in 07", href:"#health", cls:"end"},
+    s04h:{label:"Health questions · Step 04, then budget and pitch", href:"#health", cls:"end"},
     book:{label:"Book it today, two times · text the confirmation now", cls:"end end-book"},
     close:{label:"Close out \u00b7 only after the last no", cls:"end end-close"},
     ann:{label:"Annuity pivot · go to section A", href:"#annuity", cls:"end"},
@@ -964,6 +967,7 @@ h3{font-size:18px}
     reason:{t:"The reason", say:"Okay, good. So I'm getting back to you about the unfinished life insurance application you started with Ethos a little while back. You got pretty far into it and then it just stopped. Did you give up on that, or did life just get busy?",
       cue:"Straight through, no pauses, under 27 seconds total from hello. Then stop talking.",
       r:RESP},
+    gonow:{t:"Now's fine", say:"Perfect. Let me get you up to speed real quick.", end:"s02"},
     busylife:{t:"Life got busy back then", say:"Totally get it, that's most people. Good news is you already did the hard part. Let me get you up to speed real quick.", end:"s02"},
     gaveup:{t:"Gave up on it", say:"Okay, that's fair. Honestly, most people don't give up on life insurance unless they've already got something in place. Do you have anything else that acts like life insurance right now? A policy, something through work, money set aside?",
       cue:"Agree first. The question assumes they're responsible, not that they flaked. Then stop talking.",
@@ -972,8 +976,8 @@ h3{font-size:18px}
       r:[["The price","price"],["Offered too little","toolow"],["Just never finished it","busylife"],["Don't remember","forgot"]]},
 
     nocov:{t:"No coverage yet", say:"Okay. So what stopped you? Usually it's the price, the offer came back lower than you wanted, or life just got busy.",
-      r:[["The price","price"],["They offered too little","toolow"],["Got busy / forgot","forgot"],["Don't remember","forgot"]]},
-    price:{t:"Too expensive", say:"That's exactly why I'm calling. I don't actually work for Ethos, they're just one of the companies I'm contracted with. I work with over [60] different A-rated life insurance companies, so 99% of the time we can get you a way better rate. How much were they trying to charge you?",
+      r:[["The price","price"],["They offered too little","toolow"],["Got busy","busylife"],["Don't remember","forgot"]]},
+    price:{t:"Too expensive", say:"That's exactly why I'm calling. I don't actually work for Ethos, they're just one of the companies I'm contracted with. I work with all the top-rated carriers in the state of [STATE], so 99% of the time we can get you a way better rate. How much were they trying to charge you?",
       cue:"Write the number down.",
       r:[["Gives a number","pricego"],["Don't remember","pricego"],["Can't afford anything right now","afford"]]},
     pricego:{t:"Has a number", say:"Okay, got it. Let me get you up to speed real quick and I'll show you what I can do with that.",
@@ -1020,11 +1024,11 @@ h3{font-size:18px}
       r:[["Gives a time","busybook"],["Won't give a time","busynotime"]]},
     busymid:{t:"In the middle of something", say:"No problem. This is ten minutes and you already did the hard part. Want to knock it out right now, or should I call you back at [time] today?",
       cue:"Sell the same call first. The callback is the fallback.",
-      r:[["Now's fine","busylife"],["Call me back","busybook"]]},
+      r:[["Now's fine","gonow"],["Call me back","busybook"]]},
     busynotime:{t:"No time for this", say:"I hear you, nobody has time for this. That's exactly why it's been sitting for six months. So here's what I'll do: I'll take ten minutes at [time] today, I'll already have your numbers run, and all you do is say yes or no. [Time] or [time]?",
       cue:"Two specific times. Don't ask if they want to.",
       r:[["Picks a time","busybook"],["Still no","notint"]]},
-    busybook:{t:"Book it", say:"Perfect, [time] it is. I'm texting you the confirmation right now so it's on your phone.", cue:"Today. Tomorrow at worst. Text it while you're still on the line.", end:"book"},
+    busybook:{t:"Book it", say:"Perfect, [time] it is. I'm texting you the confirmation right now so it's on your phone.", cue:"Today. Tomorrow morning at worst. Text it while you're still on the line.", end:"book"},
 
     notint:{t:"Not interested", say:"That's totally fair. Honestly, you probably think I'm about to pitch you something. I'm not. Your application is still sitting open on my side, so I just need to know one thing: did you get it handled somewhere else, or did life just get in the way?",
       cue:"Soft, calm, a little surprised. Never argue with the first no. It's a reflex, not a decision. Then stop talking.",
@@ -1037,10 +1041,10 @@ h3{font-size:18px}
       r:[["Nobody depends on me","nodep"],["I've got money saved","savings"],["I've got it through work","work"],["Just don't want it","notint2"]]},
     nodep:{t:"Nobody depends on them", say:"Fair. So who gets the call? Because somebody's making the arrangements and somebody's getting the bill. Usually it's a brother, a sister, or a kid. Who would that be for you?",
       r:[["Names someone","nodep2"],["Nobody / the county","nodep3"]]},
-    nodep2:{t:"Named a person", say:"Then that's who this is for. It doesn't have to be big, just enough that [NAME THEY GAVE] isn't putting a funeral on a credit card. Couple quick questions and I'll show you what that actually costs.", end:"s04"},
-    nodep3:{t:"Says nobody", say:"Okay. Last thing then: if it turned out to be [$30] a month to make sure none of that lands on anybody, would you at least want to see the number?",
+    nodep2:{t:"Named a person", say:"Then that's who this is for. It doesn't have to be big, just enough that [NAME THEY GAVE] isn't putting a funeral on a credit card. Couple quick questions and I'll show you what that actually costs.", end:"s04h"},
+    nodep3:{t:"Says nobody", say:"Okay. Last thing then: if it turned out to be [$X] a month to make sure none of that lands on anybody, would you at least want to see the number?",
       r:[["Sure","fe"],["No","closeok"]]},
-    fe:{t:"Final expense opening", say:"Then that's probably all you'd need, and it's usually a lot less than people think. Let me ask a couple quick questions and I'll show you.", end:"s04"},
+    fe:{t:"Final expense opening", say:"Then that's probably all you'd need, and it's usually a lot less than people think. Let me ask a couple quick questions and I'll show you.", end:"s04h"},
     savings:{t:"Has savings", say:"Good, you're ahead of most people. Quick question though: is that money sitting where [wife/kids] could get to it the week after, or is it in a 401k, the house, something like that?",
       cue:"Everyone says they have savings. Make them say where it is.",
       r:[["In the bank / liquid","savings2"],["401k / house / investments","savings3"],["Won't say","savings4"]]},
@@ -1048,15 +1052,15 @@ h3{font-size:18px}
       r:[["Sure","fe"],["No","notint2"]]},
     savings3:{t:"Tied-up savings", say:"That's where most people keep it, and that's the problem. A 401k goes through the estate and the house has to sell. None of that pays a funeral home the week after. Roughly how much are we talking in there?",
       r:[["Under [$25K]","savings3a"],["[$25K] or more","savings3b"]]},
-    savings3a:{t:"Smaller account", say:"Okay. Then a small policy that pays in days, tax-free, straight to [wife/kids] is the move. Couple quick questions and I'll show you what that costs.", end:"s04"},
+    savings3a:{t:"Smaller account", say:"Okay. Then a small policy that pays in days, tax-free, straight to [wife/kids] is the move. Couple quick questions and I'll show you what that costs.", end:"s04h"},
     savings3b:{t:"Bigger account", say:"Okay, that changes things. Hold that thought, because I may be able to do a lot more with that account than a funeral policy. Mind if I ask a couple questions about it?", end:"ann"},
     savings4:{t:"Won't say", say:"Fair. Then let me ask it this way: if something happened this weekend, could [wife/kids] write the check for the funeral on Monday without selling anything?",
       r:[["Yes, easily","savings2"],["No / not really","fe"]]},
     afford:{t:"Can't afford it", say:"Totally get it, and that's the number one reason people stop. Ethos only shows a few prices. If I could find something that fits your budget, would it be worth five minutes to see?",
       r:[["Yes","affordyes"],["No","notint2"]]},
-    affordyes:{t:"Budget test drive", say:"Perfect. Couple quick questions and I'll shop it across all my carriers.", end:"s04"},
+    affordyes:{t:"Budget test drive", say:"Perfect. Couple quick questions and I'll shop it across all my carriers.", end:"s04h"},
     timing:{t:"Life got in the way", say:"Fair enough. Good news is you already did the hard part. Give me ten minutes right now and we'll finish what you started, or I can call you back at [time] today. Which is easier?",
-      r:[["Now's fine","busylife"],["Call me back","timingbook"]]},
+      r:[["Now's fine","gonow"],["Call me back","timingbook"]]},
     timingbook:{t:"Wants the callback", say:"Perfect. [Time] it is. I'm texting you the confirmation right now so it's on your phone.", end:"book"},
 
     never:{t:"I never applied", say:"Okay, I'm as confused as you. I've got your name, this number, [City, State], born [DOB]. Does that sound like something you might have priced out, even just to look?",
@@ -1151,7 +1155,10 @@ h3{font-size:18px}
     post2:{t:"Honest moment", say:"Thanks. It's just that I personally wouldn't feel right if we put this much time into getting life insurance but we didn't discuss your financial future in depth. It means I'm not doing my job. It's kinda like getting a flat tire and the mechanic only checks the tire pressure on one tire\u2026 you'd probably be mad if you drove out of the body shop and popped a second tire, right? Hahaha",
       r:[["Laughs / right","plan"]]},
     nosale:{t:"No life sale", say:"Okay, so here's the thing. On the life insurance side, [you're set / we're limited on what we can do]. But you mentioned that [401k / IRA / savings] earlier, and honestly that's where I might be able to do the most for you. Mind if I ask a couple questions about it?",
-      r:[["Sure","plan"],["Not interested","decline"]]},
+      r:[["Sure","plan"],["Not interested","nsoft"]]},
+    nsoft:{t:"Not interested (annuity)", say:"Totally fair, and I'm not trying to move anything today. One question so I know whether it's even worth bringing up: is that money sitting in the market right now, or in cash?",
+      cue:"One push, then let it go.",
+      r:[["In the market","fia"],["Cash / CD / savings","fia"],["Still no","decline"]]},
     plan:{t:"What's the money for", say:"So I know we mentioned that [ACCOUNT] earlier. What's the plan with it? Are you going to draw from it soon, is it just laying around, or is it safe money that goes to the family when you pass?",
       cue:"Their answer picks the hook.",
       r:[["Not touching it for a while","fia"],["It's for the family","fia"],["Retiring soon / need income","spia"],["Not sure","fia"],["Don't want to get into it","decline"]]},
@@ -1200,7 +1207,7 @@ h3{font-size:18px}
     q9:{t:"Beneficiary", say:"And who's the beneficiary on that account?",
       r:[["Answers","book"]]},
     book:{t:"Book it", say:"Perfect. Here's what I need from you: grab your most recent statement for that account, and I'll run the actual numbers with the carriers so you're looking at real figures, not guesses. I can do [time] or [time] today. Which one?",
-      cue:"Don't quote a rate or an income number on this call. Today, tomorrow at worst, two specific times.", end:"book"},
+      cue:"Don't quote a rate or an income number on this call. Today, tomorrow morning at worst, two specific times.", end:"book"},
     decline:{t:"Not interested", say:"No problem at all. If that ever changes, you've got my cell.", end:"close"},
     closeout:{t:"Nothing to move", say:"Okay, then let's leave it there for now. You've got my cell if anything changes.", end:"close"}
   };
