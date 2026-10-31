@@ -460,7 +460,7 @@ p.agent{color:var(--muted)}
     <div class="box read">
       <div class="step">Pre-call text</div>
       <p class="agent">Send this a few minutes before every call. It's what makes "Did you get my text?" true.</p>
-      <textarea class="copytext" id="pretext" readonly rows="6" aria-label="Pre-call text">Hi Mr./Ms. [Last Name], this is [Agent] with [Agency]. Following up on the life insurance request you filled out a while back. I'll give you a quick call in a few minutes. My state license # is [number] if you want to look me up.</textarea>
+      <textarea class="copytext" id="pretext" readonly rows="6" aria-label="Pre-call text">Hi Mr./Ms. [Last Name], this is [Agent]. Following up on the life insurance request you filled out for veterans a while back. Most vets already have something in place, so this is a quick review to make sure yours was set up right, not a sales pitch. I'll give you a quick call in a few minutes. My state license # is [number] if you want to look me up.</textarea>
       <button type="button" class="copybtn" data-copy="pretext">Copy text</button>
       <div class="cue"><span class="tag t-imp">Important</span><p>Only open with "Did you get my text?" if you actually sent one. If they catch you on a text you never sent, the call is over.</p></div>
     </div>
@@ -527,15 +527,20 @@ p.agent{color:var(--muted)}
     <div class="cue"><span class="tag t-pause">Pause</span><p>Let them talk. Most say "About what?" or "What text?" That's not a no; it's the normal answer.</p></div>
     <div class="branch box">
       <div class="step">If they say "About what?" / no:</div>
-      <p class="say">"Yeah, I sent you quite a few messages. <strong>You've probably got something in place by now already, right?</strong> <em>[pause]</em> For the life insurance for veterans."</p>
-      <div class="cue"><span class="tag t-note">Note</span><p>Don't explain the text. Go straight to the fork question, and only add "for the life insurance for veterans" if they hesitate. From Nick's live call, 10/31.</p></div>
+      <p class="say">"Yeah, it was about the life insurance request you sent in for veterans a while back. You've probably got something in place by now, so <strong>I'm not selling you anything.</strong> The reason I'm calling is <strong>we've been seeing a lot of veteran policies get rescinded</strong>, cancelled after the fact, and my job is just to <strong>make sure yours was set up right. Who'd you end up going with?</strong>"</p>
+      <div class="cue"><span class="tag t-imp">Important</span><p>Don't stop after "something in place by now." That pause is where they say "I'm all set" and hang up. The reason for the call and the question come out in one breath. "Who'd you end up going with?" needs a name; "right?" only needs a yes.</p></div>
     </div>
     <div class="branch box">
       <div class="step">If they say yes:</div>
-      <p class="say">"<strong>I'll be quick.</strong> You filled out a life insurance request for veterans a while back. <strong>You've probably got something in place by now already, right?</strong>"</p>
+      <p class="say">"Good. <strong>I'll be quick.</strong> You've probably got something in place by now, so <strong>I'm not selling you anything.</strong> The reason I'm calling is <strong>we've been seeing a lot of veteran policies get rescinded</strong>, cancelled after the fact, and my job is just to <strong>make sure yours was set up right. Who'd you end up going with?</strong>"</p>
+    </div>
+    <div class="branch box c-blue">
+      <div class="step">If they say "I'm all set":</div>
+      <p class="say">"I'm sure you are, and <strong>that's exactly what I'm checking.</strong> Five minutes, I close the file, and <strong>you never hear from me again. Who's it with?</strong>"</p>
+      <div class="cue"><span class="tag t-note">Note</span><p>Agree fast, restate the one reason, ask for the carrier, all in one breath. A second "I'm all set" is the second no. If they hang up, mark the file "hung up at opener" and redial once later today; a hang-up is a reflex, not a decision.</p></div>
     </div>
     <ul>
-      <li><b>If they have coverage:</b> "Okay, great." Go to Track A, the policy review. This is most calls.</li>
+      <li><b>If they name a carrier:</b> "Okay, great." Go to Track A, the policy review. This is most calls.</li>
       <li><b>If they have nothing:</b> go to Track B, no coverage. This is rare.</li>
     </ul>
   </div></details>
@@ -558,8 +563,8 @@ p.agent{color:var(--muted)}
       <div class="step">Track A · Policy review (most calls)</div>
 
       <h3>1. The hook</h3>
-      <p class="say">"Okay, great. So the reason I'm reaching out is, the biggest issue we've been seeing, and I'm not sure if you've been aware, but <strong>policies have been getting rescinded</strong>, right? Basically what that means is the insurance company <strong>cancels the policy like it never existed.</strong> They send back what you paid, and <strong>the family gets nothing when they need it</strong>, right? So my job is just to go back and <strong>make sure everything was set up correctly.</strong> If it was, perfect, makes my job super easy. I'll close out your file on my end and <strong>you won't get another call from us. It does take about five to ten minutes. Do you have that time right now?</strong>"</p>
-      <div class="cue"><span class="tag t-note">Note</span><p>Nick's live wording, 10/31. The two "right?" tags and "I'm not sure if you've been aware" are what keep it from sounding like a pitch. If they say yes: "When's the last time your agent called you just to check on it?" Most will say never. Let that land, then the review questions. If everything checks out, actually close the file and mark them do-not-call.</p></div>
+      <p class="say">"Okay, great. So like I said, the biggest issue we've been seeing is <strong>policies getting rescinded</strong>, right? Basically what that means is the insurance company <strong>cancels the policy like it never existed.</strong> They send back what you paid, and <strong>the family gets nothing when they need it</strong>, right? So my job is just to go back and <strong>make sure everything was set up correctly.</strong> If it was, perfect, makes my job super easy. I'll close out your file on my end and <strong>you won't get another call from us. It does take about five to ten minutes. Do you have that time right now?</strong>"</p>
+      <div class="cue"><span class="tag t-note">Note</span><p>Nick's live wording, 10/31, picking up from the opener. The "right?" tags are what keep it from sounding like a pitch. If they say yes: "When's the last time your agent called you just to check on it?" Most will say never. Let that land, then the review questions. If everything checks out, actually close the file and mark them do-not-call.</p></div>
       <div class="branch box c-blue" id="book">
         <div class="step">If they say "Not right now" / "I'm in the middle of something":</div>
         <p class="say">"Okay, got it. <strong>Is there a better time later today, or tomorrow?</strong>"</p>
@@ -821,8 +826,13 @@ p.agent{color:var(--muted)}
   <div class="step">R · Responses to common pushback</div>
   <h2>Responses to Common Pushback.</h2>
   <p class="agent">Every response ends in a question, and the question is always the same fork: <em>do you have anything in place right now?</em> One rule runs the whole section: <strong>a file closes on the third no, not the first.</strong> Never offer to take someone off the list; if they ask, do it. If they can't talk, book a specific time today or tomorrow and confirm it by text.</p>
-  <input class="filter" id="rfilter" type="search" placeholder="Type what they said… (VA, through the VA, interested, calls, coverage, VGLI, agent, remember, number, scam, mail, busy, $10,000, burial, wife, saved, afford, old, qualify, need)" aria-label="Filter pushback">
+  <input class="filter" id="rfilter" type="search" placeholder="Type what they said… (all set, VA, through the VA, interested, calls, coverage, VGLI, agent, remember, number, scam, mail, busy, $10,000, burial, wife, saved, afford, old, qualify, need)" aria-label="Filter pushback">
   <div class="rgrid" id="rgrid">
+
+  <details><summary>"I'm all set." (then they hang up)</summary><div class="det">
+    <p class="say">"I'm sure you are, and <strong>that's exactly what I'm checking.</strong> Five minutes, I close the file, and <strong>you never hear from me again. Who's it with?</strong>"</p>
+    <div class="cue"><span class="tag t-imp">Important</span><p>This is the number one hang-up on aged veteran leads, and it's caused by the question before it. "You've probably got something in place, right?" is a yes-or-no question asked before they have a reason to stay, so "yeah, I'm all set" is the natural exit. The fix is in the opener: the reason for the call comes first, in the same breath, and the question is "Who'd you end up going with?" which needs a name. If they still say "I'm all set," agree, restate the one reason, ask for the carrier. Second "I'm all set" goes to Second no. A hang-up gets one redial later today, with the voicemail.</p></div>
+  </div></details>
 
   <details><summary>"Are you with the VA?"</summary><div class="det">
     <p class="say">"No sir, thank you for asking. I'm a licensed independent agent, what they call the private sector. Most vets I talk to either had SGLI while they were in, or switched to VGLI when they got out. VGLI is term coverage, and the price goes up every five years as you get older, so it can get expensive. <strong>My job is to make sure you're not overpaying.</strong> I work with <em>[number]</em> carriers, so I can shop it around and show you if there's something better. <strong>And if what you have is the best deal, I'll tell you that too. You've probably got something in place by now already, right?</strong>"</p>
@@ -988,21 +998,26 @@ p.agent{color:var(--muted)}
     trackb:{label:"They have nothing · Track B, no coverage", href:"#trackb", cls:"end"},
     how:{label:"Build on top of it · Explain How It Works (Both Tracks)", href:"#how", cls:"end"},
     close:{label:"Close the file · third no only", cls:"end end-close"},
+    hungup:{label:"Hung up · redial later today with the voicemail; a hang-up is not a no", cls:"end end-close"},
     booked:{label:"Callback booked · send the confirmation text before your next dial", href:"#book", cls:"end"},
     dnc:{label:"Take them off the list today", cls:"end end-dnc"}
   };
   /* every pushback branch is reachable from the hook and from the fork */
   var PUSH=[["Are you with the VA?","va"],["Not interested","notint"],["I get these calls nonstop","calls"],["I don't remember filling anything out","noremember"],["How did you get my number?","hownum"],["Is this a scam?","scam"],["Just mail me something","mail"],["I'm busy / at work / driving","busy"],["What's this about?","what"]];
-  var FORK=[["Yes, I have coverage","hascov"],["I have VGLI / my military insurance","vgli"],["I already have coverage (brush-off tone)","hascov2"],["My agent takes care of me","agent"],["I have a $10,000 VA policy I don't pay for","sdvi"],["I'll just go through the VA","viava"],["The VA takes care of my burial","burial"],["No, I've got nothing","nothing"],["I'm on a fixed income / can't afford anything","fixed"],["I've got money saved / my kids will handle it","saved"],["I'm too old / they won't cover me","tooold"]];
+  var FORK=[["Names a carrier","hascov"],["I'm all set","allset"],["I have VGLI / my military insurance","vgli"],["I already have coverage (brush-off tone)","hascov2"],["My agent takes care of me","agent"],["I have a $10,000 VA policy I don't pay for","sdvi"],["I'll just go through the VA","viava"],["The VA takes care of my burial","burial"],["No, I've got nothing","nothing"],["I'm on a fixed income / can't afford anything","fixed"],["I've got money saved / my kids will handle it","saved"],["I'm too old / they won't cover me","tooold"]];
   var N = {
     start:{t:"The opener", say:"Hello, Mr./Ms. [Last Name]? {P} Hey, how's it going? This is [Agent]. Did you ever get my text by chance?", cue:"Let them talk. Most say \"About what?\" or \"What text?\" That's not a no; it's the normal answer.",
       r:[["Yes / I think so","either"],["About what? / No","no"]].concat(PUSH).concat([["Take me off your list / hostile","dnc"]])},
-    no:{t:"About what?", say:"Yeah, I sent you quite a few messages. You've probably got something in place by now already, right? {P} For the life insurance for veterans.",
-      cue:"Don't explain the text. Go straight to the fork question, and only add \"for the life insurance for veterans\" if they hesitate. Nick's live call, 10/31.",
+    no:{t:"About what?", say:"Yeah, it was about the life insurance request you sent in for veterans a while back. You've probably got something in place by now, so I'm not selling you anything. The reason I'm calling is we've been seeing a lot of veteran policies get rescinded, cancelled after the fact, and my job is just to make sure yours was set up right. Who'd you end up going with?",
+      cue:"Don't stop after \"something in place by now.\" That pause is where they say \"I'm all set\" and hang up. The reason for the call and the question come out in one breath. \"Who'd you end up going with?\" needs a name; \"right?\" only needs a yes.",
       r:FORK.concat(PUSH)},
-    either:{t:"Yes", say:"I'll be quick. You filled out a life insurance request for veterans a while back. You've probably got something in place by now already, right?",
-      cue:"If they have coverage: \"Okay, great,\" then Track A, the policy review. This is most calls. If they have nothing: Track B, no coverage. This is rare.",
+    either:{t:"Yes", say:"Good. I'll be quick. You've probably got something in place by now, so I'm not selling you anything. The reason I'm calling is we've been seeing a lot of veteran policies get rescinded, cancelled after the fact, and my job is just to make sure yours was set up right. Who'd you end up going with?",
+      cue:"Same rule: no pause before the question. Names a carrier: \"Okay, great,\" then Track A. Nothing: Track B.",
       r:FORK.concat(PUSH)},
+    allset:{t:"I'm all set.", say:"I'm sure you are, and that's exactly what I'm checking. Five minutes, I close the file, and you never hear from me again. Who's it with?",
+      cue:"Agree fast, restate the one reason, ask for the carrier. Say it in one breath; the hang-up happens in the gap. A second \"I'm all set\" is the second no.",
+      r:[["Names the carrier","hascov"],["Second \"I'm all set\"","second"],["Hangs up","hungup"]]},
+    hungup:{t:"Hangs up", say:"", cue:"Mark the file \"hung up at opener.\" Redial once later today, leave the voicemail if they don't pick up. Most hang-ups are reflex, not a decision.", end:"hungup"},
 
     hascov:{t:"They have coverage", say:"Good.", cue:"Into Track A. The hook is the first thing you say.", end:"tracka"},
     nothing:{t:"They have nothing", say:"Got it.", cue:"Into Track B. Build rapport, then re-find the why.", end:"trackb"},
