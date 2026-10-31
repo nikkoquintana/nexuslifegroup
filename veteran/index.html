@@ -533,12 +533,12 @@ p.agent{color:var(--muted)}
     <div class="cue"><span class="tag t-pause">Pause</span><p>Let them talk. Most say "About what?" or "What text?" That's not a no; it's the normal answer.</p></div>
     <div class="branch box">
       <div class="step">If they say "About what?" / no:</div>
-      <p class="say">"Yeah, the life insurance request you sent in for veterans. Real quick: <strong>a lot of veteran policies are getting rescinded</strong>, cancelled after the fact, and my job's to <strong>make sure yours was set up right. Five minutes, you can cut me off any time. Fair enough?</strong>"</p>
-      <div class="cue"><span class="tag t-imp">Important</span><p>Under 45 words, one breath. The reason, the control clause, "Fair enough?" Nothing else goes in the opener; the explanation of rescinded, the "I'm not selling you anything," the claim-denied line and the manager line all live in the body, after they've said okay. Don't ask who it's with yet; that comes in the review, after the branch question.</p></div>
+      <p class="say">"Yeah, I sent you quite a few messages. <strong>You've probably got something in place by now already, right?</strong> <em>[pause]</em> For the life insurance for veterans."</p>
+      <div class="cue"><span class="tag t-note">Note</span><p>Nick's live wording, 10/31. Go straight to the question, and only add "for the life insurance for veterans" if they hesitate. The explanation of rescinded and the claim-denied line are in the Track A hook, not here; the manager line opens Track B.</p></div>
     </div>
     <div class="branch box">
       <div class="step">If they say yes:</div>
-      <p class="say">"Good, <strong>I'll be quick.</strong> <strong>A lot of veteran policies are getting rescinded</strong>, cancelled after the fact, and my job's to <strong>make sure yours was set up right. Five minutes, you can cut me off any time. Fair enough?</strong>"</p>
+      <p class="say">"<strong>I'll be quick.</strong> You filled out a life insurance request for veterans a while back. <strong>You've probably got something in place by now already, right?</strong>"</p>
     </div>
     <div class="pair">
       <div class="branch box c-blue">
@@ -565,8 +565,8 @@ p.agent{color:var(--muted)}
       </div>
     </div>
     <ul>
-      <li><b>If they say okay / fair enough:</b> "Okay, great." Go to Track A, the policy review. This is most calls.</li>
-      <li><b>If they say they have nothing:</b> go to Track B, no coverage. This is rare.</li>
+      <li><b>If they have coverage:</b> "Okay, great." Go to Track A, the policy review. This is most calls.</li>
+      <li><b>If they have nothing:</b> go to Track B, no coverage. This is rare.</li>
     </ul>
   </div></details>
 </section>
@@ -588,8 +588,8 @@ p.agent{color:var(--muted)}
       <div class="step">Track A · Policy review (most calls)</div>
 
       <h3>1. The hook</h3>
-      <p class="say">"Okay, great. So what rescinded means: the insurance company <strong>cancels the policy like it never existed.</strong> They send back what you paid, and <strong>the family gets nothing when they need it</strong>, right? It usually happens because the health questions weren't answered correctly on the application. <strong>I'm not here to sell you anything</strong>, because at the end of the day, <strong>if the claim gets denied, it ain't worth a dang thing. Right?</strong> <em>[pause]</em> So that's all I'm checking for."</p>
-      <div class="cue"><span class="tag t-note">Note</span><p>This is where the body starts; the opener only earned the five minutes. The two "right?" tags are from Nick's live call, 10/31; the claim-denied line is his. Then straight into the review questions: the branch question first, the carrier after that. When they name the carrier: "When's the last time your agent called you just to check on it?" Most will say never. Let that land. If everything checks out, actually close the file and mark them do-not-call.</p></div>
+      <p class="say">"Okay, great. So the reason I'm reaching out is, the biggest issue we've been seeing, and I'm not sure if you've been aware, but <strong>policies have been getting rescinded</strong>, right? Basically what that means is the insurance company <strong>cancels the policy like it never existed.</strong> They send back what you paid, and <strong>the family gets nothing when they need it</strong>, right? So my job is just to go back and <strong>make sure everything was set up correctly</strong>, because at the end of the day, <strong>if the claim gets denied, it ain't worth a dang thing. Right?</strong> If it was, perfect, makes my job super easy. I'll close out your file on my end and <strong>you won't get another call from us. It does take about five to ten minutes. Do you have that time right now?</strong>"</p>
+      <div class="cue"><span class="tag t-note">Note</span><p>Nick's live wording, 10/31, plus his claim-denied line. The "right?" tags are what keep it from sounding like a pitch. If they say yes: "When's the last time your agent called you just to check on it?" Most will say never. Let that land, then the review questions. If everything checks out, actually close the file and mark them do-not-call.</p></div>
       <div class="branch box c-blue" id="book">
         <div class="step">If they say "Not right now" / "I'm in the middle of something" (at the opener or here):</div>
         <p class="say">"Okay, got it. <strong>Is there a better time later today, or tomorrow?</strong>"</p>
@@ -1047,28 +1047,28 @@ p.agent{color:var(--muted)}
   };
   /* every pushback branch is reachable from the hook and from the fork */
   var PUSH=[["Who the hell is this? / Stop calling me! (angry)","hostile"],["Are you with the VA?","va"],["Not interested","notint"],["Nobody ever called me back","nocall"],["I get these calls nonstop","calls"],["I don't remember filling anything out","noremember"],["How did you get my number?","hownum"],["Is this a scam?","scam"],["Just mail me something","mail"],["I'm busy / at work / driving","busy"],["What's this about?","what"]];
-  var FORK=[["Yeah / okay / fair enough","hascov"],["I'm all set","allset"],["None of your business / I'll talk to my agent","nyb"],["I have VGLI / my military insurance","vgli"],["I already have coverage (brush-off tone)","hascov2"],["My agent takes care of me","agent"],["I have a $10,000 VA policy I don't pay for","sdvi"],["I'll just go through the VA","viava"],["The VA takes care of my burial","burial"],["No, I've got nothing","nothing"],["I'm on a fixed income / can't afford anything","fixed"],["I've got money saved / my kids will handle it","saved"],["I'm too old / they won't cover me","tooold"]];
+  var FORK=[["Yes, I have coverage","hascov"],["I'm all set","allset"],["None of your business / I'll talk to my agent","nyb"],["I have VGLI / my military insurance","vgli"],["I already have coverage (brush-off tone)","hascov2"],["My agent takes care of me","agent"],["I have a $10,000 VA policy I don't pay for","sdvi"],["I'll just go through the VA","viava"],["The VA takes care of my burial","burial"],["No, I've got nothing","nothing"],["I'm on a fixed income / can't afford anything","fixed"],["I've got money saved / my kids will handle it","saved"],["I'm too old / they won't cover me","tooold"]];
   var N = {
     start:{t:"The opener", say:"Hello, Mr./Ms. [Last Name]? {P} Hey, how's it going? This is [Agent]. Did you ever get my text by chance?", cue:"Let them talk. Most say \"About what?\" or \"What text?\" That's not a no; it's the normal answer.",
       r:[["Yes / I think so","either"],["About what? / No","no"]].concat(PUSH).concat([["Take me off your list","dnc"]])},
-    no:{t:"About what?", say:"Yeah, the life insurance request you sent in for veterans. Real quick: a lot of veteran policies are getting rescinded, cancelled after the fact, and my job's to make sure yours was set up right. Five minutes, you can cut me off any time. Fair enough?",
-      cue:"Under 45 words. The reason, the control clause, \"Fair enough?\", one breath. Nothing else goes in the opener; the explanation, the manager line and the claim-denied line all live in the body (Track A hook, Track B). Don't ask who it's with yet.",
+    no:{t:"About what?", say:"Yeah, I sent you quite a few messages. You've probably got something in place by now already, right? {P} For the life insurance for veterans.",
+      cue:"Nick's live wording, 10/31. Go straight to the question, and only add \"for the life insurance for veterans\" if they hesitate. The explanation of rescinded and the claim-denied line are in the Track A hook, not here.",
       r:FORK.concat(PUSH)},
-    either:{t:"Yes", say:"Good, I'll be quick. A lot of veteran policies are getting rescinded, cancelled after the fact, and my job's to make sure yours was set up right. Five minutes, you can cut me off any time. Fair enough?",
-      cue:"Same rule: reason, control, \"Fair enough?\", one breath.",
+    either:{t:"Yes", say:"I'll be quick. You filled out a life insurance request for veterans a while back. You've probably got something in place by now already, right?",
+      cue:"If they have coverage: \"Okay, great,\" then Track A. If they have nothing: Track B.",
       r:FORK.concat(PUSH)},
     allset:{t:"I'm all set.", say:"I'm sure you are, and that's exactly what I'm checking. If it was set up right, I close the file and you never hear from me again. Five minutes. Fair enough?",
       cue:"Agree fast, one reason, \"Fair enough?\", no gap. Don't ask for the carrier here. A second \"I'm all set\" is the second no.",
-      r:[["Okay / fine","hascov"],["Second \"I'm all set\"","second"],["None of your business","nyb"],["Hangs up","hungup"]]},
+      r:[["Okay / fine","hascov"],["Second \"I'm all set\"","secondhq"],["None of your business","nyb"],["Hangs up","hungup"]]},
     nyb:{t:"None of your business. / I'll talk to my agent.", say:"Understood, and I'm not asking who it's with. The only thing I check is whether the health questions were read to you one at a time, because that's what's getting veteran policies cancelled. If they were, you're good and I'm gone. Fair enough?",
       cue:"Don't argue and don't repeat the question they just refused. Give them the one thing you check, then \"Fair enough?\" If they say \"stop calling me,\" that's the list, today.",
-      r:[["Okay / fine","hascov"],["Still no","second"],["Stop calling me","dnc"],["Hangs up","hungup"]]},
+      r:[["Okay / fine","hascov"],["Still no","secondhq"],["Stop calling me","dnc"],["Hangs up","hungup"]]},
     hostile:{t:"Who the hell is this? / Stop calling me!", say:"Sounds like you've been getting hammered with these calls. {P} I'm not with the VA and I'm not selling anything. One thing, then I'm gone: when they set up your life insurance, did they read you the health questions one at a time? That's what's getting veteran policies cancelled.",
       cue:"Label it first (\"sounds like you've been getting hammered\"), then pause and let him vent; don't talk over it. Low, slow voice, no \"why\" questions, don't match his volume. One reason, one question, and his control is explicit. A second \"stop calling me\" is the list, today.",
       r:[["Calms down / answers","hascov"],["Second \"stop calling me\"","dnc"],["Hangs up","hungup"]]},
     hungup:{t:"Hangs up", say:"", cue:"Mark the file \"hung up at opener.\" Redial once later today, leave the voicemail if they don't pick up. Most hang-ups are reflex, not a decision.", end:"hungup"},
 
-    hascov:{t:"Fair enough / okay", say:"Okay, great.", cue:"Into Track A. The first thing you say there is what rescinded means, then the branch question.", end:"tracka"},
+    hascov:{t:"They have coverage", say:"Okay, great.", cue:"Into Track A. The hook is the first thing you say there.", end:"tracka"},
     nothing:{t:"They have nothing", say:"Got it.", cue:"Into Track B. If you skipped the manager line in the opener (\"I'm not sure why the heck this was never handled... I'm one of the managers, and it's my job to make sure we get this handled today\"), say it here. Then build rapport and re-find the why.", end:"trackb"},
 
     vgli:{t:"I have VGLI.", say:"Okay, good, that's the group policy you kept from the service. How much is it for, and what's it running you a month right now? {P} And has the price gone up on you since you got out?",
@@ -1078,7 +1078,7 @@ p.agent{color:var(--muted)}
       r:[["Answers","hascov"],["It's fine, I'm good","fine"],["My agent takes care of me","agent"]]},
     fine:{t:"It's fine, I'm good.", say:"I believe you, and most of the time it is. The one thing I check is whether the health questions were read to you one by one, because that's what gets policies cancelled after the fact, and on veterans it happens more than anywhere else. Five minutes, and if it's clean, you know it's solid. Fair enough?",
       cue:"Don't argue about the policy, and don't ask who it's with yet; that comes in the review. A second \"I'm good\" is the second no.",
-      r:[["Okay / fine","hascov"],["Second \"I'm good\"","second"],["None of your business","nyb"]]},
+      r:[["Okay / fine","hascov"],["Second \"I'm good\"","secondhq"],["None of your business","nyb"]]},
     agent:{t:"My agent takes care of me.", say:"Glad to hear it. Then this is a second set of eyes and it costs you nothing. If everything checks out, you'll know your agent did right by you. When's the last time he called you just to check on it?",
       cue:"Most say never. Let that land, then the hook.",
       r:[["Never / a while ago","hascov"],["He checks in all the time","fine"]]},
@@ -1110,13 +1110,13 @@ p.agent{color:var(--muted)}
       r:[["She'd have to figure it out","nothing"],["I have a policy for that","hascov"],["I've got money saved","saved"]]},
     saved:{t:"I've got money saved / my kids will handle it", say:"Good, you're ahead of most people. Quick question though: is that money sitting where [BENEFICIARY] could get to it the week after, or is it in a TSP, a 401k, the house, something like that? {P} A funeral is $8,300 before the cemetery, and none of that pays a funeral home on day three. You can hand that out of the savings, or a small policy pays in days, tax-free, straight to [BENEFICIARY], and the savings never get touched. Worth a couple of questions to see the number?",
       cue:"Everyone says they have savings. Make them say where it is.",
-      r:[["Okay","nothing"],["I have a policy too","hascov"],["Still no","second"]]},
+      r:[["Okay","nothing"],["I have a policy too","hascov"],["Still no","secondsaved"]]},
     fixed:{t:"I'm on a fixed income / can't afford anything", say:"Then this matters more, not less. If what you have is solid, I'll tell you and you keep it. If you're overpaying, that's money back in your pocket every month. And if you have nothing, we start with the smallest option and it has to fit the budget or I won't put you in it. Five minutes, you can cut me off any time. Fair enough?",
       cue:"Budget is the first thing you ask in Qualifying anyway. Never promise a price here.",
       r:[["Okay / fine","hascov"],["I don't have anything","nothing"],["Still no","second"]]},
     tooold:{t:"I'm too old / they won't cover me", say:"They will. Age changes the price, not the yes. I've got carriers that go up to 89, and I'm not asking for a medical exam. Let me ask you a couple quick questions and I'll tell you straight what's there. Fair?",
       cue:"Over 80: fewer carriers, smaller amounts. Say it before the numbers, not after.",
-      r:[["Okay","nothing"],["I already have something","hascov"],["Still no","second"]]},
+      r:[["Okay","nothing"],["I already have something","hascov"],["Still no","secondold"]]},
 
     va:{t:"Are you with the VA?", say:"No sir, thank you for asking. I'm a licensed independent agent, what they call the private sector. Most vets I talk to either had SGLI while they were in, or switched to VGLI when they got out. VGLI is term coverage, and the price goes up every five years as you get older, so it can get expensive. My job is to make sure you're not overpaying. I work with [number] carriers, so I can shop it around and show you if there's something better. And if what you have is the best deal, I'll tell you that too. Five minutes, you can cut me off any time. Fair enough?",
       cue:"Fill in your real carrier count. Don't say \"all the carriers in the nation.\" SGLI only covers people while they serve, so don't describe SGLI as increasing. That's VGLI. End on \"Fair enough?\", never on \"you've got something in place, right?\"; that yes is a hang-up.",
@@ -1156,13 +1156,28 @@ p.agent{color:var(--muted)}
       r:[["Someone already set me up","hascov2"],["I didn't qualify","declined"],["It was too expensive","fixed"],["I don't need it","noneed"],["Just not interested (again)","second"]]},
     declined:{t:"I didn't qualify.", say:"Really? Did they tell you why? {P} Every carrier reads the same condition differently, and I work with [number] of them. Let me ask a couple quick health questions and I'll tell you straight if I've got one for you. Fair?",
       cue:"Into Track B; the health questions in Qualifying decide it. If nothing's day one, a graded plan and VALife (with a VA rating) are both honest answers.",
-      r:[["Okay","nothing"],["Still no","second"]]},
+      r:[["Okay","nothing"],["Still no","seconddec"]]},
     noneed:{t:"I don't need it.", say:"Okay, help me understand that, because you filled this out, so something had you looking. What's different now?",
       cue:"They're trying to get you off the phone. Make them say the actual reason.",
       r:[["The VA takes care of my burial","burial"],["I've got money saved / my kids","saved"],["I have coverage now","hascov2"],["Just don't want it","second"]]},
-    second:{t:"Second no", say:"Fair enough. Last thing, and I'm only asking because it changes what I do with your file: was it the price, or you just don't need it anymore?",
-      cue:"This is the last ask. A third brush-off is the only thing that closes a file. Never offer to close it yourself.",
-      r:[["The price","fixed"],["Don't need it","noneed"],["Third no","closeout"]]},
+    second:{t:"Second no", say:"Fair enough. Last thing, and I'm only asking because it changes what I do with your file: did you get it handled somewhere else, or you just don't want it anymore?",
+      cue:"Last ask, and it has to fit what they just said. This one is for the need-and-price branches (not interested, don't need it, fixed income, nobody called me back). \"Handled somewhere else\" is information, not a no: it's a policy to review. \"Don't want it\" is the third no.",
+      r:[["Got it handled somewhere else","hascov2"],["Don't want it","closeout"],["Hangs up","hungup"]]},
+    secondhq:{t:"Still no (after \"none of your business\" / \"I'm all set\" / \"I'm good\")", say:"Understood. One question and I'm off your phone, just so I note the file right: when they set it up, did they read you the health questions one at a time, or fly through them?",
+      cue:"He just refused to share anything, so the second ask can't be about price or need; it's the one yes-or-no that matches what you said you check. Read them one at a time means he's solid: close the file and mean it. Flew through or not sure is the five minutes. A third brush-off closes it.",
+      r:[["Read them one at a time","solid"],["Flew through / not sure","hascov"],["Third no","closeout"],["Hangs up","hungup"]]},
+    solid:{t:"They read them one at a time", say:"Then you're solid, and that's all I needed. I'll close your file on my end. Have a good one, sir.",
+      cue:"Take the yes. A vet who told you three times to go away and then answered your one question gets his file closed; that's the promise from the opener, and it's what makes the next call work.", end:"close"},
+    secondsaved:{t:"Still no (after \"I've got money saved\")", say:"Fair enough. Last thing so I note the file right: is that money somewhere [BENEFICIARY] can get to it the week after, yes or no?",
+      cue:"Matches what he said. Yes means he's set; close it. No or not sure is the gap, and that's Track B.",
+      r:[["Yes","solidsaved"],["No / not sure","nothing"],["Third no","closeout"]]},
+    solidsaved:{t:"Yes, they can get to it", say:"Then you're ahead of most people, and that's all I needed. I'll close your file. Have a good one.", end:"close"},
+    secondold:{t:"Still no (after \"I'm too old\")", say:"Understood. Last thing so I note the file right: is it that you figure they won't take you, or you just don't want it?",
+      cue:"Won't take me is a belief you can fix in Track B. Don't want it is the third no.",
+      r:[["They won't take me","nothing"],["Don't want it","closeout"]]},
+    seconddec:{t:"Still no (after \"I didn't qualify\")", say:"Understood. Did they at least tell you what it was for? {P} Because that's exactly what I'd need to find a carrier that takes it.",
+      cue:"If he names the condition, that's Track B and the health questions. If he won't, that's the third no.",
+      r:[["Names it","nothing"],["Still no","closeout"]]},
     closeout:{t:"Third no", say:"Understood. I'll make a note on the file. If anything changes, you've got my number.", end:"close"},
     dnc:{t:"Take me off your list", say:"Understood, I'll take you off my list right now. Have a good day.", cue:"Add them to the internal DNC today. No second attempt.", end:"dnc"}
   };
