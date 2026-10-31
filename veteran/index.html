@@ -651,7 +651,7 @@ p.agent{color:var(--muted)}
       <p class="agent">Use this if they say they have no life insurance at all. If you skipped the manager line in the opener ("I'm not sure why the heck this was never handled… I'm one of the managers, and it's my job to make sure we get this handled today"), say it here first.</p>
 
       <h3>1. Build rapport</h3>
-      <p class="say">"Got it. Before I go any further, <strong>what branch did you serve in?</strong>"</p>
+      <p class="say">"Got it. I'm not sure why the heck this was never handled. Could be for quite a few reasons, but <strong>I was raised better than to make excuses. Bottom line: I'm one of the managers, and it's my job to make sure we get this handled today</strong> and make sure you have the proper coverage your family needs. <em>[pause]</em> Before I go any further, <strong>what branch did you serve in?</strong>"</p>
       <div class="cue"><span class="tag t-pause">Pause</span><p>Let them talk. Ask one follow-up: where they were stationed, how long they served.</p></div>
 
       <h3>2. Re-find the why</h3>
@@ -853,7 +853,7 @@ p.agent{color:var(--muted)}
   <div class="step">R · Responses to common pushback</div>
   <h2>Responses to Common Pushback.</h2>
   <p class="agent">Every response ends in a question where yes means go, almost always <em>"Five minutes, you can cut me off any time. Fair enough?"</em> Never a question whose yes is an exit ("you've got something in place, right?"), and never "who's it with?" before they've agreed to the review. Two more rules run the section: <strong>a file closes on the third no, not the first</strong>, and never offer to take someone off the list; if they ask, do it. If they can't talk, book a specific time today or tomorrow and confirm it by text.</p>
-  <input class="filter" id="rfilter" type="search" placeholder="Type what they said… (all set, none of your business, stop calling, VA, through the VA, interested, calls, coverage, VGLI, agent, remember, number, scam, mail, busy, $10,000, burial, wife, saved, afford, old, qualify, need)" aria-label="Filter pushback">
+  <input class="filter" id="rfilter" type="search" placeholder="Type what they said… (all set, none of your business, stop calling, never called me, VA, through the VA, interested, calls, coverage, VGLI, agent, remember, number, scam, mail, busy, $10,000, burial, wife, saved, afford, old, qualify, need)" aria-label="Filter pushback">
   <div class="rgrid" id="rgrid">
 
   <details><summary>"I'm all set." (then they hang up)</summary><div class="det">
@@ -864,6 +864,11 @@ p.agent{color:var(--muted)}
   <details><summary>"None of your business." / "I'll talk to my agent directly." / "It's not your problem."</summary><div class="det">
     <p class="say">"Understood, and <strong>I'm not asking who it's with.</strong> The only thing I check is <strong>whether the health questions were read to you one at a time</strong>, because that's what's getting veteran policies cancelled. If they were, you're good and I'm gone. <strong>Fair enough?</strong>"</p>
     <div class="cue"><span class="tag t-note">Note</span><p>Don't argue and don't repeat the question they just refused. Give them the one thing you check, then "Fair enough?" "I'll talk to my agent": "Good, and ask him that exact question. If he read them to you one by one, you're solid. If he flew through it, that's the policy that gets cancelled." Then "Fair enough?" again. "Stop calling me" is the list, today.</p></div>
+  </div></details>
+
+  <details><summary>"Nobody ever called me back." / "I filled that out a year ago and never heard anything."</summary><div class="det">
+    <p class="say">"I'm not sure why the heck this was never handled. Could be for quite a few reasons, but <strong>I was raised better than to make excuses. Bottom line: I'm one of the managers, and it's my job to make sure we get this handled today</strong> and make sure you have the proper coverage your family needs. So let's get it handled. <strong>Five minutes, you can cut me off any time. Fair enough?</strong>"</p>
+    <div class="cue"><span class="tag t-note">Note</span><p>Own it; don't blame the last agent or the lead company. The same line opens Track B when they have nothing. Nick's line.</p></div>
   </div></details>
 
   <details><summary>"Who the hell is this?" / "Stop calling me!" (angry)</summary><div class="det">
@@ -1041,7 +1046,7 @@ p.agent{color:var(--muted)}
     dnc:{label:"Take them off the list today", cls:"end end-dnc"}
   };
   /* every pushback branch is reachable from the hook and from the fork */
-  var PUSH=[["Who the hell is this? / Stop calling me! (angry)","hostile"],["Are you with the VA?","va"],["Not interested","notint"],["I get these calls nonstop","calls"],["I don't remember filling anything out","noremember"],["How did you get my number?","hownum"],["Is this a scam?","scam"],["Just mail me something","mail"],["I'm busy / at work / driving","busy"],["What's this about?","what"]];
+  var PUSH=[["Who the hell is this? / Stop calling me! (angry)","hostile"],["Are you with the VA?","va"],["Not interested","notint"],["Nobody ever called me back","nocall"],["I get these calls nonstop","calls"],["I don't remember filling anything out","noremember"],["How did you get my number?","hownum"],["Is this a scam?","scam"],["Just mail me something","mail"],["I'm busy / at work / driving","busy"],["What's this about?","what"]];
   var FORK=[["Yeah / okay / fair enough","hascov"],["I'm all set","allset"],["None of your business / I'll talk to my agent","nyb"],["I have VGLI / my military insurance","vgli"],["I already have coverage (brush-off tone)","hascov2"],["My agent takes care of me","agent"],["I have a $10,000 VA policy I don't pay for","sdvi"],["I'll just go through the VA","viava"],["The VA takes care of my burial","burial"],["No, I've got nothing","nothing"],["I'm on a fixed income / can't afford anything","fixed"],["I've got money saved / my kids will handle it","saved"],["I'm too old / they won't cover me","tooold"]];
   var N = {
     start:{t:"The opener", say:"Hello, Mr./Ms. [Last Name]? {P} Hey, how's it going? This is [Agent]. Did you ever get my text by chance?", cue:"Let them talk. Most say \"About what?\" or \"What text?\" That's not a no; it's the normal answer.",
@@ -1143,6 +1148,9 @@ p.agent{color:var(--muted)}
       r:[["Okay, go ahead","either"],["Really can't right now","book"]]},
     book:{t:"Really can't right now", say:"Okay, got it. Is there a better time later today, or tomorrow? {P} [Day] at [time]? Alright, great. Can you do me a favor real quick? I'm going to send you a confirmation text. My name's [Agent]. Just reply with the letter C for confirm, okay? All my credentials will be on there. Alright, sir, have a good one.",
       cue:"Same day or tomorrow, at a specific time. If they say \"whenever,\" you pick two times. Send the confirmation text before your next dial and call back on the dot. Nick's live call, 10/31.", end:"booked"},
+    nocall:{t:"Nobody ever called me back. / I filled that out a year ago.", say:"I'm not sure why the heck this was never handled. Could be for quite a few reasons, but I was raised better than to make excuses. Bottom line: I'm one of the managers, and it's my job to make sure we get this handled today and make sure you have the proper coverage your family needs. So let's get it handled. Five minutes, you can cut me off any time. Fair enough?",
+      cue:"Own it; don't blame the last agent or the lead company. Nick's line.",
+      r:[["Okay / fine","hascov"],["I don't have anything","nothing"],["Still no","second"]]},
     notint:{t:"Not interested.", say:"Are we talking about the same thing? {P} This is the life insurance request you put in for veterans, about [a year] ago. Did someone already go over it with you, did you not qualify, or was it too expensive?",
       cue:"Soft, a little surprised. Don't accept the first no. Most of the time they think this is a VA call or a cold call about something else.",
       r:[["Someone already set me up","hascov2"],["I didn't qualify","declined"],["It was too expensive","fixed"],["I don't need it","noneed"],["Just not interested (again)","second"]]},
